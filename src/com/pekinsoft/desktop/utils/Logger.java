@@ -36,7 +36,7 @@
  */
 package com.pekinsoft.desktop.utils;
 
-import com.pekinsoft.desktop.Application;
+import com.pekinsoft.desktop.application.Application;
 import com.pekinsoft.desktop.err.InvalidLoggingLevelException;
 import java.io.File;
 import java.io.FileWriter;
@@ -114,10 +114,10 @@ public class Logger {
         }
 
         LOG_PATH = System.getProperty("user.home")
-                + FILE_SEPARATOR + ".northwind"
+                + FILE_SEPARATOR + ".pekinsoft"
                 + FILE_SEPARATOR + "var"
                 + FILE_SEPARATOR + "log"
-                + FILE_SEPARATOR + "application.log";
+                + FILE_SEPARATOR + "application.tmp.log";
         TEMP_LOG_PATH = System.getProperty("user.home")
                 + FILE_SEPARATOR + "ntbe.log";
         ERR_PATH = System.getProperty("user.home")
@@ -150,10 +150,10 @@ public class Logger {
      * by the calling application, logs informational or higher messages and is
      * appended to on future runs of the application.
      *
-     * @param path The path to the folder where the log file is to be placed.
+     * @param fileName The file name where the log file is to be written.
      */
-    public Logger(String path) {
-        this(path, INFO);
+    public Logger(String fileName) {
+        this(fileName, INFO);
     }
 
     /**
@@ -175,11 +175,11 @@ public class Logger {
      * and exit abnormally.</li>
      * </ul>
      *
-     * @param path The path to the folder where the log file is to be placed.
+     * @param fileName The file name where the log file is to be written.
      * @param level The minimum level at which to write messages to the log.
      */
-    public Logger(String path, int level) {
-        this(path, level, false);
+    public Logger(String fileName, int level) {
+        this(fileName, level, false);
     }
 
     /**

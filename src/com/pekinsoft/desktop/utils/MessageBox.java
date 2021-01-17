@@ -34,7 +34,7 @@
 
 package com.pekinsoft.desktop.utils;
 
-import com.pekinsoft.desktop.Application;
+import com.pekinsoft.desktop.application.Application;
 import javax.swing.JOptionPane;
 
 /**

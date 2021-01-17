@@ -30,7 +30,7 @@
  */
 package com.pekinsoft.desktop.task;
 
-import com.pekinsoft.desktop.Application;
+import com.pekinsoft.desktop.application.Application;
 import com.pekinsoft.desktop.utils.Logger;
 import com.sun.source.util.TaskListener;
 import java.util.List;

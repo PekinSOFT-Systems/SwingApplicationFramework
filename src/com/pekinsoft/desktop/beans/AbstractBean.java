@@ -30,8 +30,10 @@
  */
 package com.pekinsoft.desktop.beans;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -91,4 +93,91 @@ public class AbstractBean {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
     }
+    
+    /**
+     * Remove a PropertyChangeListener for a specific property. If {@code 
+     * listener} was added more than once to the same event source for the 
+     * specified property, it will be notified one less time after being
+     * removed. If {@code propertyName} is {@code null}, no exception is thrown
+     * and no action is taken. If {@code listener} is {@code null}, or was
+     * never added for the specified property, no exception is thrown and no
+     * action is taken.
+     * 
+     * @param propertyName the name of the property that was listened on
+     * @param listener the  PropertyChangeListener to be removed
+     * @see java.beans.PropertyChangeListener#removePropertyChangeListener(
+     *          String, PropertyChangeListener)
+     */
+    public synchronized void removePropertyChangeListener(String propertyName, 
+            PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+    
+    /**
+     * An array of all of the {@code PropertyChangeListener}s added so far.
+     * 
+     * @return all of the {@code PropertyChangeListener}s added so far
+     * @see java.beans.PropertyChangeListener#getPropertyChangeListeners
+     */
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+    
+    /**
+     * Called whenever the value of a bound property is set.
+     * <p>
+     * If {@code oldValue} is not equal to {@code newValue}, invoke the {@code 
+     * prpertyChange} method on all of the {@code PropertyChangeListeners} added
+     * so far, on the event dispatching thread.
+     * 
+     * @param propertyName name of the bound property
+     * @param oldValue current value
+     * @param newValue future value
+     * @see #addPropertyChangeListener
+     * @see #removePropertyChangeListener
+     * @see java.beans.PropertyChangeSupport#firePropertyChange(String, Object,
+     *          Object)
+     */
+    protected void firePropertyChangeEvent(String propertyName, Object oldValue,
+            Object newValue) {
+        if (oldValue != null && newValue != null && oldValue.equals(newValue)) {
+            return;
+        }
+        
+        pcs.firePropertyChange(propertyName, oldValue, newValue);
+    }
+    
+    /**
+     * Fire an existing PropertyChangeEvent.
+     * <p>
+     * If the event's {@code oldValue} is not equal to {@code newValue}, invoke
+     * the {@code propertyChange} method on all of the {@code 
+     * PropertyChangeListener}s added so fare, on the event dispatching thread.
+     * 
+     * @see #addPropertyChangeListener
+     * @see #removePropertyChangeListener
+     * @see java.beans.PropertyChangeSupport#firePropertyChange(PropertyChangeEvent e)
+     */
+    protected void firePropertyChange(PropertyChangeEvent evt) {
+        pcs.firePropertyChange(evt);
+    }
+    
+    private static class EDTPropertyChangeSupport extends PropertyChangeSupport {
+        EDTPropertyChangeSupport(Object source) {
+            super(source);
+        }
+        
+        public void firePrpertyChange(final PropertyChangeEvent evt) {
+            if (SwingUtilities.isEventDispatchThread()) {
+                super.firePropertyChange(evt);
+            } else {
+                Runnable doFirePropertyChange = () -> {
+                    firePropertyChange(evt);
+                };
+                
+                SwingUtilities.invokeLater(doFirePropertyChange);
+            }
+        }
+    }
+            
 }

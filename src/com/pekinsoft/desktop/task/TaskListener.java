@@ -28,7 +28,7 @@
  * 01/16/2021  Sean Carrick          Initial Creation.
  * *****************************************************************************
  */
-package com.pekinsoft.desktop.support;
+package com.pekinsoft.desktop.task;
 
 import com.pekinsoft.desktop.event.TaskEvent;
 import com.pekinsoft.desktop.task.Task;
