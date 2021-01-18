@@ -128,4 +128,63 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     private boolean userCanCancel = true;
     private boolean progressPropertyIsValid = false;
     private TaskService taskService = null;
+    
+    /**
+     * Specifies to what extent the GUI should be blocked when a Task is executed
+     * by a TaskService. Input blocking is carried out by the Task's {@link
+     * #getInputBlocker inputBlocker}.
+     * 
+     * @see Task.InputBlocker
+     * @see Action#block
+     */
+    public enum BlockingScope {
+        /**
+         * Don't block the GUI while this task is executing.
+         */
+        NONE,
+        /**
+         * Block an {@link ApplicationAction Action} while the task is executing,
+         * typically by temporarily  disabling it.
+         */
+        ACTION,
+        /**
+         * Block a component while the task is executing, typically by disabling
+         * it.
+         */
+        COMPONENT,
+        /**
+         * Block a top level window while the task is executing, typically by
+         * showing a window-modal dialog.
+         */
+        WINDOW,
+        /**
+         * Block all of the application's top level windows, typically by showing
+         * an application-modal dialog
+         */
+        APPLICATION
+    };
+    
+    private void initTask(ResourceMap resourcemap, String prefix) {
+        this.resourceMap = resourceMap;
+        
+        if ((prefix == null) || (prefix.length() == 0)) {
+            resourcePrefix = "";
+        } else if (prefix.endsWith(".")) {
+            resourcePrefix = prefix;
+        } else {
+            resourcePrefix = prefix + ".";
+        }
+        
+        if (resourceMap != null) {
+            title = resourceMap.getString(resourceName("title"));
+            description = resourceMap.getString(resourceName("description"));
+            message = resourceMap.getString(resourceName("message"));
+            
+            if (message != null) {
+                messageTime = System.currentTimeMillis();
+            }
+        }
+        addPropertyChangeListener(new StatePCL());
+        taskListeners = new CopyOnWriteArrayList<TaskListener<T, V>>();
+    }
 }

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * *****************************************************************************
- * Class Name: ResourceConverterException.java
+ * Class Name: ResourceCoverter.java
  *     Author: Sean Carrick <sean at pekinsoft dot com>
- *    Created: Jan 16 2021
+ *    Created: Jan 18 2021
  * 
  *    Purpose:
  * 
@@ -25,32 +25,15 @@
  * 
  * Date        By                   Reason
  * ----------  -------------------  --------------------------------------------
- * 01/16/2021  Sean Carrick          Initial Creation.
+ * 01/18/2021  Sean Carrick          Initial Creation.
  * *****************************************************************************
  */
-package com.pekinsoft.desktop.err;
+package com.pekinsoft.desktop.resources;
 
 /**
  *
  * @author Sean Carrick
  */
-public class ResourceConverterException extends Exception {
-
-    /**
-     * Creates a new instance of <code>ResourceConverterException</code> without
-     * detail message.
-     */
-    public ResourceConverterException() {
-        super();
-    }
-
-    /**
-     * Constructs an instance of <code>ResourceConverterException</code> with
-     * the specified detail message.
-     *
-     * @param msg the detail message.
-     */
-    public ResourceConverterException(String msg) {
-        super(msg);
-    }
+class ResourceCoverter {
+    
 }

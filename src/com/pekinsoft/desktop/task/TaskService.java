@@ -31,9 +31,9 @@
 package com.pekinsoft.desktop.task;
 
 import com.pekinsoft.desktop.beans.AbstractBean;
-import com.pekinsoft.desktop.task.Task;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.VetoableChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -138,7 +138,7 @@ public class AbstractBean {
      * @see java.beans.PropertyChangeSupport#firePropertyChange(String, Object,
      *          Object)
      */
-    protected void firePropertyChangeEvent(String propertyName, Object oldValue,
+    protected void firePropertyChange(String propertyName, Object oldValue,
             Object newValue) {
         if (oldValue != null && newValue != null && oldValue.equals(newValue)) {
             return;
