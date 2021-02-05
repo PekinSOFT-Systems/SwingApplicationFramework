@@ -28,8 +28,11 @@
  * 01/16/2021  Sean Carrick          Initial Adaptation.
  * *****************************************************************************
  */
-package com.pekinsoft.desktop.support;
+package com.pekinsoft.desktop.action;
 
+import com.pekinsoft.desktop.application.ApplicationActionMap;
+import com.pekinsoft.desktop.application.ApplicationContext;
+import com.pekinsoft.desktop.task.Task;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
