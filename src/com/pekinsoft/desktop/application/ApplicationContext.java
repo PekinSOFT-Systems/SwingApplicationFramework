@@ -31,9 +31,11 @@
 package com.pekinsoft.desktop.application;
 
 import com.pekinsoft.desktop.beans.AbstractBean;
+import com.pekinsoft.desktop.resources.ResourceMap;
 import com.pekinsoft.desktop.storage.LocalStorage;
 import com.pekinsoft.desktop.task.TaskService;
 import com.pekinsoft.desktop.utils.Logger;
+import com.pekinsoft.desktop.view.View;
 import java.util.List;
 import org.jdesktop.swingx.action.ActionManager;
 
@@ -66,5 +68,11 @@ public class ApplicationContext extends AbstractBean {
 
     public LocalStorage getLocalStorage() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ResourceMap getResourceMap(Class<? extends View> aClass, Class<View> aClass0) {
+    }
+
+    public ResourceMap getResourceMap() {
     }
 }

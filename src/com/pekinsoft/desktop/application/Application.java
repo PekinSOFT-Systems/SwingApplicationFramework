@@ -473,4 +473,7 @@ public abstract class Application extends AbstractBean {
         return props.getProperty("Application.comments");
     }
     //</editor-fold>
+
+    public ApplicationContext getContext() {
+    }
 }
