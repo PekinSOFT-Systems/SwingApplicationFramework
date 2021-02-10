@@ -52,7 +52,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import org.jdesktop.application.resources.ResourceMap;
 import org.jdesktop.application.utils.Logger;
 
 /**

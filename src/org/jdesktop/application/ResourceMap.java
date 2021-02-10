@@ -28,14 +28,13 @@
  * 01/17/2021  Sean Carrick          Initial Adaptation.
  * *****************************************************************************
  */
-package org.jdesktop.application.resources;
+package org.jdesktop.application;
 
-import org.jdesktop.application.utils.ResourceConverter;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.MnemonicText;
 import org.jdesktop.application.Resource;
 import org.jdesktop.application.utils.Logger;
-import org.jdesktop.application.utils.ResourceConverter.ResourceConverterException;
+import org.jdesktop.application.ResourceConverter.ResourceConverterException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;

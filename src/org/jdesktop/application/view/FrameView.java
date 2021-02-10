@@ -31,7 +31,7 @@
 package org.jdesktop.application.view;
 
 import org.jdesktop.application.Application;
-import org.jdesktop.application.resources.ResourceMap;
+import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.utils.Logger;
 import javax.swing.JFrame;
 import javax.swing.JRootPane;

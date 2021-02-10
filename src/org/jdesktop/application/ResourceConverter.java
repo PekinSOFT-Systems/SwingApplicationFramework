@@ -28,9 +28,9 @@
  * 01/17/2021  Sean Carrick          Initial Creation.
  * *****************************************************************************
  */
-package org.jdesktop.application.utils;
+package org.jdesktop.application;
 
-import org.jdesktop.application.resources.ResourceMap;
+import org.jdesktop.application.ResourceMap;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;

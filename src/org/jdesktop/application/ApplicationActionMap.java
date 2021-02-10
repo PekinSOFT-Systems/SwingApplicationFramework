@@ -33,7 +33,6 @@
 
 package org.jdesktop.application;
 
-import org.jdesktop.application.resources.ResourceMap;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;

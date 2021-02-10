@@ -30,7 +30,6 @@
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.resources.ResourceMap;
 import org.jdesktop.application.utils.Logger;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;

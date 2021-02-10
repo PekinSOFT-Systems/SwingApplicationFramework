@@ -32,7 +32,6 @@
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.resources.ResourceMap;
 import org.jdesktop.application.utils.Logger;
 import java.util.ArrayList;
 import java.util.Collection;

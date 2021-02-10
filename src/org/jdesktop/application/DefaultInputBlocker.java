@@ -59,7 +59,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.RootPaneContainer;
 import javax.swing.Timer;
-import org.jdesktop.application.resources.ResourceMap;
 import org.jdesktop.application.utils.Logger;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;

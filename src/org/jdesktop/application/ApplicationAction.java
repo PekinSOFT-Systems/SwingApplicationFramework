@@ -32,10 +32,6 @@
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.Application;
-import org.jdesktop.application.ApplicationActionMap;
-import org.jdesktop.application.ApplicationContext;
-import org.jdesktop.application.resources.ResourceMap;
 import org.jdesktop.application.utils.Logger;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;

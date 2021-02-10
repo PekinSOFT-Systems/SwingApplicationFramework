@@ -36,7 +36,6 @@ package org.jdesktop.application;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.enums.SysExits;
 import org.jdesktop.application.err.InvalidLoggingLevelException;
-import org.jdesktop.application.resources.ResourceMap;
 import org.jdesktop.application.utils.ArgumentParser;
 import org.jdesktop.application.utils.Logger;
 import org.jdesktop.application.utils.TerminalErrorPrinter;

@@ -30,8 +30,6 @@
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.ApplicationActionMap;
-import org.jdesktop.application.ApplicationContext;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

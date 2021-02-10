@@ -33,7 +33,6 @@
 
 package org.jdesktop.application;
 
-import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.utils.Logger;
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;

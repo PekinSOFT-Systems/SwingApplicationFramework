@@ -30,7 +30,6 @@
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.resources.ResourceMap;
 import java.awt.event.KeyEvent;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;

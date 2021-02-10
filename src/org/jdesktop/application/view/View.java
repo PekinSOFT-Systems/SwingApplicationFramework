@@ -33,7 +33,7 @@ package org.jdesktop.application.view;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.AbstractBean;
-import org.jdesktop.application.resources.ResourceMap;
+import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.utils.Logger;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
