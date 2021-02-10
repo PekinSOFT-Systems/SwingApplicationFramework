@@ -30,7 +30,6 @@
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.ResourceMap;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
