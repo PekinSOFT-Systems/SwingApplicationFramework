@@ -48,10 +48,10 @@ public class AbstractBean {
     
     /**
      * Add a PropertyChangeListener to the listener list. The listener is 
-     * registered for all properties and its {@code propertyChange} method will
+     * registered for all properties and its `propertyChange` method will
      * run on the event dispatching thread.
      * <p>
-     * If {@code listener} is {@code null}, no exception is thrown and no action
+     * If `listener` is `null`, no exception is thrown and no action
      * is taken.</p>
      * 
      * @param listener the PropertyChangeListener to be added
@@ -67,13 +67,12 @@ public class AbstractBean {
      * be invoked only when a call on firePropertyChange names that specific
      * property. The same listener object may be added more than once. For each
      * property, the listener will be invoked the number of times it was added
-     * for that property. If the {@code propertyName} or {@code listener} is
-     * {@code null}, no exception is thrown and no action is taken.
+     * for that property. If the `propertyName` or `listener` is
+     * `null`, no exception is thrown and no action is taken.
      * 
      * @param propertyName the name of the property to listen on
      * @param listener the PropertyChangeListener to be added
-     * @see java.beans.PropertyChangeListener#addPropertyChangeListener(String,
-     *          PropertyChangeListener)
+     * @see java.awt.Component#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener) 
      */
     public void addPropertyChangeListener(String propertyName, 
             PropertyChangeListener listener) {
@@ -83,30 +82,29 @@ public class AbstractBean {
     /**
      * Remove a PropertyChangeListener from the listener list.
      * <p>
-     * If {@code listener} is {@code null}, no exception is thrown and no action
+     * If `listener` is `null`, no exception is thrown and no action
      * is taken.</p>
      * 
      * @param listener the PropertyChangeListener to be removed
      * @see #addPropertyChangeListener
-     * @see java.beans.PropertyChangeListener#removePropertyChangeListener
+     * @see java.awt.Component#removePropertyChangeListener(java.beans.PropertyChangeListener) 
      */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
     }
     
     /**
-     * Remove a PropertyChangeListener for a specific property. If {@code 
-     * listener} was added more than once to the same event source for the 
+     * Remove a PropertyChangeListener for a specific property. If `listener`
+     * was added more than once to the same event source for the 
      * specified property, it will be notified one less time after being
-     * removed. If {@code propertyName} is {@code null}, no exception is thrown
-     * and no action is taken. If {@code listener} is {@code null}, or was
+     * removed. If `propertyName` is `null`, no exception is thrown
+     * and no action is taken. If `listener` is `null`, or was
      * never added for the specified property, no exception is thrown and no
      * action is taken.
      * 
      * @param propertyName the name of the property that was listened on
      * @param listener the  PropertyChangeListener to be removed
-     * @see java.beans.PropertyChangeListener#removePropertyChangeListener(
-     *          String, PropertyChangeListener)
+     * @see java.awt.Component#removePropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener) 
      */
     public synchronized void removePropertyChangeListener(String propertyName, 
             PropertyChangeListener listener) {
@@ -114,10 +112,10 @@ public class AbstractBean {
     }
     
     /**
-     * An array of all of the {@code PropertyChangeListener}s added so far.
+     * An array of all of the `PropertyChangeListener`s added so far.
      * 
-     * @return all of the {@code PropertyChangeListener}s added so far
-     * @see java.beans.PropertyChangeListener#getPropertyChangeListeners
+     * @return all of the `PropertyChangeListener`s added so far
+     * @see java.awt.Component#getPropertyChangeListeners() 
      */
     public PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
@@ -126,8 +124,8 @@ public class AbstractBean {
     /**
      * Called whenever the value of a bound property is set.
      * <p>
-     * If {@code oldValue} is not equal to {@code newValue}, invoke the {@code 
-     * prpertyChange} method on all of the {@code PropertyChangeListeners} added
+     * If `oldValue` is not equal to `newValue`, invoke the `propertyChange`
+     * method on all of the `PropertyChangeListener`s added
      * so far, on the event dispatching thread.
      * 
      * @param propertyName name of the bound property
@@ -150,10 +148,12 @@ public class AbstractBean {
     /**
      * Fire an existing PropertyChangeEvent.
      * <p>
-     * If the event's {@code oldValue} is not equal to {@code newValue}, invoke
-     * the {@code propertyChange} method on all of the {@code 
-     * PropertyChangeListener}s added so fare, on the event dispatching thread.
+     * If the event's `oldValue` is not equal to `newValue`, invoke
+     * the `propertyChange` method on all of the `PropertyChangeListener`s
+     * added so fare, on the event dispatching thread.</p>
      * 
+     * @param evt the `PropertyChangeEvent` which fired this property 
+     *          change.
      * @see #addPropertyChangeListener
      * @see #removePropertyChangeListener
      * @see java.beans.PropertyChangeSupport#firePropertyChange(PropertyChangeEvent e)

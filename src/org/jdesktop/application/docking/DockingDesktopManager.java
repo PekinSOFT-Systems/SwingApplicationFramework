@@ -58,8 +58,8 @@ import javax.swing.JLayeredPane;
  *
  * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  */
 public class DockingDesktopManager implements DesktopManager {
 
@@ -366,7 +366,7 @@ public class DockingDesktopManager implements DesktopManager {
     }
     
     /**
-     * Returns the direct child of a <tt>JDesktopPane</tt> that is
+     * Returns the direct child of a `JDesktopPane` that is
      * the parent of the specified component.
      * @param component
      * @return the specified component or one of its parents that is a direct child of a JDesktopPane.

@@ -47,7 +47,7 @@ import javax.crypto.spec.PBEKeySpec;
  *
  * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
+ * @version 1.05
  * @since 0.1.0
  */
 public class PasswordUtils {

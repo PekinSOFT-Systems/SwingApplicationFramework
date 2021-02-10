@@ -36,7 +36,7 @@
 
         <target name="-post-compile">
             <obfuscate>
-                <fileset dir="${build.classes.dir}"/>
+                <fileset dir="${build.classes.dir"/>
             </obfuscate>
         </target>
 
@@ -60,7 +60,7 @@
 
         <target name="run" depends="SwingApplicationFramework-impl.jar">
             <exec dir="bin" executable="launcher.exe">
-                <arg file="${dist.jar}"/>
+                <arg file="${dist.jar"/>
             </exec>
         </target>
 

@@ -40,38 +40,38 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A base class for converting arbitrary types to and from {@code String}s, as
+ * A base class for converting arbitrary types to and from `String`s, as
  * well as a registry of ResourceConverter implementations.
  * <p>
- * The {@code supportsType} method defines what types a ResourceConverter 
- * supports. By default it returns {@code true} for classes that are equal to 
- * the constructor's {@code type} argument. The {@code parseType} methods 
- * converts a string to the ResourceConverter's supported type, and the {@code 
- * toString} does the inverse: it converts a supported type to a {@code String}.
- * Concrete ResourceConverter subclasses must override {@code parseType()} and,
- * in most cases, the {@code toString()} method as well.</p>
+ * The `supportsType` method defines what types a ResourceConverter 
+ * supports. By default it returns `true` for classes that are equal to 
+ * the constructor's `type` argument. The `parseType` methods 
+ * converts a string to the ResourceConverter's supported type, and the `
+ * toString} does the inverse: it converts a supported type to a `String`.
+ * Concrete ResourceConverter subclasses must override `parseType()` and,
+ * in most cases, the `toString()` method as well.</p>
  * <p>
- * This class maintains a registry of ResourceConverters. The {@code forType}
+ * This class maintains a registry of ResourceConverters. The `forType`
  * method returns the first ResourceConverter that supports a particular type,
- * new ResourceConverters can be added with {@code register()}. A small set of
+ * new ResourceConverters can be added with `register()`. A small set of
  * generic ResourceConverters are registered by default. They support the 
  * following types:</p>
  * <ul>
- * <li><tt>Boolean</tt></li>
- * <li><tt>Integer</tt></li>
- * <li><tt>Float</tt></li>
- * <li><tt>Double</tt></li>
- * <li><tt>Long</tt></li>
- * <li><tt>Short</tt></li>
- * <li><tt>Byte</tt></li>
- * <li><tt>MessageType</tt></li>
- * <li><tt>URL</tt></li>
- * <li><tt>URI</tt></li>
+ * <li>`Boolean`</li>
+ * <li>`Integer`</li>
+ * <li>`Float`</li>
+ * <li>`Double`</li>
+ * <li>`Long`</li>
+ * <li>`Short`</li>
+ * <li>`Byte`</li>
+ * <li>`MessageType`</li>
+ * <li>`URL`</li>
+ * <li>`URI`</li>
  * </ul>
  * <p>
- * The Boolean ResourceConverter returns {@code true} for "true", "on", "yes";
- * {@code false} otherwise. The other primitive type ResourceConverters rely on
- * the corresponding {@code static parse<i>Type</i>} method, e.g., {@code 
+ * The Boolean ResourceConverter returns `true` for "true", "on", "yes";
+ * `false` otherwise. The other primitive type ResourceConverters rely on
+ * the corresponding `static parse<em>Type</em>` method, e.g., `
  * Integer.parseInt()}. The MessageFormat ResourceConverter just creates 
  * MessageFormat object with the string as its constructor argument. The URL/URI
  * converters just apply the corresponding constructor to the resource string.

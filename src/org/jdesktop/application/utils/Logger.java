@@ -49,7 +49,7 @@ import java.util.Date;
  *
  * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
  *
- * @version 0.1.0
+ * @version 1.05
  * @since 0.1.0
  */
 public class Logger {
@@ -305,8 +305,8 @@ public class Logger {
      * this extraneous information should aid the software designers,
      * programmers and engineers to be able to track down the error to a
      * specific cause, thereby allowing them to correct the application easier
-     * and quicker.</p>
-     *
+     * and quicker.
+     * 
      * @param ex The `Exception` that was thrown.
      * @param pkg The package in which the error happened.
      * @param cls The class in which the error happened.
@@ -315,8 +315,6 @@ public class Logger {
      * Corporate, or Enterprise).
      * @param version The string representation of the application version.
      * @param build The build of the running version.
-     * @param modules An array of {@code String}s of the installed modules
-     * names.
      */
     public void critical(Exception ex, String pkg, String cls, String method,
             String edition, String version, long build) {

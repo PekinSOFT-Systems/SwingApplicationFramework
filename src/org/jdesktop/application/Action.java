@@ -37,31 +37,31 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a method that will be used to define a Swing {@code Action} object's 
- * {@code actionPerformed} method. It also identifies the resources that will be
- * used to initialize the Action's properties. Additional {@code &#064;Action}
+ * Marks a method that will be used to define a Swing `Action` object's 
+ * `actionPerformed` method. It also identifies the resources that will be
+ * used to initialize the Action's properties. Additional `@Action`
  * parameters can be used to specify the name of the bound properties (from the
  * same class) that indicate if the Action is to be enabled/selected, and if the
  * GUI should be blocked while the Action's background {@link Task} is running.
  * <p>
- * The {@link ApplicationActionMap} class creates an {@code ActionMap} that 
- * contains one {@link ApplicationAction} for each &#064;Action found in a 
+ * The {@link ApplicationActionMap} class creates an `ActionMap` that 
+ * contains one {@link ApplicationAction} for each @Action found in a 
  * target or "actions" class. Typically applications will use {@link
  * ApplicationContext#getActionMap(Class, Object) getActionMap} to lazily
  * construct and cache ApplicationActionMaps, rather than constructing them
  * directly. By default the ApplicationActionMap's {@link ApplicationActionMap#get
- * key} for an &#064;Action is the name of the method. The {@code name} parameter
+ * key} for an @Action is the name of the method. The `name` parameter
  * can be used to specify a different key.</p>
  * <p>
- * The {@code ApplicationAction}'s properties are initialized with resources
+ * The `ApplicationAction`'s properties are initialized with resources
  * loaded from a ResourceBundle with the same name as the actions class. The
  * list of properties initialized this way is documented by the {@link 
  * ApplicationAction ApplicationsAction}'s constructor.</p>
  * <p>
- * The method marked with &#064;Action, can have no parameters, or a single
- * ActionEvent parameter. The method's return type can be {@code void} or
+ * The method marked with @Action, can have no parameters, or a single
+ * ActionEvent parameter. The method's return type can be `void` or
  * {@link Task}. If the return type is Task, the Task will be executed by the
- * ApplicationAction's {@code actionPerformed} method.</p>
+ * ApplicationAction's `actionPerformed` method.</p>
  * <p>
  * [TBD the block parameter, and the Parameter annotation]</p>
  * @see ApplicationAction

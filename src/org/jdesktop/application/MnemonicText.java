@@ -41,7 +41,7 @@ import javax.swing.JLabel;
  * instances of AbstractButton, JLabel, and javax.swing.Action. It is used like
  * this:
  * <pre>
- * MnemonicText.configure(myButton, "Save &As");
+ * MnemonicText.configure(myButton, "Save &amp;As");
  * </pre> The configure method unconditionally sets three properties on the
  * target object:
  * <ul>

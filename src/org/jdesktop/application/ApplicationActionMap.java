@@ -43,18 +43,18 @@ import javax.swing.ActionMap;
 
 /**
  * An {@link javax.swing.ActionMap} class where each entry corresponds to an 
- * <tt>&#064;Action</tt> method from a single <tt>actionsClass</tt> (i.e., a
- * class that contains one or more <tt>&#064;Action</tt>s). Each entry's key is
- * the <tt>&#064;Action</tt>'s {@link ApplicationAction} that calls the <tt>
- * &#064;Action<tt>s method. For example, the code below prints <tt>"Hello World"
- * </tt>:
+ * `@Action` method from a single `actionsClass` (i.e., a
+ * class that contains one or more `@Action`s). Each entry's key is
+ * the `@Action`'s {@link ApplicationAction` that calls the `
+ * @Action}s method. For example, the code below prints `"Hello World"
+ * }:
  * <pre>
  * public class HelloWorldActions {
- *     public &#064;Action void Hello() {
+ *     public @Action void Hello() {
  *         System.out.print("Hello "};
  *     }
  *     
- *     public &#064;Action void World() {
+ *     public @Action void World() {
  *         System.out.println("World");
  *     }
  * // ...
@@ -65,7 +65,7 @@ import javax.swing.ActionMap;
  * }
  * </pre>
  * <p>
- * If a <tt>ResourceMap</tt> is provided, then each <tt>ApplicationAction</tt>'s
+ * If a `ResourceMap` is provided, then each `ApplicationAction`'s
  * ({@link javax.swing.Action#putValue(java.lang.String, java.lang.Object) putValue},
  * {@link javax.swing.Action#getValue(java.lang.String) getValue}) properties
  * are initialized from the ResourceMap.</p>
@@ -79,8 +79,8 @@ import javax.swing.ActionMap;
  * @author Hans Muller (Original Author)
  * @author Sean Carrick (Adapting Author) &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  */
 public class ApplicationActionMap extends ActionMap {
     
@@ -136,15 +136,15 @@ public class ApplicationActionMap extends ActionMap {
     }
     
     /**
-     * All of the {@code @ProxyAction}s recursively defined by this {@code 
+     * All of the `@ProxyAction`s recursively defined by this `
      * ApplicationActionMap} and its parent ancestors.
      * <p>
-     * Returns a read-only list of the {@code @ProxyAction}s defined by this
-     * {@code ApplicationActionMap}'s {@code actionClass} and, recursively, by
-     * this {@code ApplicationActionMap}'s parent. If there are no proxyActions,
+     * Returns a read-only list of the `@ProxyAction`s defined by this
+     * `ApplicationActionMap`'s `actionClass` and, recursively, by
+     * this `ApplicationActionMap`'s parent. If there are no proxyActions,
      * an empty list is returned.</p>
      * 
-     * @return a list of all the proxyActions for this {@code ApplicationActionMap},
+     * @return a list of all the proxyActions for this `ApplicationActionMap`,
      *          or an empty list if none
      */
     public List<ApplicationAction> getProxyActions() {

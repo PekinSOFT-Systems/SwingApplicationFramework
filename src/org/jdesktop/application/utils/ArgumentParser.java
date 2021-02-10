@@ -78,7 +78,7 @@ import java.util.TreeSet;
  * 
  * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
+ * @version 1.05
  * @since 0.1.0
  */
 public class ArgumentParser {
@@ -156,7 +156,7 @@ public class ArgumentParser {
      * Checks to see if the given switch is present in the command line arguments.
      * 
      * @param switchName    The command line switch to check for.
-     * @return              {@code true} if the switch is present; {@code falcse}
+     * @return              `true` if the switch is present; `falcse`
      *                      otherwise.
      */
     public boolean isSwitchPresent(String switchName) {
@@ -201,10 +201,10 @@ public class ArgumentParser {
     }
     
     /**
-     * Retrieves the value for the given switch as a {@code java.lang.Long}.
+     * Retrieves the value for the given switch as a `java.lang.Long`.
      * 
      * @param switchName    The switch for which value is wanted.
-     * @return              {@code java.lang.Long} value of the switch value.
+     * @return              `java.lang.Long` value of the switch value.
      * @throws NumberFormatException if the string does not 
      *                      contain a parsable long.
      */
@@ -213,13 +213,13 @@ public class ArgumentParser {
     }
     
     /**
-     * Retrieves the value for the given switch as a {@code java.lang.Long}, or
+     * Retrieves the value for the given switch as a `java.lang.Long`, or
      * the provided default value if the given switch is not found.
      * 
      * @param switchName    The switch for which value is wanted.
      * @param defaultValue  A default value in the event the switch is not
      *                      present.
-     * @return              {@code java.lang.Long} value, if the switch is 
+     * @return              `java.lang.Long` value, if the switch is 
      *                      present; the supplied default value if the switch is
      *                      not found.
      * @throws NumberFormatException if the string does not 
@@ -236,10 +236,10 @@ public class ArgumentParser {
     }
     
     /**
-     * Retrieves the value for the given switch as a {@code java.lang.Double}.
+     * Retrieves the value for the given switch as a `java.lang.Double`.
      * 
      * @param switchName    The switch for which value is wanted.
-     * @return              {@code java.lang.Double} value of the switch value.
+     * @return              `java.lang.Double` value of the switch value.
      * @throws NumberFormatException if the string does not 
      *                      contain a parsable double.
      */
@@ -248,13 +248,13 @@ public class ArgumentParser {
     }
     
     /**
-     * Retrieves the value for the given switch as a {@code java.lang.Double}, 
+     * Retrieves the value for the given switch as a `java.lang.Double`, 
      * or the provided default value if the given switch is not found.
      * 
      * @param switchName    The switch for which value is wanted.
      * @param defaultValue  A default value in the event the switch is not
      *                      present.
-     * @return              {@code java.lang.Double} value, if the switch is 
+     * @return              `java.lang.Double` value, if the switch is 
      *                      present; the supplied default value if the switch is
      *                      not found.
      * @throws NumberFormatException if the string does not 
@@ -271,11 +271,11 @@ public class ArgumentParser {
     }
     
     /**
-     * Retrieves an array of {@code java.lang.String} values for the given 
+     * Retrieves an array of `java.lang.String` values for the given 
      * switch.
      * 
      * @param switchName    The switch for which values are wanted.
-     * @return              An array of {@code java.lang.String}s containing all
+     * @return              An array of `java.lang.String`s containing all
      *                      of the values associated with the given switch. If
      *                      the switch is not found, an array of length zero (0)
      *                      will be returned.
@@ -306,7 +306,7 @@ public class ArgumentParser {
      * 
      * @param clazz The class to which the switch and values should be placed
      *              into.
-     * @return      {@code java.lang.Object} of the switch and its values.
+     * @return      `java.lang.Object` of the switch and its values.
      * @throws RuntimeException in the event the POJO cannot be
      *              created.
      */
@@ -384,7 +384,7 @@ public class ArgumentParser {
     }
     
     /**
-     * Retrieves all targets as an array of {@code java.lang.String}s. The 
+     * Retrieves all targets as an array of `java.lang.String`s. The 
      * targets that are returned are values that had no switch associated with
      * them.
      * 

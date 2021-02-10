@@ -66,19 +66,19 @@ import org.jdesktop.application.view.View;
  * WindowListener that calls exit() when the window is closed. Session state is
  * stored when the application shuts down, and restored when the GUI is shown.</p>
  * <p>
- * To use {@code SingleFrameApplication}, one need only override {@code startup},
- * create the GUI's main panel, and apply {@code show} to that. Here is an 
+ * To use `SingleFrameApplication`, one need only override `startup`,
+ * create the GUI's main panel, and apply `show` to that. Here is an 
  * example:</p>
  * <pre>
  * Class MyApplication extends SingleFrameApplication {
- *     &#064;Override
+ *     @Override
  *     protected void startup() {
  *         show(new JLabel("Hello World"));
  *     }
  * }
  * </pre>
  * <p>
- * The call to {@code show} in this example creates a JFrame (named "mainFrame"),
+ * The call to `show` in this example creates a JFrame (named "mainFrame"),
  * that contains the "Hello World" JLabel. Before the frame is made visible, the
  * properties of all of the components in the hierarchy are initialized with
  * {@link ResourceMap#injectComponents ResourceMap.injectComponents} and then
@@ -91,7 +91,7 @@ import org.jdesktop.application.view.View;
  * initializes the properties of named components, so:</p>
  * <pre>
  * class MyApplication extends SingleFrameApplication {
- *     &#064;Override protected void startup() {
+ *     @Override protected void startup() {
  *         JLabel label = new JLabel();
  *         label.setName("label");
  *         show(label);
@@ -101,7 +101,7 @@ import org.jdesktop.application.view.View;
  * <p>
  * The ResourceBundle should contain definitions for all of the standard 
  * Application resources, as well as the main frame's title and the label's text.
- * Note that the JFrame that is implicitly created by the {@code show} method is
+ * Note that the JFrame that is implicitly created by the `show` method is
  * named "mainFrame".</p>
  * <pre>
  * # resources/MyApplication.properties
@@ -114,15 +114,15 @@ import org.jdesktop.application.view.View;
  * Application.description = An example of SingleFrameApplication
  * Application.lookAndFeel = system
  * 
- * mainFrame.title = ${Application.title} &{Application.version}
+ * mainFrame.title = @{Application.title} @{Application.version}
  * label.text = Hello World
  * </pre>
  *
  * @author Hans Muller (Original Author)
  * @author Sean Carrick (Adapting Author) &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  */
 public class SingleFrameApplication extends Application {
     // Public Static Constants
@@ -137,8 +137,8 @@ public class SingleFrameApplication extends Application {
      * Return the JFrame used to show this application.
      * <p>
      * The frame's name is set to "mainFrame", its title is initialized with the
-     * value of the {@code Application.title} resource and a {@WindowListener} 
-     * is added that calls {@code exit} when the user attempts to close the
+     * value of the `Application.title` resource and a `WindowListener` 
+     * is added that calls `exit` when the user attempts to close the
      * frame.</p>
      * <p>
      * This method may be called at any time; the JFrame is created lazily and
@@ -173,12 +173,12 @@ public class SingleFrameApplication extends Application {
      * <p>
      * This method should be called from the startup method by a subclass that
      * wants to construct and initialize the main frame itself. Most applications
-     * can rely on the fact that {@code getMainFrame} lazily constructs the main
-     * frame and initializes the {@code mainFrame} property.</p>
+     * can rely on the fact that `getMainFrame` lazily constructs the main
+     * frame and initializes the `mainFrame` property.</p>
      * <p>
      * If the main frame property was already initialized, either implicitly
-     * through a call to {@code getMainFrame()} or by explicitly calling this
-     * method, an IllegalStateException is thrown. If {@code mainFrame} is null,
+     * through a call to `getMainFrame()` or by explicitly calling this
+     * method, an IllegalStateException is thrown. If `mainFrame` is null,
      * an IllegalArgumentException is thrown.</p>
      * <p>
      * This property is bound.</p>
@@ -203,7 +203,7 @@ public class SingleFrameApplication extends Application {
     /**
      * Initialize the hierarchy with the specified root by injecting resources.
      * <p>
-     * By default the {@code show} methods {@link ResourceMap#injectComponents(java.awt.Component) 
+     * By default the `show` methods {@link ResourceMap#injectComponents(java.awt.Component) 
      * inject resources} before initializing the JFrame or JDialog's size, 
      * location, and restoring the window's session state. If the app is showing
      * a window whose resources have already been injected, or that should not
@@ -296,7 +296,7 @@ public class SingleFrameApplication extends Application {
     /**
      * Show the specified component in the {@link #getMainFrame() main frame}.
      * Typical applications will call this method after constructing their main
-     * GUI panel in the {@code startup} method.
+     * GUI panel in the `startup` method.
      * <p>
      * Before the main frame is made visible, the properties of all of the 
      * components in the hierarchy are initialized with {@link 
@@ -311,7 +311,7 @@ public class SingleFrameApplication extends Application {
      * saved for top level windows with a valid name and then only for component
      * descendants that are named.</p>
      * <p>
-     * Throws an IllegalArgumentException if {@code c} is null.</p>
+     * Throws an IllegalArgumentException if `c` is null.</p>
      * 
      * @param c the main frame's contentPane child
      */
@@ -330,13 +330,13 @@ public class SingleFrameApplication extends Application {
      * Initialize and show the  JDialog.
      * <p>
      * This method is inteded for showing "secondary" windows, like message
-     * dialogs, about boxes, and so on. Unlike the {@code mainFrame}, dismissing
+     * dialogs, about boxes, and so on. Unlike the `mainFrame`, dismissing
      * a secondary window will not exit the applicaiton.</p>
      * <p>
      * Session state is only automatically saved if the specified JDialog has a
      * name, and then only for component descendants that are named.</p>
      * <p>
-     * Throws and IllegalArgumentException if {@code c} is null.</p>
+     * Throws and IllegalArgumentException if `c` is null.</p>
      * 
      * @param c the JDialog to be displayed
      * 
@@ -357,13 +357,13 @@ public class SingleFrameApplication extends Application {
      * Initialize and show the secondary JFrame.
      * <p>
      * This method is intended for showing "secondary" windows, like child 
-     * windows, etc. Unlike the {@code mainFrame}, dismissing a secondary window
+     * windows, etc. Unlike the `mainFrame`, dismissing a secondary window
      * will not exit the application.</p>
      * <p>
      * Session state is only automatically saved if the specified JFrame has a 
      * name, and then only for component descendants that are named.</p>
      * <p>
-     * Throws an IllegalArgumentException if {@code c} is null.</p>
+     * Throws an IllegalArgumentException if `c` is null.</p>
      * 
      * @param c the JFrame to be displayed
      * 
@@ -455,7 +455,7 @@ public class SingleFrameApplication extends Application {
     /**
      * Save session state for the component hierarchy rooted by the mainFrame.
      * SingleFrameApplicaiton subclasses that override shutdown need to remember
-     * to call {@code super.shutdown()}.
+     * to call `super.shutdown()`.
      */
     @Override
     protected void shutdown() {

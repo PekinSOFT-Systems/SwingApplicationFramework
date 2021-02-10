@@ -55,7 +55,7 @@ public class FrameView extends View {
      * This method may be called at any time; the JFrame is created lazily and 
      * cached. For example:</p>
      * <pre>
-     * &#064;Override protected void startup() {
+     * @Override protected void startup() {
      *     getFrame().setJMenuBar(createMenuBar());
      *     show(createMainPanel());
      * }
@@ -79,12 +79,12 @@ public class FrameView extends View {
      * <p>
      * This method should be called from the startup method by a subclass that
      * wants to construct and initialize the main frame itself. Most applications
-     * can rely on the fact that {@code getFrame} lazily constructs the main 
-     * frame and initialize the {@code frame} property.</p>
+     * can rely on the fact that `getFrame` lazily constructs the main 
+     * frame and initialize the `frame` property.</p>
      * <p>
      * If the main frame property was already initialized, either implicitly 
-     * through a call to {@code getFrame} or by explicitly calling this method,
-     * an IllegalStateException is thrown. If {@code frame} is null, an
+     * through a call to `getFrame` or by explicitly calling this method,
+     * an IllegalStateException is thrown. If `frame` is null, an
      * IllegalArguemntException is thrown.</p>
      * <p>
      * This property is bound.</p>

@@ -64,14 +64,14 @@ import javax.swing.text.JTextComponent;
  * The new cut/copy/paste/delete are installed lazily, when a JTextComponent gets
  * the focus, and before any other focus-change related work is done.
  * 
- * @see updateFocusOwner()
+ * @see #updateFocusOwner(javax.swing.JComponent, javax.swing.JComponent) 
  * 
  * @author Hans Muller (Original Author)
  * @author Scott Violet (Original Author)
  * @author Sean Carrick (Adapting Author) &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  */
 public class TextAction extends AbstractBean {
     

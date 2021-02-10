@@ -44,26 +44,26 @@ import javax.swing.SwingWorker.StateValue;
 /**
  * This class is intended to serve as the model for GUI components, like status
  * bars, that display the state of an application's background tasks.
- * {@code TaskMonitor} provides an overview of all the ApplicationContexts'
- * Tasks, as well as the state of a single {@code foreground} Task.
+ * `TaskMonitor` provides an overview of all the ApplicationContexts'
+ * Tasks, as well as the state of a single `foreground` Task.
  * <p>
  * The value of {@link #getTasks() getTasks()} is a list of all of the
- * {@code Task}s whose state is not {@link Task#isDone() DONE} for all of the
- * ApplicationContext's {@code TaskService}s. In other words: all of the
+ * `Task`s whose state is not {@link Task#isDone() DONE` for all of the
+ * ApplicationContext's `TaskService`s. In other words: all of the
  * ApplicationContext's background tasks that have not finished executing. Each
  * time a new TaskService Task is executed, it is added to the list; when the
  * Task finishes it is removed. Each time the list changes
- * {@code PropertyChangeListener}s are fired. Applications that wish to create a
- * detailed visualization of all Tasks should monitor the TaskMonitor {@code
- * "tasks"} property.</p>
+ * `PropertyChangeListener`s are fired. Applications that wish to create a
+ * detailed visualization of all Tasks should monitor the TaskMonitor "`tasks`"
+ * property.</p>
  * <p>
- * Users are often only interested in the status of a single <i>foreground</i>
+ * Users are often only interested in the status of a single <em>foreground</em>
  * task, typically the one associated with the GUI element they are working
  * with, or with the most recent command they have issued. The TaskMonitor's
  * PropertyChangeListener is notified each time a property of the
  * {@link #setForegroundTask foregourndTask} changes. Additionally the
  * TaskMonitor fires synthetic PropertyChangeEvents for properties named
- * "pending", "started", and "done" when the corresponding Task {@code state}
+ * "pending", "started", and "done" when the corresponding Task `state`
  * property changes occur.</p>
  * <p>
  * TaskMonitor manages a queue of new Tasks. The foregroundTask is automatically
@@ -82,8 +82,8 @@ import javax.swing.SwingWorker.StateValue;
  * @author Hans Muller (Original Author)
  * @author Sean Carrick (Adapting Author) &lt;sean at pekinsoft dot com&gt;
  *
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  *
  * @see ApplicationContext#getTaskServices()
  * @see TaskService#getTasks()
@@ -119,10 +119,10 @@ class TaskMonitor extends AbstractBean {
 
     /**
      * The TaskMonitor's PropertyChangeListeners are fired each time any
-     * property of the {@code foregroundTask} changes. By default this property
+     * property of the `foregroundTask` changes. By default this property
      * is set to the first Task to be executed and then, when that Task
      * finishes, reset to the next most recently executed Task. If the
-     * {@code autoUpdateForegroundTask} is false, then the foregroundTask
+     * `autoUpdateForegroundTask` is false, then the foregroundTask
      * property is not reset automatically.
      *
      * @param foregroundTask the task whose properties are reflected by this
@@ -147,7 +147,7 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * Indicates the {@code Task} whose status the ApplicationContext's GUI
+     * Indicates the `Task` whose status the ApplicationContext's GUI
      * wants to be displayed, typically in the main window's status bar.
      *
      * @return the value of the foregroundTask property
@@ -158,7 +158,7 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * True if the {@code foregroundTask} property should be automatically reset
+     * True if the `foregroundTask` property should be automatically reset
      * to the oldest Task in the queue when it finishes running.
      * <p>
      * This property is true by default.</p>
@@ -173,7 +173,7 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * True if the {@code foregroundTask} property should be automatically reset
+     * True if the `foregroundTask` property should be automatically reset
      * to the oldest Task in the queue when it finishes running. An application
      * that wants explicit control over the Task being monitored can set this
      * property to false.
@@ -202,14 +202,14 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * All of the Application Tasks whose {@code state} is <strong>not</strong>
-     * {@code DONE}.
+     * All of the Application Tasks whose `state` is <strong>not</strong>
+     * `DONE`.
      * <p>
      * Each time the list of Tasks changes, a PropertyChangeEvent for the
      * property named "tasks" is fired. Applications that want to monitor all
      * background Tasks should monitor the tasks property.</p>
      *
-     * @return a list of all Tasks that are not {@code DONE}
+     * @return a list of all Tasks that are not `DONE`
      */
     public List<Task> getTasks() {
         return copyTaskQueue();

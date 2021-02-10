@@ -39,8 +39,8 @@ import java.awt.Component;
  *
  * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  */
 public class DockConstraints {
 

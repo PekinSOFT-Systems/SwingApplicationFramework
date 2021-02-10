@@ -47,7 +47,7 @@ package org.jdesktop.application.enums;
  * added as needed by PekinSOFT Systems software, if the error is not 
  * otherwise covered by the standard error codes that are already in sysexits.h.
  * <p>
- * PekinSOFT Systems is reusing these constants, directly from the {@code 
+ * PekinSOFT Systems is reusing these constants, directly from the `
  * sysexits.h} file, in compliance with the Berkeley License:</p>
  * <pre>
  * Copyright (c) 1987, 1993
@@ -84,11 +84,11 @@ package org.jdesktop.application.enums;
  *	&#0041;(#)sysexits.h	8.1 (Berkeley) 6/2/93
  * </pre>
  *
- * @author Original {@code sysexits.h} Authors (unlisted)
+ * @author Original `sysexits.h` Authors (unlisted)
  * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
  *
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  */
 public enum SysExits {
     /**

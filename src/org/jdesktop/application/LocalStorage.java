@@ -63,8 +63,8 @@ import org.jdesktop.application.utils.Logger;
  * @author Hans Muller (Original Author)
  * @author Sean Carrick (Adapting Author) &lt;sean at pekinsoft dot com&gt;
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.05
+ * @since 1.03
  */
 public class LocalStorage extends AbstractBean {
     private static Logger logger = Logger.getLogger(LocalStorage.class.getName());
@@ -426,7 +426,7 @@ public class LocalStorage extends AbstractBean {
     /**
      * This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns {@code null} if called.
+     * now simply returns `null` if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -509,7 +509,7 @@ public class LocalStorage extends AbstractBean {
     /**
      * This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns {@code null} if called.
+     * now simply returns `null` if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -548,7 +548,7 @@ public class LocalStorage extends AbstractBean {
     /**
      *This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns {@code null} if called.
+     * now simply returns `null` if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -565,7 +565,7 @@ public class LocalStorage extends AbstractBean {
     /**
      *This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns {@code null} if called.
+     * now simply returns `null` if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -582,7 +582,7 @@ public class LocalStorage extends AbstractBean {
     /**
      *This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns {@code null} if called.
+     * now simply returns `null` if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
