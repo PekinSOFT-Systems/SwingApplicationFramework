@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 /**
- * `ArgumentParser` is a library for parsing command line arguments in an 
+ * <tt>ArgumentParser</tt> is a library for parsing command line arguments in an 
  * easy, intelligible and efficient manner. This parser breaks down the 
  * difference between switches and targets. Switches are typically single letter
  * options that are prefixed with a single dash (-) or, word or multi-word 
@@ -51,8 +51,8 @@ import java.util.TreeSet;
  * to the switches.
  * 
  * For example, if your program requires a flag for debugging, you would 
- * provide a single `boolean` switch that takes no parameters, such as
- * `-d` or `--debug`. Your program would then simply check if that
+ * provide a single <tt>boolean</tt> switch that takes no parameters, such as
+ * <tt>-d</tt> or `--debug`. Your program would then simply check if that
  * switch was present, which would equate to `debugging = true`, or not,
  * which would equate to `debugging = false`.
  * 
@@ -60,8 +60,8 @@ import java.util.TreeSet;
  * debugging flag is present, you may want to set a debugging level for verbosity
  * of output. In that use case, your program could check for the existence of 
  * the debugging flag (above) and, if it exists, check for the debugging level,
- * which could be `--debugging-level 2` for a medium verbosity output. In
- * this instance, the switch is `--debugging-level` and the target is 2.
+ * which could be <tt>--debugging-level 2</tt> for a medium verbosity output. In
+ * this instance, the switch is <tt>--debugging-level</tt> and the target is 2.
  * 
  * This works for any type of switch and target. You can even have targets
  * with no switches or multiple targets for each switch. If you need targets 
@@ -100,7 +100,7 @@ public class ArgumentParser {
 
     //<editor-fold defaultstate="collapsed" desc="Constructor(s)">
     /**
-     * Creates an instance of the `ArgumentParser` class to parse command
+     * Creates an instance of the <tt>ArgumentParser</tt> class to parse command
      * line arguments into something useful.
      * 
      * @param args The command line argument passed into the implementing program.
@@ -156,7 +156,7 @@ public class ArgumentParser {
      * Checks to see if the given switch is present in the command line arguments.
      * 
      * @param switchName    The command line switch to check for.
-     * @return              `true` if the switch is present; `falcse`
+     * @return              <tt>true</tt> if the switch is present; `falcse`
      *                      otherwise.
      */
     public boolean isSwitchPresent(String switchName) {
@@ -204,7 +204,7 @@ public class ArgumentParser {
      * Retrieves the value for the given switch as a `java.lang.Long`.
      * 
      * @param switchName    The switch for which value is wanted.
-     * @return              `java.lang.Long` value of the switch value.
+     * @return              <tt>java.lang.Long</tt> value of the switch value.
      * @throws NumberFormatException if the string does not 
      *                      contain a parsable long.
      */
@@ -219,7 +219,7 @@ public class ArgumentParser {
      * @param switchName    The switch for which value is wanted.
      * @param defaultValue  A default value in the event the switch is not
      *                      present.
-     * @return              `java.lang.Long` value, if the switch is 
+     * @return              <tt>java.lang.Long</tt> value, if the switch is 
      *                      present; the supplied default value if the switch is
      *                      not found.
      * @throws NumberFormatException if the string does not 
@@ -239,7 +239,7 @@ public class ArgumentParser {
      * Retrieves the value for the given switch as a `java.lang.Double`.
      * 
      * @param switchName    The switch for which value is wanted.
-     * @return              `java.lang.Double` value of the switch value.
+     * @return              <tt>java.lang.Double</tt> value of the switch value.
      * @throws NumberFormatException if the string does not 
      *                      contain a parsable double.
      */
@@ -254,7 +254,7 @@ public class ArgumentParser {
      * @param switchName    The switch for which value is wanted.
      * @param defaultValue  A default value in the event the switch is not
      *                      present.
-     * @return              `java.lang.Double` value, if the switch is 
+     * @return              <tt>java.lang.Double</tt> value, if the switch is 
      *                      present; the supplied default value if the switch is
      *                      not found.
      * @throws NumberFormatException if the string does not 
@@ -271,7 +271,7 @@ public class ArgumentParser {
     }
     
     /**
-     * Retrieves an array of `java.lang.String` values for the given 
+     * Retrieves an array of <tt>java.lang.String</tt> values for the given 
      * switch.
      * 
      * @param switchName    The switch for which values are wanted.
@@ -306,7 +306,7 @@ public class ArgumentParser {
      * 
      * @param clazz The class to which the switch and values should be placed
      *              into.
-     * @return      `java.lang.Object` of the switch and its values.
+     * @return      <tt>java.lang.Object</tt> of the switch and its values.
      * @throws RuntimeException in the event the POJO cannot be
      *              created.
      */

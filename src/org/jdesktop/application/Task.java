@@ -44,23 +44,23 @@ import javax.swing.SwingWorker;
  * A type of {@link SwingWorker} that represents an application background task.
  * Tasks add descriptive properties that can be shown to the user, a new set of
  * methods for customizing task completion, support for blocking input to the
- * GUI while the Task is executing, and a `TaskListener` that enables one
+ * GUI while the Task is executing, and a <tt>TaskListener</tt> that enables one
  * to monitor the three key SwingWorker methods: `doInBackground`, `process`, 
  * and `done`.
  * <p>
- * When a Task completes, the `final done` method invokes one of `succeeded`, 
- * `cancelled`, `interrupted`, or `failed`. The `final done` method invokes 
- * `finished` when the completion method returns or throws an exception.</p>
+ * When a Task completes, the <tt>final done</tt> method invokes one of `succeeded`, 
+ * <tt>cancelled`, `interrupted`, or `failed`. The `final done</tt> method invokes 
+ * <tt>finished</tt> when the completion method returns or throws an exception.</p>
  * <p>
  * Tasks should provide localized values for the `title`, `description`, and 
- * `message` properties in a `ResourceBundle` for the Task subclass. A 
+ * <tt>message` properties in a `ResourceBundle</tt> for the Task subclass. A 
  * {@link ResourceMap} is loaded automatically using the
- * Task subclass as the `startClass` and Task.class the `stopClass`.
+ * Task subclass as the <tt>startClass</tt> and Task.class the `stopClass`.
  * This ResourceMap is also used to look up format strings used in calls to
  * {@link #message message}, which is used to set the `message`
  * property.</p>
  * <p>
- * For example: give a Task called `MyTask` defined like this:
+ * For example: give a Task called <tt>MyTask</tt> defined like this:
  * 
  * ```java
  * class MyTask extends Task&lt;MyResultType, Void&gt; {
@@ -85,12 +85,12 @@ import javax.swing.SwingWorker;
  * </pre>
  * <p>
  * Tasks can specify that input to the GUI is to be blocked while they're
- * being executed. The `inputBlocker` property specifies what part of the
- * GUI is to be blocked and how that's accomplished. The `inputBlocker` is
- * set automatically when an `@Action` method that returns a Task
- * specifies a {@link BlockingScope} value for the `block` annotation
+ * being executed. The <tt>inputBlocker</tt> property specifies what part of the
+ * GUI is to be blocked and how that's accomplished. The <tt>inputBlocker</tt> is
+ * set automatically when an <tt>@Action</tt> method that returns a Task
+ * specifies a {@link BlockingScope} value for the <tt>block</tt> annotation
  * parameter. To customize the way blocking is implemented you can define your
- * own `Task.InputBlocker`. For example, assume that `busyGlassPane` is a
+ * own <tt>Task.InputBlocker`. For example, assume that `busyGlassPane</tt> is a
  * component that consumes (and ignores) keyboard and mouse input:
  * 
  * ```java
@@ -113,7 +113,7 @@ import javax.swing.SwingWorker;
  * <p>
  * All of the settable properties in this class are bound, i.e., a
  * PropertyChangeEvent is fired when the value of the property changes. As with
- * the `SwingWorker` superclass, all `PropertyChangeListener`s run
+ * the <tt>SwingWorker</tt> superclass, all `PropertyChangeListener`s run
  * on the event dispatching thread. This is also true of `TaskListener`s.
  *
  * @author Hans Muller (Original Author)
@@ -174,7 +174,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     };
 
     /**
-     * Construct a `Task` with an empty (`""`) resource name
+     * Construct a <tt>Task</tt> with an empty (`""`) resource name
      * prefix, whose ResourceMap is the value of 
      * `ApplicationContext.getInstance().getResourceMap(this.getClass(), 
      * Task.class)`.
@@ -250,7 +250,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Returns the `ResourceMap` used by the constructor to initialize the
+     * Returns the <tt>ResourceMap</tt> used by the constructor to initialize the
      * `title`, `message`, etc., properties, and by the
      * {@link #message message} method to look up format strings.
      *
@@ -263,15 +263,15 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Return the value of the `title` property. The default value of this
+     * Return the value of the <tt>title</tt> property. The default value of this
      * property is the value of the {@link #getResourceMap() resourceMap}'s
-     * `title` resource.
+     * <tt>title</tt> resource.
      * <p>
      * Returns a brief one-line description of this Task that would be useful
      * for describing this task to the user. The default value of this property
      * is null.</p>
      *
-     * @return the value of the `title` property
+     * @return the value of the <tt>title</tt> property
      *
      * @see #setTitle
      * @see #setDescription
@@ -294,14 +294,14 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Return the value of the `description` property. The default value
+     * Return the value of the <tt>description</tt> property. The default value
      * of this property is the value of the
-     * {@link #getResourceMap() resourceMap's} `description` resource.
+     * {@link #getResourceMap() resourceMap's} <tt>description</tt> resource.
      * <p>
      * A longer version of the Task's title; a few sentences that describe what
      * the Task is for in terms that an application user would understand.</p>
      *
-     * @return the value of the `description` property
+     * @return the value of the <tt>description</tt> property
      *
      * @see #setDescription(java.lang.String)
      * @see #setTitle(java.lang.String)
@@ -312,9 +312,9 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Set the `description` property. The default value of this property
+     * Set the <tt>description</tt> property. The default value of this property
      * is the value of the {@link #getResourceMap() resourceMap's}
-     * `description` resource.
+     * <tt>description</tt> resource.
      * <p>
      * The description is a longer version of the Task's title. It should be a
      * few sentences that describe what the Task is for, in terms that an
@@ -372,9 +372,9 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Return the value of the `message` property. The default value of
+     * Return the value of the <tt>message</tt> property. The default value of
      * this property is the value of the {@link #getResourceMap() resourceMap's}
-     * `message` resource.
+     * <tt>message</tt> resource.
      * <p>
      * Returns a short, one-line, message that explains what the task is up to
      * in terms appropriate for an application user.</p>
@@ -389,7 +389,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Set the `message` property. The default value of this property is
+     * Set the <tt>message</tt> property. The default value of this property is
      * the value of the {@link #getResourceMap() resourceMap's} `message`
      * resource.
      * <p>
@@ -400,7 +400,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * information in the Task's title and should not convey any information
      * that the user should not ignore.</p>
      * <p>
-     * For example, a Task whose `doInBackground` method loaded a photo
+     * For example, a Task whose <tt>doInBackground</tt> method loaded a photo
      * from a web service might set this property to a new value each time a new
      * internal milestone was reached, e.g.:</p>
      * 
@@ -441,7 +441,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
 
     /**
      * Set the message property to a string generated with `String.format`
-     * and the specified arguments. The `formatResourceKey` names a
+     * and the specified arguments. The <tt>formatResourceKey</tt> names a
      * resource whose value is a format string. See the Task Class javadoc for
      * an example.
      * <p>
@@ -451,8 +451,8 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * setMessage(getResourceMap().getString(resourceName(formatResourceKey)));
      * </pre>
      * <p>
-     * If a `ResourceMap` was not specified for this Task, then set the
-     * `message` property to `formatResourceKey`.</p>
+     * If a <tt>ResourceMap</tt> was not specified for this Task, then set the
+     * <tt>message</tt> property to `formatResourceKey`.</p>
      *
      * @param formatResourceKey the suffix of the format string's resource name
      * @param args the arguments referred to by the placeholders in the format
@@ -477,7 +477,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * property was last set.
      *
      * @param unit units for the return value
-     * @return elapsed time since the `message` property was last set
+     * @return elapsed time since the <tt>message</tt> property was last set
      *
      * @see #setMessage(java.lang.String)
      */
@@ -494,7 +494,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Returns the value of the `userCanCancel` property. The default
+     * Returns the value of the <tt>userCanCancel</tt> property. The default
      * value of this property is true.
      * <p>
      * Generic GUI components, like a Task progress dialog, can use this
@@ -510,7 +510,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Sets the `userCanCancel` property. The default value of this
+     * Sets the <tt>userCanCancel</tt> property. The default value of this
      * property is true.
      * <p>
      * Generic GUI components, like a Task progress dialog, can use this
@@ -545,10 +545,10 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * completed. GUI elements that display Task progress, like an application
      * status bar, can use this property to set the {@link 
      * javax.swing.JProgressBar#indeterminate
-     * indeterminate} `JProgressBar` property.
+     * indeterminate} <tt>JProgressBar</tt> property.
      * <p>
      * A task that does keep the progress property up to date should initialize
-     * it to 0, to ensure that `isProgressPropertyValid` is always
+     * it to 0, to ensure that <tt>isProgressPropertyValid</tt> is always
      * true.</p>
      *
      * @return true if the {@link #setProgress(int) progress} property has been
@@ -561,7 +561,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * A convenience method that sets the `progress` property to the
+     * A convenience method that sets the <tt>progress</tt> property to the
      * following ratio normalized to 0 &hellip; 100.
      * <pre>
      * value - min / max - min
@@ -586,7 +586,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Convenience method tat sets the `progress` property to
+     * Convenience method tat sets the <tt>progress</tt> property to
      * `percentage * 100`.
      *
      * @param percentage a value in the range 0.0&hellip;1.0, inclusive
@@ -601,7 +601,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * A convenience method that sets the `progress` property to the
+     * A convenience method that sets the <tt>progress</tt> property to the
      * following ratio normalized to 0&hellip;100.
      * <pre>
      * value - min / max - min
@@ -628,12 +628,12 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     /**
      * Equivalent to `getState() == StateValue.PENDING`.
      * <p>
-     * When a pending Task's state changes to `StateValue.STARTED` a
+     * When a pending Task's state changes to <tt>StateValue.STARTED</tt> a
      * PropertyChangeEvent for the "started" property is fired. Similarly, when
      * a started Task's state changes to `StateValue.DONE`, a "done"
      * PropertyChangeEvent is fired.</p>
      *
-     * @return `true` if the Task is still pending; `false` if it has been started
+     * @return <tt>true` if the Task is still pending; `false</tt> if it has been started
      */
     public final boolean isPending() {
         return getState() == StateValue.PENDING;
@@ -642,12 +642,12 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     /**
      * Equivalent to `getState() == StateValue.STARTED`.
      * <p>
-     * When a pending Task's state changes to `StateValue.STARTED` a
+     * When a pending Task's state changes to <tt>StateValue.STARTED</tt> a
      * PropertyChangeEvent for the "started" property is fired. Similarly, when
      * a started Task's state changes to `StateValue.DONE`, a "done"
      * PropertyChangeEvent is fired.</p>
      *
-     * @return `true` if the Task has started; `false` if has not
+     * @return <tt>true` if the Task has started; `false</tt> if has not
      */
     public final boolean isStarted() {
         return getState() == StateValue.STARTED;
@@ -657,7 +657,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * {@inheritDoc }
      * <p>
      * This method fires the TaskListeners' {@link TaskListener#process process}
-     * method. If you override `process` and do not call
+     * method. If you override <tt>process</tt> and do not call
      * `super.process(values)`, then the `TaskListener`s will
      * <strong>not</strong>
      * run.</p>
@@ -704,7 +704,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
 
     /**
      * Called when this Task has successfully completed, i.e., when its
-     * `get` method returns a value. Tasks that compute a value should
+     * <tt>get</tt> method returns a value. Tasks that compute a value should
      * override this method.
      * <p>
      * This method runs on the EDT. It does nothing by default.</p>
@@ -724,7 +724,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * <p>
      * This method runs on the EDT. It does nothing by default.</p>
      *
-     * @param e the `InterruptedException` thrown by `get`
+     * @param e the <tt>InterruptedException</tt> thrown by `get`
      *
      * @see #cancel(boolean)
      * @see #done()
@@ -735,7 +735,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Called when an execution of this Task fails and an `ExecutionException` 
+     * Called when an execution of this Task fails and an <tt>ExecutionException</tt> 
      * is thrown by `get`.
      * <p>
      * This method runs on the EDT. It logs an error message by default.</p>
@@ -757,10 +757,10 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Called unconditionally (in a `finally` clause) after one of the
+     * Called unconditionally (in a <tt>finally</tt> clause) after one of the
      * completion methods, `succeeded`, `failed`, `cancelled`,
      * or `interrupted`, runs. Subclasses can override this method to
-     * cleanup before the `done` method returns.
+     * cleanup before the <tt>done</tt> method returns.
      * <p>
      * This method runs on the EDT. It does nothing by default.</p>
      *
@@ -773,13 +773,13 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Adds a `TaskListener` to this Task. The listener will be notified
+     * Adds a <tt>TaskListener</tt> to this Task. The listener will be notified
      * when the Task's state changes to `STARTED`, each time the `process`
      * method is called, and when the Task's state changes to `DONE`. All of the
      * listener methods will run on the event dispatching
      * thread.
      *
-     * @param listener the `TaskListener` to be added
+     * @param listener the <tt>TaskListener</tt> to be added
      *
      * @see #removeTaskListener(org.jdesktop.application.TaskListener) 
      */
@@ -792,10 +792,10 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Removes a `TaskListener` from this Task. If the specified listener
+     * Removes a <tt>TaskListener</tt> from this Task. If the specified listener
      * does not exist, this method does nothing.
      *
-     * @param listener the `TaskListener` to be removed
+     * @param listener the <tt>TaskListener</tt> to be removed
      *
      * @see #addTaskListener(org.jdesktop.application.TaskListener) 
      */
@@ -830,7 +830,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         });
     }
 
-    /* This method runs on the EDT because it is called from `StatePCL` (see
+    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see
      * below).
      */
     private void fireDoInBackgroundListeners() {
@@ -841,7 +841,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
     }
 
-    /* This method runs on the EDT because it is called from `StatePCL` (see 
+    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
      * below).
      */
     private void fireSucceededListeners(T result) {
@@ -852,7 +852,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
     }
 
-    /* This method runs on the EDT because it is called from `StatePCL` (see 
+    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
      * below).
      */
     private void fireCancelledListeners() {
@@ -863,7 +863,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
     }
 
-    /* This method runs on the EDT because it is called from `StatePCL` (see 
+    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
      * below).
      */
     private void fireInterruptedListeners(InterruptedException e) {
@@ -874,7 +874,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
     }
 
-    /* This method runs on the EDT because it is called from `StatePCL` (see 
+    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
      * below).
      */
     private void fireFailedListeners(Throwable e) {
@@ -885,7 +885,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
     }
 
-    /* This method runs on the EDT because it is called from `StatePCL` (see 
+    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
      * below).
      */
     private void fireFinishedListeners() {
@@ -896,7 +896,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
     }
 
-    /* This method runs on the EDT because it is called from `StatePCL` (see 
+    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
      * below).
      */
     private void fireCompletionListeners() {
@@ -997,15 +997,15 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     
     /**
      * Specifies to what extend input to the Application's GUI should be blocked
-     * while this Task is being executed and provides a pair of methods, `block` 
-     * and `unblock()` that do the work of blocking the GUI. For 
+     * while this Task is being executed and provides a pair of methods, <tt>block</tt> 
+     * and <tt>unblock()</tt> that do the work of blocking the GUI. For 
      * the sake of input blocking, a Task begins executing when it is {@link 
      * TaskService#execute(com.pekinsoft.desktop.application.Task)  submitted} 
      * to a `TaskService`, and it finishes executing after the Task's 
      * completion methods have been called.
      * <p>
      * The InputBlocker's {@link BlockingScope BlockingScope} and the 
-     * blocking `target` object define what part of the GUI's input will 
+     * blocking <tt>target</tt> object define what part of the GUI's input will 
      * be blocked:</p>
      * <dl>
      * <dt><strong>`Task.BlockingScope.NONE`</strong></dt>
@@ -1023,8 +1023,8 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      *  <dd>Block the entire Application while the Task is executing. The 
      *      blocking target is ignored in this case.</dd></dl>
      * <p>
-     * Input blocking begins when the `block` method is called and ends
-     * when `unblock` is called. Each method is only called once, 
+     * Input blocking begins when the <tt>block</tt> method is called and ends
+     * when <tt>unblock</tt> is called. Each method is only called once, 
      * typically by the `TaskService`.
      * 
      * @see Task#getInputBlocker() 
@@ -1043,13 +1043,13 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
          * is null or if the Task has already been executed by a TaskService, 
          * then an execption is thrown. If scope is `BlockingScope.ACTION`
          * then target must be an {@link javax.swing.Action Action}. If scope is
-         * `BlockingScope.WINDOW` or `BlockingScope.COMPONENT` then
+         * <tt>BlockingScope.WINDOW` or `BlockingScope.COMPONENT</tt> then
          * target must be a Component.
          * 
          * @param task block input while this Task is executing
          * @param scope how much of the GUI will be blocked
          * @param target the GUI element that will be blocked
-         * @param action the `@Action` that triggered running the task, or
+         * @param action the <tt>@Action</tt> that triggered running the task, or
          *          null
          * 
          * @see TaskService#execute(com.pekinsoft.desktop.application.Task) 
@@ -1086,7 +1086,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
         
         /**
-         * Construct an InputBlocker. If `target` is an `ApplicationAction`, it 
+         * Construct an InputBlocker. If <tt>target</tt> is an `ApplicationAction`, it 
          * becomes the InputBlocker's `Action`. If
          * the Task is null or if the Task has already been executed by a 
          * TaskService, then an exception is thrown.
@@ -1103,7 +1103,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
         
         /**
-         * The `block` method will block input while this Task is being 
+         * The <tt>block</tt> method will block input while this Task is being 
          * executed by a TaskService.
          * 
          * @return the value of this read-only Task property
@@ -1145,8 +1145,8 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         
         /**
          * The ApplicationAction (`@Action`) that caused the task to be
-         * executed. The DefaultInputBlocker uses the action's `name` and
-         * `resourceMap` to configure its blocking dialog if `scope`
+         * executed. The DefaultInputBlocker uses the action's <tt>name</tt> and
+         * <tt>resourceMap</tt> to configure its blocking dialog if `scope`
          * is `BlockingScope.WINDOW`.
          * <p>
          * This property may well be null.</p>
@@ -1163,7 +1163,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         }
         
         /**
-         * Block input to the GUI per the `scope` and `target`
+         * Block input to the GUI per the <tt>scope</tt> and `target`
          * properties. This method will only be called once.
          * 
          * @see #unblock() 
@@ -1172,7 +1172,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         protected abstract void block();
         
         /**
-         * Unblock input to the GUI by undoing whateve the `block` method
+         * Unblock input to the GUI by undoing whateve the <tt>block</tt> method
          * did. This method will only be called once.
          * 
          * @see #block() 

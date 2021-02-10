@@ -84,7 +84,7 @@ package org.jdesktop.application.enums;
  *	&#0041;(#)sysexits.h	8.1 (Berkeley) 6/2/93
  * </pre>
  *
- * @author Original `sysexits.h` Authors (unlisted)
+ * @author Original <tt>sysexits.h</tt> Authors (unlisted)
  * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
  *
  * @version 1.05

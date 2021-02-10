@@ -33,7 +33,7 @@ package org.jdesktop.application;
 import java.util.List;
 
 /**
- * Listener used for observing `Task` execution. A `TaskListener` is
+ * Listener used for observing <tt>Task` execution. A `TaskListener</tt> is
  * particularly useful monitoring the intermediate results {@link Task#publish
  * published} by a Task in situations where it's not practical to override the
  * Task's {@link Task#process process} method. Note that if what you really want
@@ -57,7 +57,7 @@ public interface TaskListener<T, V> {
      * method is called, i.e., just before the task begins running. The `
      * event}'s source is the Task and its value is `null`.
      * 
-     * @param event a TaskEvent whose source is the `Task` object, value 
+     * @param event a TaskEvent whose source is the <tt>Task</tt> object, value 
      *          is `null`
      * @see Task#doInBackground
      * @see TaskEvent#getSource
@@ -68,9 +68,9 @@ public interface TaskListener<T, V> {
      * Called each time the Task's {@link Task#process process} method is called.
      * The value of the event is the list of values passed to the process method.
      * 
-     * @param event a TaskEvent whose source is the `Task` object and
+     * @param event a TaskEvent whose source is the <tt>Task</tt> object and
      *          whose value is a list of the values passed to the 
-     *          `Task.process()` method
+     *          <tt>Task.process()</tt> method
      * @see Task#doInBackground
      * @see Task#process
      * @see TaskEvent#getSource
@@ -79,11 +79,11 @@ public interface TaskListener<T, V> {
     void process(TaskEvent<List<V>> event);
     
     /**
-     * Called after the Task's `Task#succeeded` method is called. The
-     * event's value is the value returned by the Task's `get` method, i.e.,
+     * Called after the Task's <tt>Task#succeeded</tt> method is called. The
+     * event's value is the value returned by the Task's <tt>get</tt> method, i.e.,
      * the value that is computed by {@link Task#doInBackground}.
      * 
-     * @param event a TaskEvent whose source is the `Task` object, and
+     * @param event a TaskEvent whose source is the <tt>Task</tt> object, and
      *          whose value is the value returned by `Task.get()`
      * @see Task#succeeded
      * @see TaskEvent#getSource
@@ -95,7 +95,7 @@ public interface TaskListener<T, V> {
      * Called after the Task's {@link Task#failed failed} method is called. The
      * event's value is the Throwable passed to `Task.failed()`.
      * 
-     * @param event a TaskEvent whose source is the `Task` object, and
+     * @param event a TaskEvent whose source is the <tt>Task</tt> object, and
      *          whose value is the Throwable passed to `Task.failed()`
      * @see Task#failed
      * @see TaskEvent#getSource
@@ -107,7 +107,7 @@ public interface TaskListener<T, V> {
      * Called after the Task's {@link Task#cancelled cancelled} method is called.
      * The `event`'s source is the Task and its value is `null`.
      * 
-     * @param event a TaskEvent whose source is the `Task` obeject, value
+     * @param event a TaskEvent whose source is the <tt>Task</tt> obeject, value
      *          is `null`
      * @see Task#cancelled
      */
@@ -118,7 +118,7 @@ public interface TaskListener<T, V> {
      * called. The `event`'s source is the Task and its value is the
      * InterruptedException passed to `Task.interrupted()`.
      * 
-     * @param event a TaskEvent whose source is the `Task` object, and
+     * @param event a TaskEvent whose source is the <tt>Task</tt> object, and
      *          whose value is the InterruptedException passed to `
      *          Task.interrupted()}
      * @see Task#interrupted
@@ -131,7 +131,7 @@ public interface TaskListener<T, V> {
      * Called after the Task's {@link Task#finished finished} method is called.
      * The `event`'s source is the Task and its value is null.
      * 
-     * @param event a TaskEvent whose source is the `Task` object, value
+     * @param event a TaskEvent whose source is the <tt>Task</tt> object, value
      *          is `null`
      * @see Task#interrupted
      * @see TaskEvent#getSource

@@ -83,7 +83,7 @@ import javax.swing.border.EmptyBorder;
  * ResourceMaps are typically obtained with the `ApplicationContext`
  * {@link ApplicationContext#getResourceMap() getResourceMap} method which lazily
  * creates per Application, package, and class ResourceMaps that are linked
- * together with the ResourceMap `parent` property.</p>
+ * together with the ResourceMap <tt>parent</tt> property.</p>
  * <p>
  * An individual ResourceMap provides read-only access to all of the resources
  * defined by the ResourceBundles named when the ResourceMap was created as well
@@ -91,17 +91,17 @@ import javax.swing.border.EmptyBorder;
  * getObject} method which requires both the name of the resource and its
  * expected type. The latter is used to convert strings, if necessary.</p>
  * <p>
- * The `getObject` method scans raw string resource values for `
+ * The <tt>getObject</tt> method scans raw string resource values for `
  * resourceName} variable substitutions before performing string
  * conversion. Variables named this way can refer to String resources defined
  * anywhere in their ResourceMap or any parent ResourceMap. The special variable
- * `${null}` means that the value of the resource will be `null`.
+ * <tt>${null}</tt> means that the value of the resource will be `null`.
  * </p><p>
  * ResourceMaps can be used to "inject" resource values into Swing component
- * properties and into object fields. The `injectComponents` method uses
+ * properties and into object fields. The <tt>injectComponents</tt> method uses
  * Component names ({@link Component#setName}) to match resources names with
- * properties. The `injectFields` method sets fields that have been
- * tagged with the `@Resource` annotation to the value of resources
+ * properties. The <tt>injectFields</tt> method sets fields that have been
+ * tagged with the <tt>@Resource</tt> annotation to the value of resources
  * with the same name.</p>
  *
  * @author Hans Muller (Original Author)
@@ -127,7 +127,7 @@ public class ResourceMap {
     /**
      * Creates a ResourceMap that contains all of the resources defined in the
      * named {@link ResourceBundle}s, as well as (recursively) the `parent
-     * } ResourceMap. The `parent` may be null. Typically just one
+     * } ResourceMap. The <tt>parent</tt> may be null. Typically just one
      * ResourceBundle is specified, however, one might name additional
      * ResourceBundles that contain platform or Swing look and feel specific
      * resources. When multiple bundles are named, a resource defined in
@@ -139,14 +139,14 @@ public class ResourceMap {
      * `classLoader} is `null`, an `IllegalArgumentException`
      * is thrown.</p>
      * <p>
-     * At least one `bundleName` must be specified and all of the `bundleName`s
+     * At least one <tt>bundleName</tt> must be specified and all of the `bundleName`s
      * must be non-empty strings, or an
-     * `IllegalArgumentException` is thrown. The bundles are listed in
+     * <tt>IllegalArgumentException</tt> is thrown. The bundles are listed in
      * priority order, highest priority first. In other words, resources in the
      * first ResourceBundle named first, shadow resources with the same name
      * later in the list.</p>
      * <p>
-     * All of the `bundleNames` must share a common package prefix. The
+     * All of the <tt>bundleNames</tt> must share a common package prefix. The
      * package prefix implicitly specifies the resources directory (see
      * {@link #getResourcesDir}). For example, the resources directory for
      * bundle names "myapp.resources.foo" and "myapp.resources.bar", would be
@@ -389,12 +389,12 @@ public class ResourceMap {
     }
 
     /**
-     * By default this method is used by `keySet` to get the names of the
+     * By default this method is used by <tt>keySet</tt> to get the names of the
      * resources defined in this ResourceMap. This method lazily loads the
      * ResourceBundles named by the constructor.
      * <p>
      * The protected `getResource`, `putResource`, and `containsResourceKey`,
-     * `getResourceKeySet` abstract the internal
+     * <tt>getResourceKeySet</tt> abstract the internal
      * representation of this ResourceMap's list of `ResourceBundle`s.
      * Most applications can ignore them.</p>
      *
@@ -413,21 +413,21 @@ public class ResourceMap {
     }
 
     /**
-     * By default this method is used by `keySet` to get the names of the
+     * By default this method is used by <tt>keySet</tt> to get the names of the
      * resources defined in this ResourceMap. This method lazily loads the
      * ResourceBundles named by the constructor.
      * <p>
      * The protected `getResource`, `putResource`, and `containsResourceKey`,
-     * `getResourceKeySet` abstract the internal
+     * <tt>getResourceKeySet</tt> abstract the internal
      * representation of this ResourceMap's list of `ResourceBundle`s.
      * Most applications can ignore them.</p>
      * <p>
-     * If `key} is `null`, an `IllegalArgumentException` is
+     * If <tt>key} is `null`, an `IllegalArgumentException</tt> is
      * thrown.</p>
      *
      * @param key the name of the resource
-     * @return `true` if a resource named `key` is defined in this
-     * ResourceMap; `false` otherwise
+     * @return <tt>true` if a resource named `key</tt> is defined in this
+     * ResourceMap; <tt>false</tt> otherwise
      * @see #getResource
      * @see #putResource
      * @see #getResourceKeySet
@@ -439,20 +439,20 @@ public class ResourceMap {
     }
 
     /**
-     * By default this method is used by `keySet` to get the names of the
+     * By default this method is used by <tt>keySet</tt> to get the names of the
      * resources defined in this ResourceMap. This method lazily loads the
      * ResourceBundles named by the constructor.
      * <p>
      * The protected `getResource`, `putResource`, and `containsResourceKey`,
-     * `getResourceKeySet` abstract the internal
+     * <tt>getResourceKeySet</tt> abstract the internal
      * representation of this ResourceMap's list of `ResourceBundle`s.
      * Most applications can ignore them.</p>
      * <p>
-     * If `key} is `null`, an `IllegalArgumentException` is
+     * If <tt>key} is `null`, an `IllegalArgumentException</tt> is
      * thrown.</p>
      *
      * @param key the name of the resource
-     * @return the value of the resource named `key` (can be `null`)
+     * @return the value of the resource named <tt>key</tt> (can be `null`)
      * @see #putResource
      * @see #containsResourceKey
      * @see #getResourceKeySet
@@ -465,16 +465,16 @@ public class ResourceMap {
     }
 
     /**
-     * By default this method is used by `keySet` to get the names of the
+     * By default this method is used by <tt>keySet</tt> to get the names of the
      * resources defined in this ResourceMap. This method lazily loads the
      * ResourceBundles named by the constructor.
      * <p>
      * The protected `getResource`, `putResource`, and `containsResourceKey`,
-     * `getResourceKeySet` abstract the internal
+     * <tt>getResourceKeySet</tt> abstract the internal
      * representation of this ResourceMap's list of `ResourceBundle`s.
      * Most applications can ignore them.</p>
      * <p>
-     * If `key} is `null`, an `IllegalArgumentException` is
+     * If <tt>key} is `null`, an `IllegalArgumentException</tt> is
      * thrown.</p>
      *
      * @param key the name of the resource
@@ -492,21 +492,21 @@ public class ResourceMap {
     }
 
     /**
-     * Retrieves the value of the resource named `key`, or `null` if
+     * Retrieves the value of the resource named <tt>key`, or `null</tt> if
      * no resource with that name exists. A resource exists if it is defined in
      * this ResourceMap or (recursively) in the ResourceMap's parent(s).
      * <p>
      * String resources may contain variables that name other resources. Each
-     * `${variable-key`` variable is replaced with the value of a string
+     * <tt>${variable-key`</tt> variable is replaced with the value of a string
      * resource name `variable-key`. For example, given the following
      * resources:
      * <pre>
      * Application.title=My Application
      * ErrorDialog.title=Error: ${application.title}
      * WarningDialog.title=Warning: ${application.title}
-     * </pre> The value of `"WarningDialog.title"` would be `"Warning: My
+     * </pre> The value of <tt>"WarningDialog.title"</tt> would be `"Warning: My
      * Application"}. To include "${" in a resource, insert a backslash before
-     * the "$". For example, the value of `escString` in the example below
+     * the "$". For example, the value of <tt>escString</tt> in the example below
      * would be `"${hello`"`:
      * <pre>
      * escString = \\${hello}
@@ -515,8 +515,8 @@ public class ResourceMap {
      * resource is the special variable `${null``, then the resource will
      * be removed from this ResourceMap.
      * <p>
-     * The value returned by `getObject` will be of the specified type. If
-     * a string valued resource exists for `key`, and `type` is not
+     * The value returned by <tt>getObject</tt> will be of the specified type. If
+     * a string valued resource exists for <tt>key`, and `type</tt> is not
      * `String.class`, the value will be converted using a
      * ResourceConverter and the will be ResourceMap entry updated with the
      * converted value.</p>
@@ -526,14 +526,14 @@ public class ResourceMap {
      * conversion fails, or if resource parameters can not be evaluated, or if
      * the existing resource is of the wrong type.</p>
      * <p>
-     * An `IllegalArgumentException` is thrown if `key` or `type` are `null`</p>
+     * An <tt>IllegalArgumentException` is thrown if `key` or `type</tt> are `null`</p>
      *
      * @param key resource name
      * @param type resource type
      * @return resource value
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` or `type` are
+     * @throws IllegalArgumentException if <tt>key` or `type</tt> are
      * `null`
      * @see ResourceConverter#forType
      * @see ResourceMap.LookupException
@@ -665,12 +665,12 @@ public class ResourceMap {
      * If no arguments are specified, return the String value of the resource
      * named `key`. This is equivalent to calling `getObject(key,
      * String.class)}. If arguments are provided, then the type of the resource
-     * named `key` is assumed to be {@link String#format(String, Object...)
+     * named <tt>key</tt> is assumed to be {@link String#format(String, Object...)
      * format} string, which is applied to the arguments if it's non
      * `null`. For example, given the following resources:
      * <pre>
      * hello=Hello %s
-     * </pre> then the value of `getString("hello", "World")` would be 
+     * </pre> then the value of <tt>getString("hello", "World")</tt> would be 
      * `"Hello World"`.
      *
      * @param key the name of the resource
@@ -678,7 +678,7 @@ public class ResourceMap {
      * @return the String value of the resource named `key`
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is `null`
+     * @throws IllegalArgumentException if <tt>key</tt> is `null`
      * @see #getObject
      * @see String#format(java.lang.String, java.lang.Object...) 
      */
@@ -699,7 +699,7 @@ public class ResourceMap {
      * @return the Boolean value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Boolean getBoolean(String key) {
@@ -714,7 +714,7 @@ public class ResourceMap {
      * @return the Integer value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Integer getInteger(String key) {
@@ -729,7 +729,7 @@ public class ResourceMap {
      * @return the Long value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Long getLong(String key) {
@@ -744,7 +744,7 @@ public class ResourceMap {
      * @return the Short value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Short getShort(String key) {
@@ -759,7 +759,7 @@ public class ResourceMap {
      * @return the Byte value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Byte getByte(String key) {
@@ -774,7 +774,7 @@ public class ResourceMap {
      * @return the Float value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Float getFloat(String key) {
@@ -789,7 +789,7 @@ public class ResourceMap {
      * @return the Double value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Double getDouble(String key) {
@@ -806,7 +806,7 @@ public class ResourceMap {
      * @return the Icon value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final Icon getIcon(String key) {
@@ -818,18 +818,18 @@ public class ResourceMap {
      * `getObject(key, ImageIcon.class)`. This method relies on the
      * ImageIcon ResourceConverter that is registered by this class.
      * <p>
-     * If the resource named `key` is a String, it should name an image
+     * If the resource named <tt>key</tt> is a String, it should name an image
      * file to be found in the resources subdirectory that also contains the
      * ResourceBundle (typically a ".properties" file) that was used to create
      * the corresponding ResourceMap.</p>
      * <p>
      * For example, given the ResourceMap produced by
-     * `Application.getClass(com.mypackage.MyClass.class)` and a
-     * ResourceBundle called `MyClass.properties` in
+     * <tt>Application.getClass(com.mypackage.MyClass.class)</tt> and a
+     * ResourceBundle called <tt>MyClass.properties</tt> in
      * `com.mypackage.resources`:</p>
      * <pre>
      * openIcon=myOpenIcon.png
-     * </pre> the `resourceMap.getIcon("openIcon")` would load the image
+     * </pre> the <tt>resourceMap.getIcon("openIcon")</tt> would load the image
      * file called "myOpenIcon.png" from the resources subdirectory, effective
      * like this:
      * <pre>
@@ -842,7 +842,7 @@ public class ResourceMap {
      * @return the ImageIcon value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      */
     public final ImageIcon getImageIcon(String key) {
@@ -865,7 +865,7 @@ public class ResourceMap {
      * @return the Font value of the resource named key
      * @throws LookupException if an error occurs during lookup or string
      * conversion
-     * @throws IllegalArgumentException if `key` is null
+     * @throws IllegalArgumentException if <tt>key</tt> is null
      * @see #getObject
      * @see ResourceConverter#forType
      * @see Font#decode
@@ -878,7 +878,7 @@ public class ResourceMap {
      * Convenience method that is shorthand for calling:
      * `getObject(key, Color.class)`. This method relies on the Color
      * ResourceConverter that is registered by this class. It defines an
-     * improved version of `Color.decode` that supports colors with an
+     * improved version of <tt>Color.decode</tt> that supports colors with an
      * alpha channel and comma separated RGB[A] values. Legal format for color
      * resources are:
      * <pre>
@@ -906,7 +906,7 @@ public class ResourceMap {
      * Convenience method that is shorthand for calling:
      * `getObject(key, KeyStroke.class)`. This method relies on the
      * KeyStroke ResourceConverter that is registered by this class. It defines
-     * an improved version of `Color.decode` that supports colors with an
+     * an improved version of <tt>Color.decode</tt> that supports colors with an
      * alpha channel and comma separated RGB[A] values. Legal format for color
      * resources are:
      *
@@ -1098,7 +1098,7 @@ public class ResourceMap {
     }
 
     /**
-     * Set each property in `target` to the value of the resource named
+     * Set each property in <tt>target</tt> to the value of the resource named
      * `<em>componentName<em>.propertyName`, where `<em>componentName</em>
      * } is the value of the target component's name property, i.e., the
      * value of `target.getName()`. The type of the resource must match
@@ -1116,7 +1116,7 @@ public class ResourceMap {
      * myButton.preferredSize = 256, 256
      * </pre> 
      * <p>
-     * The `injectComponent(myButton)` would initialize myButton's
+     * The <tt>injectComponent(myButton)</tt> would initialize myButton's
      * text, foreground, and preferredSize properties to `Hello World`,
      * `
      * new Color(0, 0, 0)}, and `new Dimension(256, 256)`
@@ -1307,10 +1307,10 @@ public class ResourceMap {
     }
     
     /**
-     * Set each field with a `@Resource` annotation in the target
+     * Set each field with a <tt>@Resource</tt> annotation in the target
      * object, to the value of a resource whose name is the simple name of the
      * target class followed by "." followed by the name of the field. If the
-     * key `@Resource` parameter is specified, then a resource with
+     * key <tt>@Resource</tt> parameter is specified, then a resource with
      * that name is used instead. Array valued fields can also be initialized
      * with resources whose names end with "[index]". For example:
      * <pre>
@@ -1327,13 +1327,13 @@ public class ResourceMap {
      * MyClass.numbers[0]=10
      * MyClass.numbers[1]=11
      * </pre>
-     * Then `injectFields(new MyClass())` would initialize the MyClass
-     * `sOne` field to "One", the `sTwo` field to "Two", and the 
+     * Then <tt>injectFields(new MyClass())</tt> would initialize the MyClass
+     * <tt>sOne` field to "One", the `sTwo</tt> field to "Two", and the 
      * two elements of the numbers array to 10 and 11.
      * <p>
-     * If `target` is null an IllegalArgumentException is thrown. If an
+     * If <tt>target</tt> is null an IllegalArgumentException is thrown. If an
      * error occurs during resource lookup, then an unchecked LookupException is
-     * thrown. If a target field marked with `@Resource` can not be
+     * thrown. If a target field marked with <tt>@Resource</tt> can not be
      * set, then an unchecked InjectFieldException is thrown.</p>
      * 
      * @param target the object whose fields will be initialized

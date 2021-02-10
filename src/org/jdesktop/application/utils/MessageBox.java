@@ -108,9 +108,9 @@ public class MessageBox {
     /**
      * Standardized method of displaying errors to the user.
      * <p>
-     * Error messages should be displayed from any `catch()` block where
-     * the `try` block has failed. Some critical errors should be followed
-     * by a call to the `exit()` method and the program should be 
+     * Error messages should be displayed from any <tt>catch()</tt> block where
+     * the <tt>try</tt> block has failed. Some critical errors should be followed
+     * by a call to the <tt>exit()</tt> method and the program should be 
      * terminated. However, that functionality should only be reserved for
      * critical errors, from which the user cannot recover.
      * 

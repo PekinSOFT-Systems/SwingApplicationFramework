@@ -426,7 +426,7 @@ public class LocalStorage extends AbstractBean {
     /**
      * This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns `null` if called.
+     * now simply returns <tt>null</tt> if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -509,7 +509,7 @@ public class LocalStorage extends AbstractBean {
     /**
      * This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns `null` if called.
+     * now simply returns <tt>null</tt> if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -548,7 +548,7 @@ public class LocalStorage extends AbstractBean {
     /**
      *This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns `null` if called.
+     * now simply returns <tt>null</tt> if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -565,7 +565,7 @@ public class LocalStorage extends AbstractBean {
     /**
      *This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns `null` if called.
+     * now simply returns <tt>null</tt> if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.
@@ -582,7 +582,7 @@ public class LocalStorage extends AbstractBean {
     /**
      *This method is no longer supported since support of JNLP (Java Web Start)
      * was dropped by Oracle, Inc., in March of 2018, as of Java 11. The method
-     * now simply returns `null` if called.
+     * now simply returns <tt>null</tt> if called.
      * 
      * @deprecated 
      * @since March 2018 by Oracle, Inc.

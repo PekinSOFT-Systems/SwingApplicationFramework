@@ -33,9 +33,9 @@ package org.jdesktop.application;
 import java.util.EventObject;
 
 /**
- * An encapsulation of the value produced by one of the `Task` execution 
+ * An encapsulation of the value produced by one of the <tt>Task</tt> execution 
  * methods: `doInBackground()}, `process`, `done`. The source
- * of a `TaskEvent` is the `Task` that produced the value.
+ * of a <tt>TaskEvent` is the `Task</tt> that produced the value.
  * 
  * @see TaskListener
  * @see Task
@@ -48,15 +48,15 @@ public class TaskEvent<T> extends EventObject {
     /**
      * Returns the value this event represents.
      * 
-     * @return the `value` constructor argument
+     * @return the <tt>value</tt> constructor argument
      */
     public final T getValue() {return value; }
     
     /**
      * Construct a `Task`
      * 
-     * @param source the `Task` that produced the value
-     * @param value the value, `null} if type `T` is `Void`
+     * @param source the <tt>Task</tt> that produced the value
+     * @param value the value, <tt>null} if type `T</tt> is `Void`
      */
     public TaskEvent(Task source, T value) {
         super(source);

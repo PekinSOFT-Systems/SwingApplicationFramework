@@ -79,12 +79,12 @@ public class FrameView extends View {
      * <p>
      * This method should be called from the startup method by a subclass that
      * wants to construct and initialize the main frame itself. Most applications
-     * can rely on the fact that `getFrame` lazily constructs the main 
-     * frame and initialize the `frame` property.</p>
+     * can rely on the fact that <tt>getFrame</tt> lazily constructs the main 
+     * frame and initialize the <tt>frame</tt> property.</p>
      * <p>
      * If the main frame property was already initialized, either implicitly 
-     * through a call to `getFrame` or by explicitly calling this method,
-     * an IllegalStateException is thrown. If `frame` is null, an
+     * through a call to <tt>getFrame</tt> or by explicitly calling this method,
+     * an IllegalStateException is thrown. If <tt>frame</tt> is null, an
      * IllegalArguemntException is thrown.</p>
      * <p>
      * This property is bound.</p>

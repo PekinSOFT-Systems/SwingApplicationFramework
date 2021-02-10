@@ -37,20 +37,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a method that will be used to define a Swing `Action` object's 
- * `actionPerformed` method. It also identifies the resources that will be
+ * Marks a method that will be used to define a Swing <tt>Action</tt> object's 
+ * <tt>actionPerformed</tt> method. It also identifies the resources that will be
  * used to initialize the Action's properties. Additional `@Action`
  * parameters can be used to specify the name of the bound properties (from the
  * same class) that indicate if the Action is to be enabled/selected, and if the
  * GUI should be blocked while the Action's background {@link Task} is running.
  * <p>
- * The {@link ApplicationActionMap} class creates an `ActionMap` that 
+ * The {@link ApplicationActionMap} class creates an <tt>ActionMap</tt> that 
  * contains one {@link ApplicationAction} for each @Action found in a 
  * target or "actions" class. Typically applications will use {@link
  * ApplicationContext#getActionMap(Class, Object) getActionMap} to lazily
  * construct and cache ApplicationActionMaps, rather than constructing them
  * directly. By default the ApplicationActionMap's {@link ApplicationActionMap#get
- * key} for an @Action is the name of the method. The `name` parameter
+ * key} for an @Action is the name of the method. The <tt>name</tt> parameter
  * can be used to specify a different key.</p>
  * <p>
  * The `ApplicationAction`'s properties are initialized with resources
@@ -59,9 +59,9 @@ import java.lang.annotation.Target;
  * ApplicationAction ApplicationsAction}'s constructor.</p>
  * <p>
  * The method marked with @Action, can have no parameters, or a single
- * ActionEvent parameter. The method's return type can be `void` or
+ * ActionEvent parameter. The method's return type can be <tt>void</tt> or
  * {@link Task}. If the return type is Task, the Task will be executed by the
- * ApplicationAction's `actionPerformed` method.</p>
+ * ApplicationAction's <tt>actionPerformed</tt> method.</p>
  * <p>
  * [TBD the block parameter, and the Parameter annotation]</p>
  * @see ApplicationAction

@@ -52,9 +52,9 @@ public class StringUtils {
     /**
      * Abbreviates a String using ellipses.This will turn "Now is the time for
      * all good men" into "Now is the time for...". Specifically: If the number
-     * of characters in `source` is less than or equal to `maxLength, return
+     * of characters in <tt>source</tt> is less than or equal to `maxLength, return
      * `source`. Else abbreviate it to (`substring(source, maxLangth - 3) +
-     * "..."`). If `width` is less than four, throw and
+     * "..."`). If <tt>width</tt> is less than four, throw and
      * `IllegalArgumentException`. In no case will it return a String of length
      * greater than `width`.
      *
@@ -68,7 +68,7 @@ public class StringUtils {
      * StringUtils.abbreviate("abcdefg", 3)     = IllegalArgumentException
      * </pre>
      * <p>
-     * Throws an `IllegalArguementException` if the width is too small.</p>
+     * Throws an <tt>IllegalArguementException</tt> if the width is too small.</p>
      *
      * @param source the String to check, may be null
      * @param width maximum length of result String, must be at least 4
@@ -90,9 +90,9 @@ public class StringUtils {
     }
 
     /**
-     * Unlike `abbreviate`, this method will allow you to wrap the `String` at a
+     * Unlike <tt>abbreviate`, this method will allow you to wrap the `String</tt> at a
      * given width. This is accomplished by placing a newline character into the
-     * string, `source`, at the given `width` position. Once the newline
+     * string, <tt>source`, at the given `width</tt> position. Once the newline
      * character is inserted, the portion of the string prior to the newline is
      * dropped out of the source string, and the process repeats until the
      * source string fits within the given width.
@@ -148,9 +148,9 @@ public class StringUtils {
 
     /**
      * Removes a substring only if it is at the beginning of a source string,
-     * otherwise returns the source string. A `null` source string will return
+     * otherwise returns the source string. A <tt>null</tt> source string will return
      * `null`. An empty ("") source string will return the empty string. A
-     * `null` search string will return the source string.
+     * <tt>null</tt> search string will return the source string.
      *
      * @param source the string from which the substring should be removed.
      * @param remove the substring to remove from the source string.
@@ -199,13 +199,13 @@ public class StringUtils {
      * Removes a substring only if it is at the end of a source string,
      * otherwise returns the source string.
      *
-     * A `null` source string will return `null`. An empty ("") source string
-     * will return the empty string. A `null` search string will return the
+     * A <tt>null</tt> source string will return `null`. An empty ("") source string
+     * will return the empty string. A <tt>null</tt> search string will return the
      * source string.
      *
      * @param source the source String to search, may be null
      * @param remove the String to search for and remove, may be null
-     * @return the substring with the string removed, if found, `null` if `null`
+     * @return the substring with the string removed, if found, <tt>null</tt> if `null`
      * String input
      */
     public static String removeEnd(String source, String remove) {
@@ -227,18 +227,18 @@ public class StringUtils {
     }
 
     /**
-     * Pads the provided `String` to the left side of the field of the given
+     * Pads the provided <tt>String</tt> to the left side of the field of the given
      * field width. This method is guaranteed to never return a value longer
      * than the given `fieldWidth`. If the provided value is already longer than
-     * the `fieldWidth` value, then an abbreviated `String` is returned.
+     * the <tt>fieldWidth` value, then an abbreviated `String</tt> is returned.
      *
-     * @param toPad the `String` to left-align in the field.
+     * @param toPad the <tt>String</tt> to left-align in the field.
      * @param fieldWidth the width of the field
-     * @return `String` containing the `toPad` value padded on the right end
+     * @return <tt>String` containing the `toPad</tt> value padded on the right end
      * with spaces to bring the length of the value to the width of the field.
-     * `String` of `width` number of spaces if an empty `String` is provided.
-     * @throws IllegalArgumentException in the event `toPad` is `null`, or
-     * `fieldWidth` is less than four.
+     * <tt>String` of `width` number of spaces if an empty `String</tt> is provided.
+     * @throws IllegalArgumentException in the event <tt>toPad</tt> is `null`, or
+     * <tt>fieldWidth</tt> is less than four.
      */
     public static String padLeft(String toPad, int fieldWidth) {
         if (toPad == null || fieldWidth < 4) {
@@ -255,18 +255,18 @@ public class StringUtils {
     }
 
     /**
-     * Pads the provided `String` to the right side of the field of the given
+     * Pads the provided <tt>String</tt> to the right side of the field of the given
      * field width. This method is guaranteed to never return a value longer
      * than the given `fieldWidth`. If the provided value is already longer than
-     * the `fieldWidth` value, then an abbreviated `String` is returned.
+     * the <tt>fieldWidth` value, then an abbreviated `String</tt> is returned.
      *
-     * @param toPad the `String` to right-align in the field.
+     * @param toPad the <tt>String</tt> to right-align in the field.
      * @param fieldWidth the width of the field
-     * @return `String` containing the `toPad` value padded on the left end with
+     * @return <tt>String` containing the `toPad</tt> value padded on the left end with
      * spaces to bring the length of the value to the width of the field.
-     * `String` of `width` number of spaces if an empty `String` is provided.
-     * @throws IllegalArgumentException in the event `toPad` is `null`, or
-     * `fieldWidth` is less than four.
+     * <tt>String` of `width` number of spaces if an empty `String</tt> is provided.
+     * @throws IllegalArgumentException in the event <tt>toPad</tt> is `null`, or
+     * <tt>fieldWidth</tt> is less than four.
      */
     public static String padRight(String toPad, int fieldWidth) {
         if (toPad == null || fieldWidth < 4) {

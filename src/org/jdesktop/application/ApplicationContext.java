@@ -43,10 +43,10 @@ import javax.swing.JComponent;
  * A singleton that manages shared objects, like actions, resources, and tasks,
  * for `Application`s.
  * <p>
- * {@link Application Application}s use the `ApplicationContext` singleton
+ * {@link Application Application}s use the <tt>ApplicationContext</tt> singleton
  * to find global values and services. The majority of the Swing Application
  * Framework API can be accessed through `ApplicationContext`. The static
- * `getInstance` method returns the singleton. Typically it is only called
+ * <tt>getInstance</tt> method returns the singleton. Typically it is only called
  * after the application has been {@link Application#launch launch}ed, however,
  * it is always safe to call `getInstance`.
  *
@@ -118,7 +118,7 @@ public class ApplicationContext extends AbstractBean {
     }
 
     /**
-     * The `Application` singleton, or null if `launch` has not yet
+     * The <tt>Application` singleton, or null if `launch</tt> has not yet
      * been called.
      *
      * @return the launched Application singleton
@@ -140,7 +140,7 @@ public class ApplicationContext extends AbstractBean {
     }
 
     /**
-     * The application's `ResourceManager` provides read-only cached
+     * The application's <tt>ResourceManager</tt> provides read-only cached
      * access to resources in ResourceBundles via the {@link ResourceMap
      * ResourceMap} class.
      *
@@ -154,7 +154,7 @@ public class ApplicationContext extends AbstractBean {
 
     /**
      * Change this application's `ResourceManager`. An
-     * `ApplicationContext` subclass that wanted to fundamentally change
+     * <tt>ApplicationContext</tt> subclass that wanted to fundamentally change
      * the way `ResourceMap`s were created and cached could replace this
      * property in its constructor.
      * <p>
@@ -188,8 +188,8 @@ public class ApplicationContext extends AbstractBean {
      * </pre>
      *
      * @param cls the class that defines the location of ResourceBundles
-     * @return a `ResourceMap` that contains resources loaded from
-     * `ResourceBundles` found in the resources subpackage of the
+     * @return a <tt>ResourceMap</tt> that contains resources loaded from
+     * <tt>ResourceBundles</tt> found in the resources subpackage of the
      * specified class's package
      *
      * @see ResourceManager#getResourceMap(java.lang.Class, java.lang.Class)
@@ -201,7 +201,7 @@ public class ApplicationContext extends AbstractBean {
     /**
      * Returns a {@link ResourceMap#getParent() chain} of two or more
      * ResourceMaps. The first encapsulates the ResourceBundles defined for all
-     * of the classes between `startClass` and `stopClass`,
+     * of the classes between <tt>startClass</tt> and `stopClass`,
      * inclusive. Its parent encapsulates the ResourceBundles defined for the
      * entire application.
      * <p>
@@ -213,8 +213,8 @@ public class ApplicationContext extends AbstractBean {
      *
      * @param startClass the first class whose ResourceBundles will be included
      * @param stopClass the last class whose ResourceBundles will be included
-     * @return a `ResourceMap` that contains resources loaded from
-     * `ResourceBundles` found in the resources subpackage of the
+     * @return a <tt>ResourceMap</tt> that contains resources loaded from
+     * <tt>ResourceBundles</tt> found in the resources subpackage of the
      * specified class's package
      *
      * @see ResourceManager#getResourceMap(java.lang.Class, java.lang.Class)
@@ -257,7 +257,7 @@ public class ApplicationContext extends AbstractBean {
 
     /**
      * Change this application's `ActionManager`. An
-     * `ApplicationContext` subclass that wanted to fundamentally change
+     * <tt>ApplicationContext</tt> subclass that wanted to fundamentally change
      * the way `ActionManager`s were created and cached could replace this
      * property in its constructor.
      * <p>
@@ -279,7 +279,7 @@ public class ApplicationContext extends AbstractBean {
     }
 
     /**
-     * Returns the shared `ActionMap` chain for the entire
+     * Returns the shared <tt>ActionMap</tt> chain for the entire
      * `Application`.
      * <p>
      * This is just a convenience method that calls
@@ -289,7 +289,7 @@ public class ApplicationContext extends AbstractBean {
      * return getActionManager().getActionMap();
      * </pre>
      *
-     * @return the `ActionMap` chain for the entire `Application`
+     * @return the <tt>ActionMap</tt> chain for the entire `Application`
      *
      * @see ActionManager#getActionMap()
      */
@@ -298,7 +298,7 @@ public class ApplicationContext extends AbstractBean {
     }
 
     /**
-     * Returns the `ApplicationActionMap` chain for the specified actions
+     * Returns the <tt>ApplicationActionMap</tt> chain for the specified actions
      * class and target object.
      * <p>
      * This is just a convenience method that calls      {@link ActionManager#getActionMap(java.lang.Class, java.lang.Object) 
@@ -309,8 +309,8 @@ public class ApplicationContext extends AbstractBean {
      *
      * @param actionsClass the class that contains the `@Action`
      * annotations
-     * @param actionsObject the `Object` that the actions act upon
-     * @return the `ActionMap` for the specified object
+     * @param actionsObject the <tt>Object</tt> that the actions act upon
+     * @return the <tt>ActionMap</tt> for the specified object
      *
      * @see #getActionMap(java.lang.Class, java.lang.Object)
      */
@@ -323,7 +323,7 @@ public class ApplicationContext extends AbstractBean {
      * Defined as `getActionMap(actionsObject.getClass(), actionsObject)`
      *
      * @param actionsObject the object upon which the actions will act
-     * @return the `ActionMap` for the specified object
+     * @return the <tt>ActionMap</tt> for the specified object
      *
      * @see #getActionMap(java.lang.Class, java.lang.Object)
      */

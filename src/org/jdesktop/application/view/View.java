@@ -55,12 +55,12 @@ import javax.swing.JToolBar;
  * defined by the View subclass. By default, the View elements are arranged in a
  * conventional way:
  * <ul>
- * <li> `menuBar` &mdash; becomes the rootPane's JMenuBar</li>
- * <li> `toolBar` &mdash; added to `BorderLayout.NORTH` of the
+ * <li> <tt>menuBar</tt> &mdash; becomes the rootPane's JMenuBar</li>
+ * <li> <tt>toolBar` &mdash; added to `BorderLayout.NORTH</tt> of the
  * rootPane's contentPane</li>
- * <li> `component` &mdash; added to `BorderLayout.CENTER` of the
+ * <li> <tt>component` &mdash; added to `BorderLayout.CENTER</tt> of the
  * rootPane's contentPane</li>
- * <li> `statusBar` &mdash; added to `BorderLayout.SOUTH` of the
+ * <li> <tt>statusBar` &mdash; added to `BorderLayout.SOUTH</tt> of the
  * rootPane's contentPane</li>
  * </ul>
  * <p>
@@ -117,7 +117,7 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The `Application` that is responsible for showing/hiding this View.
+     * The <tt>Application</tt> that is responsible for showing/hiding this View.
      * 
      * @return the Application that owns this View
      */
@@ -126,7 +126,7 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The `ApplicationContext` for the `Application` that is 
+     * The <tt>ApplicationContext` for the `Application</tt> that is 
      * responsible for showing/hiding this View. This method is just shorthand 
      * for `getApplication().getContext()`.
      * 
@@ -140,10 +140,10 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The `ResourceMap` for this View. This method is just shorthand for
+     * The <tt>ResourceMap</tt> for this View. This method is just shorthand for
      * `getContext().getResourceMap(getClass(), View.class)`.
      * 
-     * @return the `ResourceMap` for this View
+     * @return the <tt>ResourceMap</tt> for this View
      * @see #getContext
      */
     public ResourceMap getResourceMap() {
@@ -155,12 +155,12 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The `JRootPane` for this View. All of the components for this View
+     * The <tt>JRootPane</tt> for this View. All of the components for this View
      * must be added to its rootPane. Most applications will do so by setting 
      * the View's `component}, `menuBar`, `toolBar`, and
-     * `statusBar` properties.
+     * <tt>statusBar</tt> properties.
      * 
-     * @return the `rootPane` for this View
+     * @return the <tt>rootPane</tt> for this View
      * @see #setComponent
      * @see #setMenuBar
      * @see #setToolBar
@@ -186,9 +186,9 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The main `JComponent` for this View.
+     * The main <tt>JComponent</tt> for this View.
      * 
-     * @return the `component` for this View
+     * @return the <tt>component</tt> for this View
      * @see #setComponent
      */
     public JComponent getComponent() {
@@ -202,7 +202,7 @@ public class View extends AbstractBean {
      * <p>
      * This is a bound property. The default value is null.</p>
      * 
-     * @param component the `component` for this View
+     * @param component the <tt>component</tt> for this View
      * @see #getComponent
      */
     public void setComponent(JComponent component) {
@@ -213,9 +213,9 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The main `JMenuBar` for this View.
+     * The main <tt>JMenuBar</tt> for this View.
      * 
-     * @return the `menuBar` for this View
+     * @return the <tt>menuBar</tt> for this View
      * @see #setMenuBar
      */
     public JMenuBar getMenuBar() {
@@ -223,11 +223,11 @@ public class View extends AbstractBean {
     }
     
     /**
-     * Sets the `JMenuBar` for this View.
+     * Sets the <tt>JMenuBar</tt> for this View.
      * <p>
      * This is a bound property. The default value is null.</p>
      * 
-     * @param menuBar the `JMenuBar` for this View.
+     * @param menuBar the <tt>JMenuBar</tt> for this View.
      * @see #getMenuBar
      */
     public void setMenuBar(JMenuBar menuBar) {
@@ -238,7 +238,7 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The `JToolBar` list for this View.
+     * The <tt>JToolBar</tt> list for this View.
      * 
      * @return all `JTooBar`s owned by this View
      * @see #setToolBars(List)
@@ -280,9 +280,9 @@ public class View extends AbstractBean {
     }
     
     /**
-     * The primary (or main) `JToolBar` for this View.
+     * The primary (or main) <tt>JToolBar</tt> for this View.
      * 
-     * @return the primary (or main) `JToolBar` for this View
+     * @return the primary (or main) <tt>JToolBar</tt> for this View
      * @see #setToolBar(JToolBar)
      */
     public final JToolBar getToolBar() {
@@ -291,11 +291,11 @@ public class View extends AbstractBean {
     }
     
     /**
-     * Sets the primary (or main) `JToolBar` for this View.
+     * Sets the primary (or main) <tt>JToolBar</tt> for this View.
      * <p>
      * This is a bound property. The default value is null.</p>
      * 
-     * @param toolBar the primary (or main) `JToolBar` for this View
+     * @param toolBar the primary (or main) <tt>JToolBar</tt> for this View
      * @see #getToolBar
      */
     public void setToolBar(JToolBar toolBar) {

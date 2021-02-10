@@ -29,8 +29,8 @@
  *  WHEN          BY                  REASON
  *  ------------  ------------------- ------------------------------------------
  *  Mar 8, 2020  Sean Carrick        Initial creation.
- *  Mar 21, 2020 Sean Carrick        Added the parameter `modules` to the 
- *                                   `critical` function, so that installed
+ *  Mar 21, 2020 Sean Carrick        Added the parameter <tt>modules</tt> to the 
+ *                                   <tt>critical</tt> function, so that installed
  *                                   modules may be added to the error log.
  * *****************************************************************************
  */
@@ -85,7 +85,7 @@ public class Logger {
      */
     public static final int CRITICAL = 5;
     /**
-     * Off: used for any errors in setting up the `Logger` object. The calling
+     * Off: used for any errors in setting up the <tt>Logger</tt> object. The calling
      * application should check to make sure that logging is not turned off
      * before calling a logging event.
      */
@@ -137,7 +137,7 @@ public class Logger {
 
     //<editor-fold defaultstate="collapsed" desc="Constructor(s)">
     /**
-     * Creates a default `Logger` object that places the log file in the user's
+     * Creates a default <tt>Logger</tt> object that places the log file in the user's
      * home folder. This log will log at the informational level and be appended
      * to for future runs of the application.
      */
@@ -146,7 +146,7 @@ public class Logger {
     }
 
     /**
-     * Creates a `Logger` object that places the log file in the path specified
+     * Creates a <tt>Logger</tt> object that places the log file in the path specified
      * by the calling application, logs informational or higher messages and is
      * appended to on future runs of the application.
      *
@@ -157,7 +157,7 @@ public class Logger {
     }
 
     /**
-     * Creates a `Logger` object that places the log file in the path specified
+     * Creates a <tt>Logger</tt> object that places the log file in the path specified
      * by the calling application, logs all messages at the provided logging
      * level or higher and is appended to on future runs of the application.
      *
@@ -183,7 +183,7 @@ public class Logger {
     }
 
     /**
-     * Creates a `Logger` object that places the log file in the path specified
+     * Creates a <tt>Logger</tt> object that places the log file in the path specified
      * by the calling application, logs all messages at the provided logging
      * level or higher and has its ability to append messages from future runs
      * of the application set by the calling application.
@@ -298,16 +298,16 @@ public class Logger {
     /**
      * Logs a system critical error to the log file just before the application
      * exits.This should only be used for unrecoverable errors in the program.
-     * All other errors should be logged through the `error` method.<p>
-     * The `extraData` parameter should contain information pertinent to the
-     * user within the context of your application. The `error` logging method
+     * All other errors should be logged through the <tt>error</tt> method.<p>
+     * The <tt>extraData</tt> parameter should contain information pertinent to the
+     * user within the context of your application. The <tt>error</tt> logging method
      * places system and Java information into the message by default. All of
      * this extraneous information should aid the software designers,
      * programmers and engineers to be able to track down the error to a
      * specific cause, thereby allowing them to correct the application easier
      * and quicker.
      * 
-     * @param ex The `Exception` that was thrown.
+     * @param ex The <tt>Exception</tt> that was thrown.
      * @param pkg The package in which the error happened.
      * @param cls The class in which the error happened.
      * @param method The method in which the error happened.
@@ -449,7 +449,7 @@ public class Logger {
     }
 
     /**
-     * If the `Logger` is currently enabled for debugging messages, then the
+     * If the <tt>Logger</tt> is currently enabled for debugging messages, then the
      * given message is written out to the log file.
      *
      * @param msg The message to log.
@@ -474,7 +474,7 @@ public class Logger {
     }
 
     /**
-     * As long as the `Logger` is not `OFF`, then an entry message to a method
+     * As long as the <tt>Logger</tt> is not `OFF`, then an entry message to a method
      * with no parameters will be written to the file, regardless of logging
      * level.
      *
@@ -503,7 +503,7 @@ public class Logger {
     }
 
     /**
-     * As long as the `Logger` is not `OFF`, then an entry message to a method
+     * As long as the <tt>Logger</tt> is not `OFF`, then an entry message to a method
      * with one parameter will be written to the file, regardless of logging
      * level.
      *
@@ -535,7 +535,7 @@ public class Logger {
     }
 
     /**
-     * As long as the `Logger` is not `OFF`, then an entry message to a method
+     * As long as the <tt>Logger</tt> is not `OFF`, then an entry message to a method
      * with multiple parameters will be written to the file, regardless of
      * logging level.
      *
@@ -583,18 +583,18 @@ public class Logger {
      * Logs a non-critical error to the log file, typically, when it is thrown
      * and just before the program recovers from it. This should only be used
      * for recoverable errors in the program. Any other errors, which are
-     * unrecoverable, should be logged through the `critical` method, just
+     * unrecoverable, should be logged through the <tt>critical</tt> method, just
      * before the application exits.
      * <p>
-     * The `extraData` parameter should contain information pertinent to the
-     * user within the context of your application. The `error` logging method
+     * The <tt>extraData</tt> parameter should contain information pertinent to the
+     * user within the context of your application. The <tt>error</tt> logging method
      * places system and Java information into the message by default. All of
      * this extraneous information should aid the software designers,
      * programmers and engineers to be able to track down the error to a
      * specific cause, thereby allowing them to correct the application easier
      * and quicker.</p>
      *
-     * @param ex The `Exception` that was thrown.
+     * @param ex The <tt>Exception</tt> that was thrown.
      * @param extraData Any extra data, such as user information, that may be
      * critical to hunting down the error.
      */
@@ -661,7 +661,7 @@ public class Logger {
     }
 
     /**
-     * As long as `Logging` is not `OFF`, then a message will be written to the
+     * As long as <tt>Logging</tt> is not `OFF`, then a message will be written to the
      * log file whenever control passes back out of the method that has no
      * return value, nor parameters.
      *
@@ -690,7 +690,7 @@ public class Logger {
     }
 
     /**
-     * As long as `Logging` is not `OFF`, then a message will be written to the
+     * As long as <tt>Logging</tt> is not `OFF`, then a message will be written to the
      * log file whenever control passes back out of the method that has a return
      * value, but no parameters.
      *
@@ -722,7 +722,7 @@ public class Logger {
     }
 
     /**
-     * As long as `Logging` is not `OFF`, then a message will be written to the
+     * As long as <tt>Logging</tt> is not `OFF`, then a message will be written to the
      * log file whenever control passes back out of the method that has a return
      * value and a single parameter.
      *
@@ -809,13 +809,13 @@ public class Logger {
      * Logs a non-critical error to the log file, typically, when it is thrown
      * and just before the program handles it. This should only be used for
      * handled errors in the program. Any other errors, which are unrecoverable,
-     * should be logged through the `critical` method, just before the
+     * should be logged through the <tt>critical</tt> method, just before the
      * application exits.
      * <p>
-     * The `extraData` parameter should contain information pertinent to the
+     * The <tt>extraData</tt> parameter should contain information pertinent to the
      * user within the context of your application..</p>
      *
-     * @param ex The `Exception` that was thrown.
+     * @param ex The <tt>Exception</tt> that was thrown.
      * @param extraData Any extra data, such as user information, that may be
      * critical to hunting down the error.
      */
@@ -866,9 +866,9 @@ public class Logger {
 
     /**
      * Provides a method of logging informational messages to the log file. For
-     * this message to be logged, the `Logger` must have been properly
-     * established (NOT in the `OFF` state) and the level must be set at `INFO`,
-     * `CONFIG` or `DEBUG`.
+     * this message to be logged, the <tt>Logger</tt> must have been properly
+     * established (NOT in the <tt>OFF</tt> state) and the level must be set at `INFO`,
+     * <tt>CONFIG</tt> or `DEBUG`.
      *
      * @param msg The message to write to the log file.
      */
@@ -910,8 +910,8 @@ public class Logger {
 
     /**
      * Provides a method of logging warning messages to the log file. For this
-     * message to be logged, the `Logger` must have been properly established
-     * (NOT in the `OFF` state) and the level must be set at `WARN` or
+     * message to be logged, the <tt>Logger</tt> must have been properly established
+     * (NOT in the <tt>OFF` state) and the level must be set at `WARN</tt> or
      * `CRITICAL`.
      * <p>
      * A good practice for this type of message is to place user, system and

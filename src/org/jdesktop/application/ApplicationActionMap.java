@@ -43,9 +43,9 @@ import javax.swing.ActionMap;
 
 /**
  * An {@link javax.swing.ActionMap} class where each entry corresponds to an 
- * `@Action` method from a single `actionsClass` (i.e., a
+ * <tt>@Action` method from a single `actionsClass</tt> (i.e., a
  * class that contains one or more `@Action`s). Each entry's key is
- * the `@Action`'s {@link ApplicationAction` that calls the `
+ * the <tt>@Action`'s {@link ApplicationAction</tt> that calls the `
  * @Action}s method. For example, the code below prints `"Hello World"
  * }:
  * <pre>
@@ -65,7 +65,7 @@ import javax.swing.ActionMap;
  * }
  * </pre>
  * <p>
- * If a `ResourceMap` is provided, then each `ApplicationAction`'s
+ * If a <tt>ResourceMap</tt> is provided, then each `ApplicationAction`'s
  * ({@link javax.swing.Action#putValue(java.lang.String, java.lang.Object) putValue},
  * {@link javax.swing.Action#getValue(java.lang.String) getValue}) properties
  * are initialized from the ResourceMap.</p>
@@ -140,7 +140,7 @@ public class ApplicationActionMap extends ActionMap {
      * ApplicationActionMap} and its parent ancestors.
      * <p>
      * Returns a read-only list of the `@ProxyAction`s defined by this
-     * `ApplicationActionMap`'s `actionClass` and, recursively, by
+     * <tt>ApplicationActionMap`'s `actionClass</tt> and, recursively, by
      * this `ApplicationActionMap`'s parent. If there are no proxyActions,
      * an empty list is returned.</p>
      * 

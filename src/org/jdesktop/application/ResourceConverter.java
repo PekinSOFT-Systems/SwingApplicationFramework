@@ -43,13 +43,13 @@ import java.util.List;
  * A base class for converting arbitrary types to and from `String`s, as
  * well as a registry of ResourceConverter implementations.
  * <p>
- * The `supportsType` method defines what types a ResourceConverter 
- * supports. By default it returns `true` for classes that are equal to 
- * the constructor's `type` argument. The `parseType` methods 
+ * The <tt>supportsType</tt> method defines what types a ResourceConverter 
+ * supports. By default it returns <tt>true</tt> for classes that are equal to 
+ * the constructor's <tt>type` argument. The `parseType</tt> methods 
  * converts a string to the ResourceConverter's supported type, and the `
  * toString} does the inverse: it converts a supported type to a `String`.
- * Concrete ResourceConverter subclasses must override `parseType()` and,
- * in most cases, the `toString()` method as well.</p>
+ * Concrete ResourceConverter subclasses must override <tt>parseType()</tt> and,
+ * in most cases, the <tt>toString()</tt> method as well.</p>
  * <p>
  * This class maintains a registry of ResourceConverters. The `forType`
  * method returns the first ResourceConverter that supports a particular type,
@@ -69,9 +69,9 @@ import java.util.List;
  * <li>`URI`</li>
  * </ul>
  * <p>
- * The Boolean ResourceConverter returns `true` for "true", "on", "yes";
- * `false` otherwise. The other primitive type ResourceConverters rely on
- * the corresponding `static parse<em>Type</em>` method, e.g., `
+ * The Boolean ResourceConverter returns <tt>true</tt> for "true", "on", "yes";
+ * <tt>false</tt> otherwise. The other primitive type ResourceConverters rely on
+ * the corresponding <tt>static parse<em>Type</em></tt> method, e.g., `
  * Integer.parseInt()}. The MessageFormat ResourceConverter just creates 
  * MessageFormat object with the string as its constructor argument. The URL/URI
  * converters just apply the corresponding constructor to the resource string.

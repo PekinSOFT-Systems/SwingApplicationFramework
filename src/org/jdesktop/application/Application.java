@@ -67,20 +67,20 @@ import javax.swing.UnsupportedLookAndFeelException;
  * <p>
  * This class defines a simple lifecycle for Swing application:
  * `initialize`, `startup`, `ready`, and `shutdown`. The
- * `Application`'s `startup` method is responsible for creating the
- * initial GUI and making it visible, and the `shutdown` method for hiding
+ * <tt>Application`'s `startup</tt> method is responsible for creating the
+ * initial GUI and making it visible, and the <tt>shutdown</tt> method for hiding
  * the GUI and performing any other cleanup actions before the application
- * exits. The `initialize` method can be used to configure system
+ * exits. The <tt>initialize</tt> method can be used to configure system
  * properties that must be set before the GUI is constructed and the
- * `ready` method is for applications that want to do a little bit of
+ * <tt>ready</tt> method is for applications that want to do a little bit of
  * extra work once the GUI is "ready" to use. Concrete subclasses <em>must</em>
- * override the `startup` method.</p>
+ * override the <tt>startup</tt> method.</p>
  * <p>
- * Applications are started with static `launch` method. Applications use
- * the `ApplicationContext` {@link Application#getContext singleton` to
+ * Applications are started with static <tt>launch</tt> method. Applications use
+ * the <tt>ApplicationContext` {@link Application#getContext singleton</tt> to
  * find resources, actions, local storage, and so on.</p>
  * <p>
- * All `Application` subclasses <em>must</em> override the `startup`
+ * All <tt>Application</tt> subclasses <em>must</em> override the `startup`
  * method and they should call {@link #exit} (which calls `shutdown`) to
  * exit. Here's an example of a complete "Hello World" Application:</p>
  * ```java
@@ -114,22 +114,22 @@ import javax.swing.UnsupportedLookAndFeelException;
  * }
  * ```
  * <p>
- * The `mainFrame`'s `defaultCloseOperation` is set to `DO_NOTHING_ON_CLOSE`
+ * The <tt>mainFrame`'s `defaultCloseOperation</tt> is set to `DO_NOTHING_ON_CLOSE`
  * because we are handling attempts to close the window by
- * calling `ApplicationContext` {@link exit`.</p>
+ * calling <tt>ApplicationContext</tt> {@link exit`.</p>
  * <p>
  * Simple, single-frame applications, like the example, can be defined more
  * easily with the {@link SingleFrameApplication SingleFrameApplication} 
- * `Application` subclass.</p>
+ * <tt>Application</tt> subclass.</p>
  * <p>
  * All of the `Application`'s methods are called (<strong>must</strong> be called)
  * on the EDT.</p>
  * <p>
  * All but the most trivial applications should define a ResourceBundle in the
  * resources subpackage with the same name as the application class, like 
- * `resources/MyApplication.properties`. This `ResourceBundle` contains resources
+ * <tt>resources/MyApplication.properties`. This `ResourceBundle</tt> contains resources
  * shared by the entire application and should begin with the following standard
- * `Application` resources:</p>
+ * <tt>Application</tt> resources:</p>
  * <pre>
  * Application.name=A short name, typically just a few words
  * Application.id=Suitable for Application specific identifiers, like file names
@@ -142,8 +142,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  * Application.lookAndFeel=either system, default, or a lookAndFeel class name
  * </pre>
  * <p>
- * The `Application.lookAndFeel` resource is used to initialize the
- * `UIManager lookAndFeel` as follows:</p>
+ * The <tt>Application.lookAndFeel</tt> resource is used to initialize the
+ * <tt>UIManager lookAndFeel</tt> as follows:</p>
  * <ul>
  * <li>`system` &mdash; the system (native) look and feel</li>
  * <li>`default` &mdash; use the JVM default, typically the cross-platform
@@ -151,41 +151,41 @@ import javax.swing.UnsupportedLookAndFeelException;
  * <li>a LookAndFeel class name &mdash; use the specified class</li>
  * </ul>
  * <p>
- * The `Application` framework has four built-in command line switches
+ * The <tt>Application</tt> framework has four built-in command line switches
  * which are present and available for use in all applications derived from this
  * framework:</p>
  * <ul>
- * <li>`-d` or `--debug` &mdash; either of these two switches may be
+ * <li>`-d` or <tt>--debug</tt> &mdash; either of these two switches may be
  * used to indicate that the application logs should log all messages set at the
- * `Logger.DEBUG` level or higher. This creates more verbose application
+ * <tt>Logger.DEBUG</tt> level or higher. This creates more verbose application
  * logs, which helps to track down errors and bugs.</li>
- * <li>`-i` or `--ide` &mdash; either of these two switches should
+ * <li>`-i` or <tt>--ide</tt> &mdash; either of these two switches should
  * be used in the development environment while developing the software project.
  * What these two switches tell the application is "We are developing this
  * project, so calculate the version number for us."</li></ul><p>
  * As you just read, the Swing Application Framework not only provides a lot of
  * run-time functionality "out-of-the-box," but it also manages versioning of
  * your project during development. We picked an arbitrary number to start the
- * `build` number at, which is 1903. Once the `build` number
- * surpasses 4999, the `revision` number is incremented by 1 and the
- * `build` number is reset to 1903.</p>
+ * <tt>build` number at, which is 1903. Once the `build</tt> number
+ * surpasses 4999, the <tt>revision</tt> number is incremented by 1 and the
+ * <tt>build</tt> number is reset to 1903.</p>
  * <p>
- * Once the `revision` number surpasses 30, the `minor` number is
- * incremented by one, and the `revision` number is reset to zero.</p>
+ * Once the <tt>revision` number surpasses 30, the `minor</tt> number is
+ * incremented by one, and the <tt>revision</tt> number is reset to zero.</p>
  * <p>
- * Once the `minor` number surpasses 10, the `major` number is
+ * Once the <tt>minor` number surpasses 10, the `major</tt> number is
  * incremented by one, and the minor number is reset to zero.</p>
  * <p>
  * The way the version numbers are calculated, the version will change only
- * while executing the application with either the `-i` or `--ide`
+ * while executing the application with either the <tt>-i</tt> or `--ide`
  * switch passed on the command line. However, each time the project is executed
  * in the IDE, while one of those switches is present in the IDE or Project
- * settings, the version `build` number will increment each time the
+ * settings, the version <tt>build</tt> number will increment each time the
  * project is run. It is for this reason that we made the version calculator
  * require 3096 runs of the project with one of the IDE switches present before
- * it updates the `revision` number.</p>
+ * it updates the <tt>revision</tt> number.</p>
  * <p>
- * When it comes to the `-d` and `--debug` switches, having one of
+ * When it comes to the <tt>-d` and `--debug</tt> switches, having one of
  * them present during development will help you track down nefarious bugs and
  * logic flaws prior to deploying your project to end-users. Also, if an
  * end-user calls into your tech support after a version has been deployed, your
@@ -195,7 +195,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * rears its ugly head again, the user will be able to email a detailed log file
  * to tech support to aide them in tracking down the issue.</p>
  * <dl>
- * <dt>Developer's Caveat:</dt><dd>Supplying the `-d` or `--debug`
+ * <dt>Developer's Caveat:</dt><dd>Supplying the <tt>-d</tt> or `--debug`
  * switch on the command line is the smallest part of the battle. The victory
  * comes when you are creating quality log entries throughout your program's
  * source code. We, at PekinSOFT Systems, tend to use log entries as the
@@ -236,7 +236,7 @@ public abstract class Application extends AbstractBean {
             + File.separator + ".application.properties";
 
     // The properties object for the application class. The Desktop system, by
-    //+ default, creates a `config` folder under the application folder for
+    //+ default, creates a <tt>config</tt> folder under the application folder for
     //+ storing configuration files. The reason is that each class that would
     //+ like to store files in an application will need to have its own config
     //+ file which contains only settings/configuration for that class.
@@ -249,7 +249,7 @@ public abstract class Application extends AbstractBean {
     //+ the purpose of creating log files by making it extremely difficult to
     //+ find the problem(s) the application was having. This was especially true
     //+ when the logging level was set to DEBUG during development. Therefore,
-    //+ we have decided to make the log for the `Application` class `private`
+    //+ we have decided to make the log for the <tt>Application</tt> class `private`
     //+ and force each class to have its own log.
     //+
     //+ This will not impose any additional requirements of developers using the
@@ -281,9 +281,9 @@ public abstract class Application extends AbstractBean {
     }
 
     /**
-     * Creates an instance of the specified `Application` subclass, sets
-     * the `ApplicationContext` `Application` property, and then
-     * calls the new `Application`'s `startup` method. The `launch` method is 
+     * Creates an instance of the specified <tt>Application</tt> subclass, sets
+     * the <tt>ApplicationContext` `Application</tt> property, and then
+     * calls the new <tt>Application`'s `startup` method. The `launch</tt> method is 
      * typically called from the Application's `main`:
      * <pre>
      * public static void main (String[] args) {
@@ -291,12 +291,12 @@ public abstract class Application extends AbstractBean {
      * }
      * </pre>
      * <p>
-     * The `applicationClass` constructor and `startup` methods run
+     * The <tt>applicationClass` constructor and `startup</tt> methods run
      * on the event dispatching thread.</p>
      *
-     * @param <T> the `Class` type of the application
-     * @param applicationClass the `Application` class to launch
-     * @param args the `main` method arguments
+     * @param <T> the <tt>Class</tt> type of the application
+     * @param applicationClass the <tt>Application</tt> class to launch
+     * @param args the <tt>main</tt> method arguments
      * @see #shutdown
      * @see ApplicationContext#getApplication
      */
@@ -434,14 +434,14 @@ public abstract class Application extends AbstractBean {
      * Responsible for initializations that must occur before the GUI is
      * constructed by `startup`.
      * <p>
-     * This method is called by the static `launch` method, before `startup` is 
+     * This method is called by the static <tt>launch` method, before `startup</tt> is 
      * called. Subclasses that want to do any initialization work
-     * before `startup` must override it. The `initialize` method
+     * before <tt>startup` must override it. The `initialize</tt> method
      * runs on the event dispatching thread.</p>
      * <p>
-     * The `initialize(String[] args)` method should be called by any
-     * `Application` that accepts command-line arguments. For all of
-     * PekinSOFT Systems' applications, the `initialize` method is used
+     * The <tt>initialize(String[] args)</tt> method should be called by any
+     * <tt>Application</tt> that accepts command-line arguments. For all of
+     * PekinSOFT Systems' applications, the <tt>initialize</tt> method is used
      * because all of PekinSOFT Systems' applications use command-line
      * parameters for debugging purposes and calculating application versions.
      * </p>
@@ -457,7 +457,7 @@ public abstract class Application extends AbstractBean {
      * }
      * </pre></dd></dl>
      *
-     * @param args the `main` method arguments
+     * @param args the <tt>main</tt> method arguments
      * @see #launch(java.lang.Class, java.lang.String[]) 
      * @see #startup() 
      * @see #shutdown()
@@ -485,7 +485,7 @@ public abstract class Application extends AbstractBean {
      * Responsible for starting the application; for creating and showing the
      * initial GUI.
      * <p>
-     * This method is called by the static `launch` method, subclasses
+     * This method is called by the static <tt>launch</tt> method, subclasses
      * must override it. It runs on the event dispatching thread.
      *
      * @see #launch(java.lang.Class, java.lang.String[]) 
@@ -679,7 +679,7 @@ public abstract class Application extends AbstractBean {
      * </strong> recommended that each class have its own properties file which
      * stores only the properties for that class.<br><br>As an example of this
      * recommendation, consider the application's main frame, which may be
-     * obtained from the `Application` class by calling 
+     * obtained from the <tt>Application</tt> class by calling 
      * `Application.getMainFrame()`. Though the window returned is the main frame
      * of the entire application, it stores its settings in its own
      * configuration file under the `${Application.app.config.folder``
@@ -698,14 +698,14 @@ public abstract class Application extends AbstractBean {
     /**
      * Provides a centralized means of storing settings for all classes in built
      * upon the Desktop Framework. For example, windows should call this method
-     * from their `JFrame.windowClosing()` or
-     * `JFrame.windowClosed()` event. By doing so, all settings for that
-     * `JFrame` in which the application is interested will be saved for
+     * from their <tt>JFrame.windowClosing()</tt> or
+     * <tt>JFrame.windowClosed()</tt> event. By doing so, all settings for that
+     * <tt>JFrame</tt> in which the application is interested will be saved for
      * use on next startup.
      *
-     * @param propsToStore `java.util.Properties` object for the class
+     * @param propsToStore <tt>java.util.Properties</tt> object for the class
      * wishing to store their settings
-     * @return `true` upon successful storage; `false` otherwise
+     * @return <tt>true` upon successful storage; `false</tt> otherwise
      */
     public static boolean storeSettings(Properties propsToStore) {
         logger.enter(Application.class.getName(), "storeProperties(Properties)",
@@ -810,14 +810,14 @@ public abstract class Application extends AbstractBean {
 
     /**
      * Give the Application a chance to veto an attempt to exit/quit. An
-     * `ExitListener`'s `canExit` method should return false if 
+     * <tt>ExitListener`'s `canExit</tt> method should return false if 
      * there are pending decisions that the user must make before the app exits.
-     * A typical `ExitListener` would prompt the user with a modal dialog.
+     * A typical <tt>ExitListener</tt> would prompt the user with a modal dialog.
      * <p>
-     * The `eventObject` argument will be the value passed to 
+     * The <tt>eventObject</tt> argument will be the value passed to 
      * {@link #exit(java.util.EventObject)  exit() }. It may be null.</p>
      * <p>
-     * The `willExit` method is called after the exit has been confirmed.
+     * The <tt>willExit</tt> method is called after the exit has been confirmed.
      * An ExitListener that is going to perform some cleanup work should do so
      * in `willExit`.</p>
      * <p>
@@ -838,7 +838,7 @@ public abstract class Application extends AbstractBean {
     }
     
     /**
-     * Add an `ExitListener` to the list.
+     * Add an <tt>ExitListener</tt> to the list.
      * 
      * @param listener the `ExitListener`
      * 
@@ -850,7 +850,7 @@ public abstract class Application extends AbstractBean {
     }
     
     /**
-     * Remove an `ExitListener` from the list.
+     * Remove an <tt>ExitListener</tt> from the list.
      * 
      * @param listener the `ExitListener`
      * 
@@ -872,7 +872,7 @@ public abstract class Application extends AbstractBean {
     }
     
     /**
-     * The default `Action` for quitting an application, `quit` just
+     * The default <tt>Action` for quitting an application, `quit</tt> just
      * exits the application by calling `exit(e)`.
      * 
      * @param e the triggering event
@@ -901,12 +901,12 @@ public abstract class Application extends AbstractBean {
     }
     
     /**
-     * The `Application` singleton, or a placeholder if `launch` has
+     * The <tt>Application` singleton, or a placeholder if `launch</tt> has
      * not yet been called.
      * <p>
      * Typically this method is only called after an Application has been launched,
      * however, in some situations, like tests, it is useful to be able to get
-     * an `Application` object without actually launching. The <em>
+     * an <tt>Application</tt> object without actually launching. The <em>
      * placeholder</em> Application object provides access to an `
      * ApplicationContext} singleton and has the same semantics as launching an
      * Application defined like this:</p>

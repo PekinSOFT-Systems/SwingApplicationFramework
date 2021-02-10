@@ -48,10 +48,10 @@ public class AbstractBean {
     
     /**
      * Add a PropertyChangeListener to the listener list. The listener is 
-     * registered for all properties and its `propertyChange` method will
+     * registered for all properties and its <tt>propertyChange</tt> method will
      * run on the event dispatching thread.
      * <p>
-     * If `listener` is `null`, no exception is thrown and no action
+     * If <tt>listener</tt> is `null`, no exception is thrown and no action
      * is taken.</p>
      * 
      * @param listener the PropertyChangeListener to be added
@@ -67,7 +67,7 @@ public class AbstractBean {
      * be invoked only when a call on firePropertyChange names that specific
      * property. The same listener object may be added more than once. For each
      * property, the listener will be invoked the number of times it was added
-     * for that property. If the `propertyName` or `listener` is
+     * for that property. If the <tt>propertyName` or `listener</tt> is
      * `null`, no exception is thrown and no action is taken.
      * 
      * @param propertyName the name of the property to listen on
@@ -82,7 +82,7 @@ public class AbstractBean {
     /**
      * Remove a PropertyChangeListener from the listener list.
      * <p>
-     * If `listener` is `null`, no exception is thrown and no action
+     * If <tt>listener</tt> is `null`, no exception is thrown and no action
      * is taken.</p>
      * 
      * @param listener the PropertyChangeListener to be removed
@@ -97,8 +97,8 @@ public class AbstractBean {
      * Remove a PropertyChangeListener for a specific property. If `listener`
      * was added more than once to the same event source for the 
      * specified property, it will be notified one less time after being
-     * removed. If `propertyName` is `null`, no exception is thrown
-     * and no action is taken. If `listener` is `null`, or was
+     * removed. If <tt>propertyName</tt> is `null`, no exception is thrown
+     * and no action is taken. If <tt>listener</tt> is `null`, or was
      * never added for the specified property, no exception is thrown and no
      * action is taken.
      * 
@@ -124,7 +124,7 @@ public class AbstractBean {
     /**
      * Called whenever the value of a bound property is set.
      * <p>
-     * If `oldValue` is not equal to `newValue`, invoke the `propertyChange`
+     * If <tt>oldValue</tt> is not equal to `newValue`, invoke the `propertyChange`
      * method on all of the `PropertyChangeListener`s added
      * so far, on the event dispatching thread.
      * 
@@ -148,11 +148,11 @@ public class AbstractBean {
     /**
      * Fire an existing PropertyChangeEvent.
      * <p>
-     * If the event's `oldValue` is not equal to `newValue`, invoke
-     * the `propertyChange` method on all of the `PropertyChangeListener`s
+     * If the event's <tt>oldValue</tt> is not equal to `newValue`, invoke
+     * the <tt>propertyChange</tt> method on all of the `PropertyChangeListener`s
      * added so fare, on the event dispatching thread.</p>
      * 
-     * @param evt the `PropertyChangeEvent` which fired this property 
+     * @param evt the <tt>PropertyChangeEvent</tt> which fired this property 
      *          change.
      * @see #addPropertyChangeListener
      * @see #removePropertyChangeListener

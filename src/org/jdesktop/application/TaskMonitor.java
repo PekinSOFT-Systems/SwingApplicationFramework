@@ -44,11 +44,11 @@ import javax.swing.SwingWorker.StateValue;
 /**
  * This class is intended to serve as the model for GUI components, like status
  * bars, that display the state of an application's background tasks.
- * `TaskMonitor` provides an overview of all the ApplicationContexts'
- * Tasks, as well as the state of a single `foreground` Task.
+ * <tt>TaskMonitor</tt> provides an overview of all the ApplicationContexts'
+ * Tasks, as well as the state of a single <tt>foreground</tt> Task.
  * <p>
  * The value of {@link #getTasks() getTasks()} is a list of all of the
- * `Task`s whose state is not {@link Task#isDone() DONE` for all of the
+ * <tt>Task`s whose state is not {@link Task#isDone() DONE</tt> for all of the
  * ApplicationContext's `TaskService`s. In other words: all of the
  * ApplicationContext's background tasks that have not finished executing. Each
  * time a new TaskService Task is executed, it is added to the list; when the
@@ -119,10 +119,10 @@ class TaskMonitor extends AbstractBean {
 
     /**
      * The TaskMonitor's PropertyChangeListeners are fired each time any
-     * property of the `foregroundTask` changes. By default this property
+     * property of the <tt>foregroundTask</tt> changes. By default this property
      * is set to the first Task to be executed and then, when that Task
      * finishes, reset to the next most recently executed Task. If the
-     * `autoUpdateForegroundTask` is false, then the foregroundTask
+     * <tt>autoUpdateForegroundTask</tt> is false, then the foregroundTask
      * property is not reset automatically.
      *
      * @param foregroundTask the task whose properties are reflected by this
@@ -147,7 +147,7 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * Indicates the `Task` whose status the ApplicationContext's GUI
+     * Indicates the <tt>Task</tt> whose status the ApplicationContext's GUI
      * wants to be displayed, typically in the main window's status bar.
      *
      * @return the value of the foregroundTask property
@@ -158,7 +158,7 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * True if the `foregroundTask` property should be automatically reset
+     * True if the <tt>foregroundTask</tt> property should be automatically reset
      * to the oldest Task in the queue when it finishes running.
      * <p>
      * This property is true by default.</p>
@@ -173,7 +173,7 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * True if the `foregroundTask` property should be automatically reset
+     * True if the <tt>foregroundTask</tt> property should be automatically reset
      * to the oldest Task in the queue when it finishes running. An application
      * that wants explicit control over the Task being monitored can set this
      * property to false.
@@ -202,7 +202,7 @@ class TaskMonitor extends AbstractBean {
     }
 
     /**
-     * All of the Application Tasks whose `state` is <strong>not</strong>
+     * All of the Application Tasks whose <tt>state</tt> is <strong>not</strong>
      * `DONE`.
      * <p>
      * Each time the list of Tasks changes, a PropertyChangeEvent for the

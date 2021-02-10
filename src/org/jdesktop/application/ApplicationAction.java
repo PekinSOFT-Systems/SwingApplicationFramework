@@ -46,7 +46,7 @@ import javax.swing.KeyStroke;
 
 /**
  * The {@link javax.swing.Action} class used to implement the
- * `@Action` annotation. This class is typically not instantiated directly, it's 
+ * <tt>@Action</tt> annotation. This class is typically not instantiated directly, it's 
  * created as a side effect of constructing an `ApplicationActionMap`:
  * ```java
  * public class MyActions {
@@ -64,7 +64,7 @@ import javax.swing.KeyStroke;
  * When an ApplicationAction is constructed, it initializes all of its
  * properties from the specified `ResourceMap`. Resource names must match
  * the `@Action`'s name, which is the name of the corresponding method, or
- * the value of the optional `@Action` name parameter. To initialize the
+ * the value of the optional <tt>@Action</tt> name parameter. To initialize the
  * text and shortDescription properties of the action named `"anAction"`
  * in the previous example, one would define two resources:
  * <pre>
@@ -76,8 +76,8 @@ import javax.swing.KeyStroke;
  * can be found in the ApplicationAction {@link #ApplicationAction constructor}
  * documentation.</p>
  * <p>
- * An ApplicationAction's `enabled` and `selected` properties can
- * be delegated to `boolean` properties of the Actions class, by specifying the
+ * An ApplicationAction's <tt>enabled` and `selected</tt> properties can
+ * be delegated to <tt>boolean</tt> properties of the Actions class, by specifying the
  * corresponding property names. This can be done with the `@Action`
  * annotation, e.g.:</p>
  * ```java
@@ -95,21 +95,21 @@ import javax.swing.KeyStroke;
  * ApplicationAction will track the state of the specified property
  * ("anActionEnabled" in this case) with a PropertyChangeListener.</p>
  * <p>
- * ApplicationActions can automatically `block` the GUI while the
- * `actionPerformed` method is running, depending on the value of block
+ * ApplicationActions can automatically <tt>block</tt> the GUI while the
+ * <tt>actionPerformed</tt> method is running, depending on the value of block
  * annotation parameter. For example, if the value of block is
  * `Task.BlockingScope.ACTION`, then the action will be disabled while
  * the actionPerformed method runs.</p>
  * <p>
- * An ApplicationAction can have a `proxy` Action, i.e., another Action
- * that provides the `actionPerformed` method, the enabled/selected
+ * An ApplicationAction can have a <tt>proxy</tt> Action, i.e., another Action
+ * that provides the <tt>actionPerformed</tt> method, the enabled/selected
  * properties, and values for the Action's long and short descriptions. If the
  * proxy property is set, this ApplicationAction tracks all of the
- * aforementioned properties, and the `actionPerformed` method just calls
+ * aforementioned properties, and the <tt>actionPerformed</tt> method just calls
  * the proxy's
- * `actionPerformed` method. If a `proxySource` is specified, then
+ * <tt>actionPerformed` method. If a `proxySource</tt> is specified, then
  * it becomes the source of the ActionEvent that's passed to the proxy
- * `actionPeformed` method. Proxy action dispatching is as simple as
+ * <tt>actionPeformed</tt> method. Proxy action dispatching is as simple as
  * this:
  * ```java
  * public void actionPeformed(ActionEvent actionEvent) {
@@ -151,14 +151,14 @@ public class ApplicationAction extends AbstractAction {
     private PropertyChangeListener proxyPCL = null;
 
     /**
-     * Construct an `ApplicationAxtion` that implements an `@Action`.
+     * Construct an <tt>ApplicationAxtion</tt> that implements an `@Action`.
      * <p>
-     * If a `ResourceMap` is provided, then all fo the
+     * If a <tt>ResourceMap</tt> is provided, then all fo the
      * {@link javax.swing.Action Action} properties are initialized with the
      * values of resources whose key begins with `baseName`. `ResourceMap`
-     * keys are created by appending an `@Action` resource name, like
+     * keys are created by appending an <tt>@Action</tt> resource name, like
      * "`Action.shortDescription`", to the `@Action`'s baseName. For example,
-     * given an `@Action` defined like this:</p>
+     * given an <tt>@Action</tt> defined like this:</p>
      * ```java
      * @Action void actionBaseName() { }
      * ```
@@ -191,22 +191,22 @@ public class ApplicationAction extends AbstractAction {
      * character as the mnemonic. If `Action.mnemonic`/`Action.displayedMnemonic`
      * resources are also defined (an odd case), they will override the mnemonic
      * specified with the Action.text marker character.</li>
-     * <li>`Action.icon`<br>Used to initialize both `Action.SMALL_ICON` and 
+     * <li>`Action.icon`<br>Used to initialize both <tt>Action.SMALL_ICON</tt> and 
      * `Action.LARGE_ICON`.<br><hr><br>If Action.smallIcon or
      * Action.largeIcon resources are also defined, they will override the value
      * defined for Action.icon.</li>
      * <li>`Action.displayedMnemonicIndexKey`<br>The corresponding
-     * `javax.swing.Action` constant is only defined in Java SE 6. We will set the
+     * <tt>javax.swing.Action</tt> constant is only defined in Java SE 6. We will set the
      * Action property in earlier versions of Java, as well.<br><hr><br>
      * This has been deprecated as of Swing Application Framework 1.05 due to
      * the framework being updated to Java 11.</li></ul>
      *
-     * @param appAM the `ApplicationActionMap` for which this action is being
+     * @param appAM the <tt>ApplicationActionMap</tt> for which this action is being
      * constructed
-     * @param resourceMap initial `Action` properties are loaded from this
+     * @param resourceMap initial <tt>Action</tt> properties are loaded from this
      * `ResourceMap`
      * @param baseName the name of the `@Action`
-     * @param actionMethod unless a proxy is specified, `actionPerformed` calls
+     * @param actionMethod unless a proxy is specified, <tt>actionPerformed</tt> calls
      * this method
      * @param enabledProperty name of the enabled property
      * @param selectedProperty name of the selected property
@@ -297,10 +297,10 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * The name of the `@Action` `enabledProperty` whose value is returned
+     * The name of the <tt>@Action` `enabledProperty</tt> whose value is returned
      * by {@link #isEnabled() `isEnabled``, or `null`.
      *
-     * @return the name of the `enabledProperty` or `null`
+     * @return the name of the <tt>enabledProperty</tt> or `null`
      *
      * @see #isEnabled()
      */
@@ -309,10 +309,10 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * The name fo the `@Action` `selectedProperty` whose value is returned
+     * The name fo the <tt>@Action` `selectedProperty</tt> whose value is returned
      * by {@link #isSelected `isSelected``, or `null`.
      *
-     * @return the name of the `selectedProperty` or `null`
+     * @return the name of the <tt>selectedProperty</tt> or `null`
      *
      * @see #isSelected
      */
@@ -336,16 +336,16 @@ public class ApplicationAction extends AbstractAction {
      * Set the proxy for this action. If the proxy is non-`null` then we delegate
      * and/or track the following:
      * <ul>
-     * <li>`actionPerformed`<br>Our `actionPerformed` method calls
+     * <li>`actionPerformed`<br>Our <tt>actionPerformed</tt> method calls
      * the delegate's after the ActionEvent source to be the value of
      * `getProxySource`</li>
      * <li>`shortDescription`<br>If the proxy's `shortDescription`, i.e.,
      * the value for key {@link javax.swing.Action#SHORT_DESCRIPTION
-     * `SHORT_DESCRIPTION`` is not `null`, then set this action's `shortDescription`.
-     * Most Swing components use the `shortDescription` to initialize their
+     * <tt>SHORT_DESCRIPTION`</tt> is not `null`, then set this action's `shortDescription`.
+     * Most Swing components use the <tt>shortDescription</tt> to initialize their
      * tooltip.</li>
      * <li>`longDescription`<br>If the proxy's `longDescription`, i.e., the
-     * value for {@link javax.swing.Action#LONG_DESCRIPTION `LONG_DESCRIPTION`` is
+     * value for {@link javax.swing.Action#LONG_DESCRIPTION <tt>LONG_DESCRIPTION`</tt> is
      * not `null`, then set this action's `longDescription`.</li></ul>
      *
      * @see #setProxy(javax.swing.Action)
@@ -376,8 +376,8 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * Return the value that becomes the `ActionEvent` source before the
-     * `ActionEvent` is passed along to the proxy `Action`.
+     * Return the value that becomes the <tt>ActionEvent</tt> source before the
+     * <tt>ActionEvent</tt> is passed along to the proxy `Action`.
      *
      * @see #getProxy()
      * @see #setProxySource
@@ -390,10 +390,10 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * Set the value that becomes the `ActionEvent` source before the
-     * `ActionEvent` is passed along to the proxy `Action`.
+     * Set the value that becomes the <tt>ActionEvent</tt> source before the
+     * <tt>ActionEvent</tt> is passed along to the proxy `Action`.
      *
-     * @param source the `ActionEvent` source
+     * @param source the <tt>ActionEvent</tt> source
      * @see #getProxy()
      * @see #getProxySource()
      * @see ActionEvent#setSource(java.lang.Object)
@@ -579,17 +579,17 @@ public class ApplicationAction extends AbstractAction {
 
     /**
      * The name of this Action. This string begins with the name of the
-     * corresponding @Action method (unless the `name`` `@Action`
+     * corresponding @Action method (unless the <tt>name`</tt> `@Action`
      * parameter was specified.
      * <p>
      * This name is used as a prefix to look up action resources, and the
-     * `ApplicationContext` Framework uses it as the key for this `Action` in the
+     * <tt>ApplicationContext` Framework uses it as the key for this `Action</tt> in the
      * `ApplicationActionMaps`.</p>
      * 
      * <dl><dt>Note:</dt><dd>This property should not be confused with the
-     * {@link javax.swing.Action#NAME `Action.NAME`` key. That key is actually
-     * used to initialize the `text` properties of Swing components,
-     * which is why we call the corresponding `ApplicationAction` resource
+     * {@link javax.swing.Action#NAME <tt>Action.NAME`</tt> key. That key is actually
+     * used to initialize the <tt>text</tt> properties of Swing components,
+     * which is why we call the corresponding <tt>ApplicationAction</tt> resource
      * "`Action.text`", as in:
      * <pre>
      * myCloseButton.Action.text = Close
@@ -611,7 +611,7 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * Provides parameter values to `@Action` methods. By default, parameter
+     * Provides parameter values to <tt>@Action</tt> methods. By default, parameter
      * values are selected based exclusively on their type:
      * <table border=1>
      * <caption>Action Methods</caption>
@@ -625,15 +625,15 @@ public class ApplicationAction extends AbstractAction {
      * </tr>
      * <tr>
      * <td>`javax.swing.Action`</td>
-     * <td>This `ApplicationAction` object</td>
+     * <td>This <tt>ApplicationAction</tt> object</td>
      * </tr>
      * <tr>
      * <td>`ActionMap`</td>
-     * <td>The `ActionMap` that contains this `Action`</td>
+     * <td>The <tt>ActionMap</tt> that contains this `Action`</td>
      * </tr>
      * <tr>
      * <td>`ResourceMap`</td>
-     * <td>The `ResourceMap` of the `ActionMap` that contains this
+     * <td>The <tt>ResourceMap` of the `ActionMap</tt> that contains this
      * `Action`</td>
      * </tr>
      * <tr>
@@ -642,9 +642,9 @@ public class ApplicationAction extends AbstractAction {
      * </tr>
      * </table>
      * <p>
-     * `ApplicationAction` subclasses may also select values based on the value of
-     * the `Action.Parameter` annotation, which is passed along as the
-     * `pKey` argument to this method:</p>
+     * <tt>ApplicationAction</tt> subclasses may also select values based on the value of
+     * the <tt>Action.Parameter</tt> annotation, which is passed along as the
+     * <tt>pKey</tt> argument to this method:</p>
      * ```java
      * @Action
      * public void doAction(@Action.Parameter("myKey") String myParameter) {
@@ -653,13 +653,13 @@ public class ApplicationAction extends AbstractAction {
      * }
      * ```
      * <p>
-     * If `pType` and `pKey` are not recognized, this method calls
+     * If <tt>pType` and `pKey</tt> are not recognized, this method calls
      * {@link #actionFailed} with an `IllegalArgumentException`.
      *
      * @param pType parameter type
-     * @param pKey the value of the `@Action.Parameter` annotation
-     * @param actionEvent the `ActionEvent` that triggered this Action
-     * @return an `Object` representing this `ActionArgument`
+     * @param pKey the value of the <tt>@Action.Parameter</tt> annotation
+     * @param actionEvent the <tt>ActionEvent</tt> that triggered this Action
+     * @return an <tt>Object</tt> representing this `ActionArgument`
      */
     protected Object getActionArgument(Class pType, String pKey,
             ActionEvent actionEvent) {
@@ -749,8 +749,8 @@ public class ApplicationAction extends AbstractAction {
     /**
      * This method implements this `Action`'s behavior.
      * <p>
-     * If there is a proxy `Action` then call its `actionPerformed` method.
-     * Otherwise, call the `@Action` method with parameter values provided by
+     * If there is a proxy <tt>Action` then call its `actionPerformed</tt> method.
+     * Otherwise, call the <tt>@Action</tt> method with parameter values provided by
      * `getActionArgument()`. If anything goes wrong, call `actionFailed()`.
      *
      * @param e {@inheritDoc}
@@ -772,10 +772,10 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * If the proxy action is `null` and `enabledProperty` was specified,
-     * then return the value of the `enabled` property's is/get method applied to
+     * If the proxy action is <tt>null` and `enabledProperty</tt> was specified,
+     * then return the value of the <tt>enabled</tt> property's is/get method applied to
      * our `ApplicationActionMap`'s `actionsObject`. Otherwise, return the
-     * value of this `Action`'s `enabled` property.
+     * value of this <tt>Action`'s `enabled</tt> property.
      *
      * @return {@inheritDoc}
      * @see #setProxy(javax.swing.Action)
@@ -797,10 +797,10 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * If the proxy action is `null` and `enabledProperty` was specified,
-     * the set the value of the `enabled` property by invoking the corresponding
-     * `set` method on our ApplicationActionMap`'s `actionsObject`.
-     * Otherwise, set the value of this `Action`'s `enabled` property.
+     * If the proxy action is <tt>null` and `enabledProperty</tt> was specified,
+     * the set the value of the <tt>enabled</tt> property by invoking the corresponding
+     * <tt>set</tt> method on our ApplicationActionMap`'s `actionsObject`.
+     * Otherwise, set the value of this <tt>Action`'s `enabled</tt> property.
      *
      * @param enabled {@inheritDoc}
      * @see #setProxy(javax.swing.Action)
@@ -821,12 +821,12 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * If the proxy action is `null` and `selectedProperty` was specified,
-     * then return the value of the `selected` property's is/get method applied to
+     * If the proxy action is <tt>null` and `selectedProperty</tt> was specified,
+     * then return the value of the <tt>selected</tt> property's is/get method applied to
      * our `ApplicationActionMap`'s `actionsObject`. Otherwise, return the
-     * value of this `Action`'s `enabled` property.
+     * value of this <tt>Action`'s `enabled</tt> property.
      *
-     * @return `true` if this `Action`'s `JTobbleButton` is selected
+     * @return <tt>true` if this `Action`'s `JTobbleButton</tt> is selected
      * @see #setProxy(javax.swing.Action)
      * @see #setSelected(boolean)
      * @see ApplicationActionMap#getActionsObject()
@@ -848,10 +848,10 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * If the proxy action is `null` and `selectedProperty` was specified,
-     * then set the value of the `selected` property by invoking the corresponding
-     * `set` method on our `ApplicationActionMap`'s `actionsObject`.
-     * Otherwise, set the value of this `Action`'s `selected` property.
+     * If the proxy action is <tt>null` and `selectedProperty</tt> was specified,
+     * then set the value of the <tt>selected</tt> property by invoking the corresponding
+     * <tt>set</tt> method on our `ApplicationActionMap`'s `actionsObject`.
+     * Otherwise, set the value of this <tt>Action`'s `selected</tt> property.
      *
      * @param selected this `Action`'s `JToggleButton`'s value
      * @see #setProxy(javax.swing.Action)
@@ -874,8 +874,8 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * Keeps the `@Action selectedProperty` in sync when the value of
-     * `key` is `Action.SELECTED_KEY`.
+     * Keeps the <tt>@Action selectedProperty</tt> in sync when the value of
+     * <tt>key</tt> is `Action.SELECTED_KEY`.
      *
      * @param key {@inheritDoc}
      * @param value {@inheritDoc}
@@ -931,7 +931,7 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * Returns a string representation of this `ApplicationAction` that
+     * Returns a string representation of this <tt>ApplicationAction</tt> that
      * should be useful for debugging. If the action is enabled, its name is
      * enclosed by parentheses; if it is selected, then a "+" appears after the
      * name. If the action will appear with a text label, then that is included

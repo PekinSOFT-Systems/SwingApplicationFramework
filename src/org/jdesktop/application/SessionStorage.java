@@ -62,12 +62,12 @@ import javax.swing.table.TableColumn;
  * restoring that state when the application is restarted. Session state is
  * stored on a per component basis, and only for components with a
  * {@link java.awt.Component#getName() name} and for which a 
- * `SessionState.Property` object has been defined. SessionState Properties that
- * preserve the `bounds` `Rectangle` for windows, the `dividerLocation` for 
- * `JSplitPane`s and the `selectedIndex` for
+ * <tt>SessionState.Property</tt> object has been defined. SessionState Properties that
+ * preserve the <tt>bounds` `Rectangle` for windows, the `dividerLocation</tt> for 
+ * <tt>JSplitPane`s and the `selectedIndex</tt> for
  * `JTabbedPane`s are defined by default. The `ApplicationContext`
  * {@link ApplicationContext#getSessionStorage getSessionStorage} method
- * provides a shared `SessionStorage` object.</p>
+ * provides a shared <tt>SessionStorage</tt> object.</p>
  * <p>
  * A typical Application saves session state in its {@link Application#shutdown
  * shutdown} method, and then restores session state in {@link Application#startup
@@ -94,24 +94,24 @@ import javax.swing.table.TableColumn;
  * </pre>
  * <p>
  * In this example, the bounds of `mainFrame`, as well as the session
- * state for any of its `JSplitPane` or `JTabbedPane` will be saved
+ * state for any of its <tt>JSplitPane` or `JTabbedPane</tt> will be saved
  * when the application shuts down, and restored when the application starts up
  * again.
  * </p>
  * <dl><dt>Note:</dt><dd>Error handling has been omitted for this example.</dd>
  * </dl><p>
  * Session state is stored locally, relative to the user's home directory, by
- * the `LocalStorage` {@link LocalStorage#save save` and {@link
- * LocalStorage#load load} methods. The `startup` method must set the
- * `ApplicationContext` `vendorId` and `applicationId`
+ * the <tt>LocalStorage` {@link LocalStorage#save save</tt> and {@link
+ * LocalStorage#load load} methods. The <tt>startup</tt> method must set the
+ * <tt>ApplicationContext` `vendorId</tt> and `applicationId`
  * properties to ensure that the correct {@link LocalStorage#getDirectory() local
  * directory} is selected on all platforms. For example on Windows XP, the full
- * pathname for filename `"session.xml"` is typically:</p>
+ * pathname for filename <tt>"session.xml"</tt> is typically:</p>
  * <pre>
  * ${userHome}\Application Data\${vendorId}\${applicationId}\session.xml
  * </pre>
  * <p>
- * Where the value of `${userHome`` is the value of the Java System
+ * Where the value of <tt>${userHome`</tt> is the value of the Java System
  * Property `"user.home"`. On Solaris or Linux, the file is:</p>
  * <pre>
  * ${userHome}/.${applicationId}/session.xml
@@ -170,7 +170,7 @@ public class SessionStorage {
      * </tr>
      * </table>
      * <p>
-     * Applications typically would not create a `SessionStorage` object
+     * Applications typically would not create a <tt>SessionStorage</tt> object
      * directly, they would use the shared ApplicationContext value:</p>
      * <pre>
      * ApplicationContext ctx = Application.getInstance(MyApplication.class).getContext();
@@ -199,9 +199,9 @@ public class SessionStorage {
 
     /* Acted on the FIX-ME comment from the original and added JavaDoc */
     /**
-     * Retrieves the `ApplicationContext` for this `SessionStorage`
+     * Retrieves the <tt>ApplicationContext</tt> for this `SessionStorage`
      * object. Since session states are stored per application, the
-     * `ApplicationContext` determines where the `"session.xml"`
+     * <tt>ApplicationContext</tt> determines where the `"session.xml"`
      * file is stored on the local system.
      *
      * @see ApplicationContext
@@ -337,7 +337,7 @@ public class SessionStorage {
      * Saves the state of each named component in the specified hierarchy to a
      * file using {@link LocalStorage#save(java.lang.Object, java.lang.String) 
      * LocalStorage.save(fileName)}. Each component is visited in breadth-first
-     * order: if a `Property` {@link #getProperty(Component) exists` for
+     * order: if a <tt>Property` {@link #getProperty(Component) exists</tt> for
      * that component, and the component has a {@link java.awt.Component#getName()
      * name}, then its {@link Property#getSessionState state} is saved.
      * <p>
@@ -374,7 +374,7 @@ public class SessionStorage {
      * </pre>
      *
      * @param root the root of the Component hierarchy to be saved
-     * @param fileName the `LocalStorage` filename
+     * @param fileName the <tt>LocalStorage</tt> filename
      * @throws IOException in the event some sort of input/output error occurs
      *
      * @see #restore
@@ -440,7 +440,7 @@ public class SessionStorage {
      * state is {@link Property#setSessionState restored}.
      *
      * @param root the root of the Component hierarchy to be restored
-     * @param fileName the `LocalStorage` filename
+     * @param fileName the <tt>LocalStorage</tt> filename
      * @throws IOException In the event errors occur while reading filename
      * @see #save(java.awt.Component, java.lang.String)
      * @see ApplicationContext#getLocalStorage()
@@ -459,7 +459,7 @@ public class SessionStorage {
     }
 
     /**
-     * This Java Bean records the `columnWidths` for all of the columns in
+     * This Java Bean records the <tt>columnWidths</tt> for all of the columns in
      * a JTable. A width of -1 is used to mark `TableColumn`s that are not
      * resizable.
      *
@@ -495,7 +495,7 @@ public class SessionStorage {
     }
 
     /**
-     * A `sessionState` property for JTable.
+     * A <tt>sessionState</tt> property for JTable.
      * <p>
      * This class defines how the sessionState for `JTable`s is
      * {@link TableProperty#getSessionState(java.awt.Component) saved} and null     {@link TableProperty#setSessionState(java.awt.Component, java.lang.Object) 
@@ -503,7 +503,7 @@ public class SessionStorage {
      * restore the width of each resizable `TableColumn`, if the number of
      * columns have not changed.</p>
      * <p>
-     * `TableProperty` is registered for `JTable.class` by default,
+     * <tt>TableProperty` is registered for `JTable.class</tt> by default,
      * so this class applies to JTable and any subclass of JTable. One can
      * override the default with the {@link #putProperty putProperty}
      * method.</p>
@@ -532,12 +532,12 @@ public class SessionStorage {
          * {@link TableColumn#getResizable resizable}. A width of -1 is used to
          * mark `TableColum`s that are not resizable.
          * <p>
-         * Throws an `IllegalArgumentException` if `Component c` is
+         * Throws an <tt>IllegalArgumentException` if `Component c</tt> is
          * not a non-null `JTable`.</p>
          *
-         * @param c the `JTable` whose columnWidths will be saved in a
-         * `TableState` object
-         * @return the `TableState` object or null
+         * @param c the <tt>JTable</tt> whose columnWidths will be saved in a
+         * <tt>TableState</tt> object
+         * @return the <tt>TableState</tt> object or null
          *
          * @see #setSessionState(java.awt.Component, java.lang.Object)
          * @see TableState
@@ -566,12 +566,12 @@ public class SessionStorage {
          * Restore the width of each resizable `TableColumn`, if the
          * number of columns have not changed.
          * <p>
-         * Throws an `IllegalArgumentException` if `c` is not a
-         * `JTable` or if `state` is not an instance of
+         * Throws an <tt>IllegalArgumentException` if `c</tt> is not a
+         * <tt>JTable` or if `state</tt> is not an instance of
          * {@link TableState}.
          *
          * @param c the JTable whose column widths are to be restored
-         * @param state the `TableState` to be restored
+         * @param state the <tt>TableState</tt> to be restored
          *
          * @see #getSessionState(java.awt.Component)
          * @see TableState
@@ -602,7 +602,7 @@ public class SessionStorage {
     }
 
     /**
-     * Defines the `sessionState` property. The value of this property is
+     * Defines the <tt>sessionState</tt> property. The value of this property is
      * the GUI state that should be preserved across sessions for the specified
      * GUI component. The type of sessionState values must be one of those
      * supported by {@link java.beans.XMLEncoder XMLEncoder} and
@@ -616,36 +616,36 @@ public class SessionStorage {
     public interface Property {
 
         /**
-         * Return the value of the `sessionState` property, typically a
-         * Java bean or a Collection that defines the `Component` state
+         * Return the value of the <tt>sessionState</tt> property, typically a
+         * Java bean or a Collection that defines the <tt>Component</tt> state
          * that should be preserved across Application sessions. This value will
          * be stored with {@link java.beans.XMLEncoder XMLEncoder}, loaded with
          * {@link java.beans.XMLDecoder XMLDecoder}, and passed to 
-         * `setSessionState` to restore the Component's state.
+         * <tt>setSessionState</tt> to restore the Component's state.
          *
          * @param c the Component
-         * @return the `sessionState` object for Component `c`
+         * @return the <tt>sessionState</tt> object for Component `c`
          * @see #setSessionState
          */
         Object getSessionState(Component c);
 
         /**
-         * Restore Component `c`'s `sessionState` from the specified
+         * Restore Component <tt>c`'s `sessionState</tt> from the specified
          * object.
          *
          * @param c the Component
-         * @param state the value of the `sessionState` property
+         * @param state the value of the <tt>sessionState</tt> property
          * @see #getSessionState(java.awt.Component)
          */
         void setSessionState(Component c, Object state);
     }
 
     /**
-     * This Java Bean defines the `Window` state preserved across
+     * This Java Bean defines the <tt>Window</tt> state preserved across
      * sessions: the Window's `bounds`, and the bounds of the Window's
      * `GraphicsConfiguration`, i.e., the bounds of the screen on which
      * the Window appears. If the Window is actually a Frame, we also store its
-     * extendedState. `WindowState` objects are stored and restored by the
+     * extendedState. <tt>WindowState</tt> objects are stored and restored by the
      * {@link WindowProperty WindowProperty} class.
      */
     public static class WindowState {
@@ -709,18 +709,18 @@ public class SessionStorage {
     }
 
     /**
-     * A `sessionState` property for Window.
+     * A <tt>sessionState</tt> property for Window.
      * <p>
      * This class defines how th esession state for `Window`s is
      * {@link WindowProperty#getSessionState(java.awt.Component) saved} and null
      * null null null     {@link WindowProperty#setSessionState(java.awt.Component, java.lang.Object) 
      * restored} in terms of a property called `sessionState`. The
-     * Window's `bounds Rectangle` is saved and restored if the dimensions
+     * Window's <tt>bounds Rectangle</tt> is saved and restored if the dimensions
      * of the Window's screen have not changed.</p>
      * <p>
-     * `WindowProperty` is registered for `Window.class` by default,
+     * <tt>WindowProperty` is registered for `Window.class</tt> by default,
      * so this class applies to the AWT `Window`, `Dialog`, and
-     * `Frame` class, as well as their Swing counterparts:
+     * <tt>Frame</tt> class, as well as their Swing counterparts:
      * `JWindow}, `JDialog`, and `JFrame`.</p>
      *
      * @see #save(java.awt.Component, java.lang.String)
@@ -746,12 +746,12 @@ public class SessionStorage {
          * Returns a {@link WindowState WindowState} object for
          * `Window c`.
          * <p>
-         * Throws an `IllegalArgumentException` if `Component c` is
+         * Throws an <tt>IllegalArgumentException` if `Component c</tt> is
          * not a non-null `Window`.
          *
-         * @param c the `Window` whose bounds will be stored in a
-         * `WindowState` object
-         * @return the `WindowState` object
+         * @param c the <tt>Window</tt> whose bounds will be stored in a
+         * <tt>WindowState</tt> object
+         * @return the <tt>WindowState</tt> object
          * @see #setSessionState(java.awt.Component, java.lang.Object)
          * @see WindowState
          */
@@ -791,7 +791,7 @@ public class SessionStorage {
          * isLocationByPlatform} property, which indicates that native Window
          * manager should pick the Window's location, is false. More precisely:
          * <p>
-         * If `state` is non-null, and Window `c`'s `GraphicsConfiguration`
+         * If <tt>state</tt> is non-null, and Window `c`'s `GraphicsConfiguration`
          * {@link GraphicsConfiguration#getBounds bounds}
          * matches the {@link WindowState#getGraphicsConfiguration() WindowState's
          * value}, and Window `c`'s {@link Window#isLocationByPlatform()
@@ -799,12 +799,12 @@ public class SessionStorage {
          * location to the value
          * {@link WindowState#getBounds() saved value}.</p>
          * <p>
-         * Throws an `IllegalArgumentException` if `c` is not a
-         * `Window` or if `state` is non-null but not an instance of
+         * Throws an <tt>IllegalArgumentException` if `c</tt> is not a
+         * <tt>Window` or if `state</tt> is non-null but not an instance of
          * {@link WindowState}.</p>
          *
          * @param c the Window whose state is to be restored
-         * @param state the `WindowState` to be restored
+         * @param state the <tt>WindowState</tt> to be restored
          * @see #getSessionState(java.awt.Component)
          * @see WindowState
          */
@@ -850,8 +850,8 @@ public class SessionStorage {
     }
 
     /**
-     * This Java Bean records the `selectedIndex` and `tabCount`
-     * properties of a `JTabbedPane`. A `TabbedPaneState` object
+     * This Java Bean records the <tt>selectedIndex</tt> and `tabCount`
+     * properties of a <tt>JTabbedPane`. A `TabbedPaneState</tt> object
      * created by {@link TabbedPaneProperty#getSessionState} and used to restore
      * the selected tab by {@link TabbedPaneProperty#setSessionState}.
      *
@@ -907,15 +907,15 @@ public class SessionStorage {
     }
 
     /**
-     * A `sessionState` property for `JTabbedPane`s.
+     * A <tt>sessionState</tt> property for `JTabbedPane`s.
      * <p>
      * This class defines how the session state for `JTabbedPane`s is
      * {@link WindowProperty#getSessionState(java.awt.Component) saved} and null null     {@link WindowProperty#setSessionState(java.awt.Component, java.lang.Object) 
      * restored} in terms of a property called `sessionState`. The
-     * JTabbedPane's `selectedIndex` is saved and restored if the number
+     * JTabbedPane's <tt>selectedIndex</tt> is saved and restored if the number
      * of tabs (`tabCount`) has not changed.</p>
      * <p>
-     * `TabbedPaneProperty` is registered for `JTabbedPane.class` by
+     * <tt>TabbedPaneProperty` is registered for `JTabbedPane.class</tt> by
      * default, so this class applies to JTabbedPane and any subclass of
      * JTabbedPane. One can override the default with the {@link #putProperty
      * putProperty} method.
@@ -939,12 +939,12 @@ public class SessionStorage {
          * Returns a {@link TabbedPaneState TabbedPaneState} object for 
          * `JTabbedPane c`.
          * <p>
-         * Throws an `IllegalArgumentException` if `Component c` is
+         * Throws an <tt>IllegalArgumentException` if `Component c</tt> is
          * not a non-null `JTabbedPane`.
          *
-         * @param c the `JTabbedPane` whose selectedIndex will be recorded
-         * in a `TabbedPaneState` object
-         * @return the `TabbedPaneState` object
+         * @param c the <tt>JTabbedPane</tt> whose selectedIndex will be recorded
+         * in a <tt>TabbedPaneState</tt> object
+         * @return the <tt>TabbedPaneState</tt> object
          * @see #setSessionState(java.awt.Component, java.lang.Object)
          * @see TabbedPaneState
          */
@@ -958,15 +958,15 @@ public class SessionStorage {
         }
 
         /**
-         * Restore the `JTabbedPane`'s `selectedIndex` property if
+         * Restore the <tt>JTabbedPane`'s `selectedIndex</tt> property if
          * the number of {@link JTabbedPane#getTabCount() tabs} has not changed.
          * <p>
-         * Throws an `IllegalArgumentException` if `c` is not a
-         * `JTabbedPane` or if `state` is non-null but is not an
+         * Throws an <tt>IllegalArgumentException` if `c</tt> is not a
+         * <tt>JTabbedPane` or if `state</tt> is non-null but is not an
          * instance of {@link TabbedPaneState}.
          *
          * @param c the JTabbedPane whose state is to be restored
-         * @param state the `TabbedPaneState` to restore
+         * @param state the <tt>TabbedPaneState</tt> to restore
          */
         @Override
         public void setSessionState(Component c, Object state) {
@@ -986,9 +986,9 @@ public class SessionStorage {
     }
 
     /**
-     * This Java Bean records the `dividerLocation` and
-     * `orientation` properties of a `JSplitPane`. A
-     * `SplitPaneState` object created by
+     * This Java Bean records the <tt>dividerLocation</tt> and
+     * <tt>orientation</tt> properties of a `JSplitPane`. A
+     * <tt>SplitPaneState</tt> object created by
      * {@link SplitPaneProperty#getSessionState} and used to restore the
      * orientation by {@link SplitPaneProperty#setSessionState}.
      *
@@ -1042,15 +1042,15 @@ public class SessionStorage {
     }
 
     /**
-     * A `sessionState` property for JSplitPane.
+     * A <tt>sessionState</tt> property for JSplitPane.
      * <p>
      * This class defines how the session state for `JSplitPane`s is
      * {@link WindowProperty#getSessionState(java.awt.Component) saved} and null null     {@link WindowProperty#setSessionState(java.awt.Component, java.lang.Object) 
      * restored} in terms of a property called `sessionState`. The
-     * JSplitPane's `dividerLocation` is saved and restored if its
-     * `orientation` has not changed</p>
+     * JSplitPane's <tt>dividerLocation</tt> is saved and restored if its
+     * <tt>orientation</tt> has not changed</p>
      * <p>
-     * `SplitPaneProperty` is registered for `JSplitPane.class` by
+     * <tt>SplitPaneProperty` is registered for `JSplitPane.class</tt> by
      * default, so this class applies to JSplitPane and any subclass of
      * JSplitPane. One can override the default with the
      * {@link #putProperty putProperty} method.
@@ -1072,13 +1072,13 @@ public class SessionStorage {
 
         /**
          * Returns a {@link SplitPaneState SplitPaneState} object for 
-         * `JSplitPane c`. If the split pane's `dividerLocation` is -1,
+         * <tt>JSplitPane c`. If the split pane's `dividerLocation</tt> is -1,
          * indicating that either the divider has not been moved, or it has been
          * reset, then return null.
          *
-         * @param c the `JSplitPane` whose dividerLocation will be
-         * recorded in a `SplitPaneState` object
-         * @return the `SplitPaneState` object
+         * @param c the <tt>JSplitPane</tt> whose dividerLocation will be
+         * recorded in a <tt>SplitPaneState</tt> object
+         * @return the <tt>SplitPaneState</tt> object
          * @see #setSessionState(java.awt.Component, java.lang.Object)
          * @see SplitPaneState
          */
@@ -1092,15 +1092,15 @@ public class SessionStorage {
         }
 
         /**
-         * Restore the `JSplitPane`'s `dividerLocation` property if
+         * Restore the <tt>JSplitPane`'s `dividerLocation</tt> property if
          * its {@link JSplitPane#getOrientation() orientation} has not changed.
          * <p>
-         * Throws an `IllegalArgumentException` if `c` is not a
-         * `JSplitPane` or if `state` is non-null but not an
+         * Throws an <tt>IllegalArgumentException` if `c</tt> is not a
+         * <tt>JSplitPane` or if `state</tt> is non-null but not an
          * instance of {@link SplitPaneState}.
          *
          * @param c the JSplitPane whose state is to be restored
-         * @param state the `SplitPaneState` to be restored
+         * @param state the <tt>SplitPaneState</tt> to be restored
          * @see #getSessionState(java.awt.Component)
          * @see SplitPaneState
          */
@@ -1127,16 +1127,16 @@ public class SessionStorage {
     }
 
     /**
-     * Returns the `Property` object that was {@link #putProperty
+     * Returns the <tt>Property</tt> object that was {@link #putProperty
      * registered} for the specified class or a superclass. If no Property has
      * been registered, return null. To lookup the session state
-     * `Property` for a `Component`, use
+     * <tt>Property</tt> for a `Component`, use
      * {@link #getProperty(java.awt.Component) }.
      * <p>
-     * Throws an `IllegalArgumentException` if `cls` is null.</p>
+     * Throws an <tt>IllegalArgumentException` if `cls</tt> is null.</p>
      *
-     * @param cls the class to which the returned `Property` applies
-     * @return the `Property` registered with `putProperty` for the
+     * @param cls the class to which the returned <tt>Property</tt> applies
+     * @return the <tt>Property` registered with `putProperty</tt> for the
      * specified class or the first one registered for a superclass of
      * `cls`
      *
@@ -1160,16 +1160,16 @@ public class SessionStorage {
     }
     
     /**
-     * Register a `Property` for the specified class. One can clear the
-     * `Property` for a class by setting the entry to null:
+     * Register a <tt>Property</tt> for the specified class. One can clear the
+     * <tt>Property</tt> for a class by setting the entry to null:
      * <pre>
      * sessionStorage.putProperty(myClass.class, null);
      * </pre>
      * <p>
-     * Throws an `IllegalArgumentException` if `cls` is null.</p>
+     * Throws an <tt>IllegalArgumentException` if `cls</tt> is null.</p>
      * 
-     * @param cls the class to which the `Property` applies
-     * @param property the `Property` object to register or null.
+     * @param cls the class to which the <tt>Property</tt> applies
+     * @param property the <tt>Property</tt> object to register or null.
      * 
      * @see #getProperty(java.awt.Component) 
      * @see #getProperty(java.lang.Class) 

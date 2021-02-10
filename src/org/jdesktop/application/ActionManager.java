@@ -38,9 +38,9 @@ import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
 
 /**
- * The application's `ActionManager` provides read-only cached access to
+ * The application's <tt>ActionManager</tt> provides read-only cached access to
  * `ActionMap`s that contain one entry for each method marked with the
- * `@Action` annotation in a class.
+ * <tt>@Action</tt> annotation in a class.
  * 
  * @see ApplicationContext#getActionMap(Object)
  * @see ApplicationActionMap
@@ -62,7 +62,7 @@ public class ActionManager {
     /**
      * Creates a default instance of the ActionManager class.
      * 
-     * @param context the `ApplicationContext` to which this `
+     * @param context the <tt>ApplicationContext</tt> to which this `
      *          ActionManager} belongs
      */
     public ActionManager (ApplicationContext context) {

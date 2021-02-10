@@ -366,7 +366,7 @@ public class DockingDesktopManager implements DesktopManager {
     }
     
     /**
-     * Returns the direct child of a `JDesktopPane` that is
+     * Returns the direct child of a <tt>JDesktopPane</tt> that is
      * the parent of the specified component.
      * @param component
      * @return the specified component or one of its parents that is a direct child of a JDesktopPane.
