@@ -122,7 +122,7 @@ public class MessageBox {
         msg += ex.getMessage() + "\n\nException: ";
         msg += ex.getClass().getSimpleName();
         msg += "\n\nSee also the application log: " 
-                + Application.getProperties().getProperty(
+                + Application.getInstance().getContext().getResourceMap().getString(
                         "Application.app.log.folder");
 
         JOptionPane.showMessageDialog(null, 
@@ -132,7 +132,7 @@ public class MessageBox {
     }
     
     /**
-     * Standarized method of displaying a question to the user.
+     * Standardized method of displaying a question to the user.
      * <p>
      * This method should be used to request confirmation from the user for any
      * particular action they may have taken. Mostly, this method should be used

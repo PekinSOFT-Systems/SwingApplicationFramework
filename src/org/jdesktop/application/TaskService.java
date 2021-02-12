@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2006-2021 PekinSOFT Systems
+ * Copyright (C) 2006 Sun Microsystems, Inc.
+ * Copyright (C) 2021 PekinSOFT Systems
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,27 +14,28 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * *****************************************************************************
- * Class Name: TaskService.java
- *     Author: Sean Carrick <sean at pekinsoft dot com>
- *    Created: Jan 16 2021
- * 
- *    Purpose:
  * 
  * *****************************************************************************
- * CHANGE LOG:
- * 
- * Date        By                   Reason
- * ----------  -------------------  --------------------------------------------
- * 01/16/2021  Sean Carrick          Initial Creation.
+ *  Project    :   SwingApplicationFramework
+ *  Class      :   TaskService.java
+ *  Author     :   Sean Carrick
+ *  Created    :   Feb 11, 2021 @ 6:57:44 PM
+ *  Modified   :   Feb 11, 2021
+ *  
+ *  Purpose:     See class JavaDoc comment.
+ *  
+ *  Revision History:
+ *  
+ *  WHEN          BY                   REASON
+ *  ------------  -------------------  -----------------------------------------
+ *  ??? ??, 2006  Hans Muller          Initial creation.
+ *  Feb 11, 2021  Sean Carrick         Updated to Java 11.
  * *****************************************************************************
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.AbstractBean;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,15 +46,19 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
 
 /**
+ * @author Hans Muller (Original Author) &lt;current email unknown&gt;
+ * @author Sean Carrick (Updater) &lt;sean at pekinsoft dot com&gt;
  *
- * @author Sean Carrick
+ * @version 1.05
+ * @since 1.03
  */
 public class TaskService extends AbstractBean {
+
     private final String name;
     private final ExecutorService executorService;
     private final List<Task> tasks;
     private final PropertyChangeListener taskPCL;
-    
+
     public TaskService(String name, ExecutorService executorService) {
         if (name == null) {
             throw new IllegalArgumentException("null name");
@@ -60,27 +66,26 @@ public class TaskService extends AbstractBean {
         if (executorService == null) {
             throw new IllegalArgumentException("null executorService");
         }
-        
         this.name = name;
         this.executorService = executorService;
         this.tasks = new ArrayList<>();
         this.taskPCL = new TaskPCL();
     }
-    
+
     public TaskService(String name) {
         this(name, new ThreadPoolExecutor(
-                3,  // corePool size
+                3, // corePool size
                 10, // maximumPool size
-                11, TimeUnit.SECONDS,   // non-core threads, time to live
+                1L, TimeUnit.SECONDS, // non-core threads time to live
                 new LinkedBlockingQueue<Runnable>()));
     }
-    
+
     public final String getName() {
         return name;
     }
-    
+
     private List<Task> copyTasksList() {
-        synchronized(tasks) {
+        synchronized (tasks) {
             if (tasks.isEmpty()) {
                 return Collections.emptyList();
             } else {
@@ -88,29 +93,24 @@ public class TaskService extends AbstractBean {
             }
         }
     }
-    
+
     private class TaskPCL implements PropertyChangeListener {
+
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            String propertyName = evt.getPropertyName();
-            
+        public void propertyChange(PropertyChangeEvent e) {
+            String propertyName = e.getPropertyName();
             if ("done".equals(propertyName)) {
-                Task task = (Task) evt.getSource();
-                
+                Task task = (Task) (e.getSource());
                 if (task.isDone()) {
                     List<Task> oldTaskList, newTaskList;
-                    
-                    synchronized(task) {
+                    synchronized (tasks) {
                         oldTaskList = copyTasksList();
                         tasks.remove(task);
                         task.removePropertyChangeListener(taskPCL);
                         newTaskList = copyTasksList();
-                    };
-                
+                    }
                     firePropertyChange("tasks", oldTaskList, newTaskList);
-                    
                     Task.InputBlocker inputBlocker = task.getInputBlocker();
-                    
                     if (inputBlocker != null) {
                         inputBlocker.unblock();
                     }
@@ -118,10 +118,9 @@ public class TaskService extends AbstractBean {
             }
         }
     }
-    
+
     private void maybeBlockTask(Task task) {
         final Task.InputBlocker inputBlocker = task.getInputBlocker();
-        
         if (inputBlocker == null) {
             return;
         }
@@ -129,17 +128,14 @@ public class TaskService extends AbstractBean {
             if (SwingUtilities.isEventDispatchThread()) {
                 inputBlocker.block();
             } else {
-                Runnable doBlockTask = new Runnable() {
-                    public void run() {
-                        inputBlocker.block();
-                    }
+                Runnable doBlockTask = () -> {
+                    inputBlocker.block();
                 };
-                
                 SwingUtilities.invokeLater(doBlockTask);
             }
         }
     }
-    
+
     public void execute(Task task) {
         if (task == null) {
             throw new IllegalArgumentException("null task");
@@ -147,13 +143,10 @@ public class TaskService extends AbstractBean {
         if (!task.isPending() || (task.getTaskService() != null)) {
             throw new IllegalArgumentException("task has already been executed");
         }
-        
         task.setTaskService(this);
-        
         // TBD: what if task has already been submitted?
         List<Task> oldTaskList, newTaskList;
-        
-        synchronized(tasks) {
+        synchronized (tasks) {
             oldTaskList = copyTasksList();
             tasks.add(task);
             newTaskList = copyTasksList();
@@ -163,29 +156,28 @@ public class TaskService extends AbstractBean {
         maybeBlockTask(task);
         executorService.execute(task);
     }
-    
+
     public List<Task> getTasks() {
         return copyTasksList();
     }
-    
+
     public final void shutdown() {
         executorService.shutdown();
     }
-    
+
     public final List<Runnable> shutdownNow() {
         return executorService.shutdownNow();
     }
-    
-    public final boolean isShutDown() {
+
+    public final boolean isShutdown() {
         return executorService.isShutdown();
     }
-    
+
     public final boolean isTerminated() {
         return executorService.isTerminated();
     }
-    
-    public final boolean awaitTermination(long timeout, TimeUnit unit) 
-            throws InterruptedException {
-        return executorService.awaitTermination(timeout, TimeUnit.DAYS);
+
+    public final boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
+        return executorService.awaitTermination(timeout, unit);
     }
 }

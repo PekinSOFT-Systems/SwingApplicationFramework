@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import org.jdesktop.application.LocalStorage;
 
 /**
  *
@@ -224,8 +225,8 @@ public class Logger {
         //+ enclose it in a try...catch() block. We will also need to do this
         //+ anytime we use the log field.
         try {
-            this.log = new FileWriter(Application.getProperties().getProperty(
-                    "Application.app.logs.folder") + fileName);
+            File logDir = Application.getInstance().getContext().getLocalStorage().getDirectory();
+            this.log = new FileWriter(logDir + fileName);
         } catch (IOException ex) {
             // We are going to simply show a message box to the user explaining
             //+ that logging setup failed and then we will turn off logging.

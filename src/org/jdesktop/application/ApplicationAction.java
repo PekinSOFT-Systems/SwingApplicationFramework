@@ -15,121 +15,116 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * *****************************************************************************
- * Project    :   SwingApplicationFramework
- * Class      :   ApplicationAction.java
- * Author     :   Sean Carrick <sean at pekinsoft dot com>
- * Created    :   Jan 30, 2021 @ 2:08:08 PM
- * Modified   :   Jan 30, 2021
+ *  Project    :   SwingApplicationFramework
+ *  Class      :   ApplicationAction.java
+ *  Author     :   Sean Carrick
+ *  Created    :   Feb 10, 2021 @ 8:51:37 PM
+ *  Modified   :   Feb 10, 2021
  *  
- * Purpose:
- * 	
- * Revision History:
+ *  Purpose:     See class JavaDoc comment.
  *  
- * WHEN          BY                  REASON
- * ------------  ------------------- -------------------------------------------
- * Jan 30, 2021     Sean Carrick             Initial creation.
+ *  Revision History:
+ *  
+ *  WHEN          BY                   REASON
+ *  ------------  -------------------  -----------------------------------------
+ *  ??? ??, 2006  Hans Muller          Initial creation.
+ *  Feb 10, 2021  Sean Carrick         Update to Java 11.
  * *****************************************************************************
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.utils.Logger;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.Icon;
 import javax.swing.KeyStroke;
 
 /**
- * The {@link javax.swing.Action} class used to implement the
- * <tt>@Action</tt> annotation. This class is typically not instantiated directly, it's 
- * created as a side effect of constructing an `ApplicationActionMap`:
+ * The {@link javax.swing.Action} class used to implement the <code>&#064;Action
+ * </code> annotation. This class is typically not instantiated directly, it's 
+ * created as a side effect of constructing an <code>ApplicationActionMap</code>:
  * ```java
  * public class MyActions {
- *     @Action
- *     public void anAction() {
- *         // An @Action named "anAction"
- *     }
+ *     &#064;Action public void anAction() { }  // an &#064;Action named "anAction"
  * }
- *
  * ApplicationContext ac = ApplicationContext.getInstance();
  * ActionMap actionMap = ac.getActionMap(new MyActions());
  * myButton.setAction(actionMap.get("anAction"));
  * ```
  * <p>
- * When an ApplicationAction is constructed, it initializes all of its
- * properties from the specified `ResourceMap`. Resource names must match
- * the `@Action`'s name, which is the name of the corresponding method, or
- * the value of the optional <tt>@Action</tt> name parameter. To initialize the
- * text and shortDescription properties of the action named `"anAction"`
- * in the previous example, one would define two resources:
+ * When an ApplicationAction is constructed, it initializes all of its properties 
+ * from the specified <code>ResourceMap</code>. Resource names must match the 
+ * <code>@Action's</code> name, which is the name of the corresponding method, or
+ * the value of the optional <code>@Action</code> name parameter. To initialize 
+ * the text and shortDescription properties of the action named <code>"anAction"
+ * </code> in the previous example, one would define two resources:</p>
  * <pre>
  * anAction.Action.text = Button/Menu/etc label text for anAction
- * anAction.Ation.shortDescription = Tooltip text for anAction
+ * anAction.Action.shortDescription = Tooltip text for anAction
  * </pre>
  * <p>
  * A complete description of the mapping between resources and Action properties
- * can be found in the ApplicationAction {@link #ApplicationAction constructor}
+ * can be found in the ApplicationAction {@link #ApplicationAction constructor} 
  * documentation.</p>
  * <p>
- * An ApplicationAction's <tt>enabled` and `selected</tt> properties can
- * be delegated to <tt>boolean</tt> properties of the Actions class, by specifying the
- * corresponding property names. This can be done with the `@Action`
- * annotation, e.g.:</p>
+ * An ApplicationAction's <code>enabled</code> and <code>selected</code>
+ * properties can be delegated to boolean properties of the Actions class, by
+ * specifying the corresponding property names. This can be done with the
+ * <code>@Action</code> annotation, e.g.:</p>
  * ```java
  * public class MyActions {
- *     @Action(enabledProperty = "anActionEnabled")
+ *     &#064;Action(enabledProperty = "anActionEnabled")
  *     public void anAction() { }
  *     public boolean isAnActionEnabled() {
- *         // Will fire PropertyChange when anActionEnabled changes.
+ *         // will fire PropertyChange when anActionEnabled changes
  *         return anActionEnabled;
  *     }
  * }
  * ```
  * <p>
- * If the MyActions class supports PropertyChange events, then the
+ * If the MyActions class supports PropertyChange events, then then
  * ApplicationAction will track the state of the specified property
  * ("anActionEnabled" in this case) with a PropertyChangeListener.</p>
  * <p>
- * ApplicationActions can automatically <tt>block</tt> the GUI while the
- * <tt>actionPerformed</tt> method is running, depending on the value of block
+ * ApplicationActions can automatically <code>block</code> the GUI while the
+ * <code>actionPerformed</code> method is running, depending on the value of block
  * annotation parameter. For example, if the value of block is
- * `Task.BlockingScope.ACTION`, then the action will be disabled while
+ * <code>Task.BlockingScope.ACTION</code>, then the action will be disabled while
  * the actionPerformed method runs.</p>
  * <p>
- * An ApplicationAction can have a <tt>proxy</tt> Action, i.e., another Action
- * that provides the <tt>actionPerformed</tt> method, the enabled/selected
+ * An ApplicationAction can have a <code>proxy</code> Action, i.e. another Action
+ * that provides the <code>actionPerformed</code> method, the enabled/selected
  * properties, and values for the Action's long and short descriptions. If the
  * proxy property is set, this ApplicationAction tracks all of the
- * aforementioned properties, and the <tt>actionPerformed</tt> method just calls
- * the proxy's
- * <tt>actionPerformed` method. If a `proxySource</tt> is specified, then
- * it becomes the source of the ActionEvent that's passed to the proxy
- * <tt>actionPeformed</tt> method. Proxy action dispatching is as simple as
- * this:
+ * aforementioned properties, and the <code>actionPerformed</code> method just calls
+ * the proxy's <code>actionPerformed</code> method. If a <code>proxySource</code>
+ * is specified, then it becomes the source of the ActionEvent that's passed to 
+ * the proxy <code>actionPerformed</code> method. Proxy action dispatching is as 
+ * simple as this:
  * ```java
- * public void actionPeformed(ActionEvent actionEvent) {
+ * public void actionPerformed(ActionEvent actionEvent) {
  *     javax.swing.Action proxy = getProxy();
  *     if (proxy != null) {
  *         actionEvent.setSource(getProxySource());
  *         proxy.actionPerformed(actionEvent);
  *     }
- *     // ...
+ *     // ....
  * }
- * ```
- *
- * @author Hans Muller (Original Author)
- * @author Sean Carrick (Adapting Author) &lt;sean at pekinsoft dot com&gt;
- *
- * @see ApplicationContext#getActionMap(Object)
- * @see ResourceMap
- *
+ * 
+ * @author Hans Muller (Original Author) &lt;current email unknown&gt;
+ * @author Sean Carrick (Updater) &lt;sean at pekinsoft dot com&gt;
+ * 
  * @version 1.05
  * @since 1.03
+ * 
+ * @see ApplicationContext#getActionMap(java.lang.Object) 
+ * @see ResourceMap
  */
 public class ApplicationAction extends AbstractAction {
 
@@ -137,39 +132,42 @@ public class ApplicationAction extends AbstractAction {
             ApplicationAction.class.getName());
     private final ApplicationActionMap appAM;
     private final ResourceMap resourceMap;
-    private final String actionName;        // See getName()
-    private final Method actionMethod;      // See @Action method
+    private final String actionName;        // see getName()
+    private final Method actionMethod;      // The @Action method
     private final String enabledProperty;   // names a bound appAM.getActionsClass() property
     private final Method isEnabledMethod;   // Method object for is/getEnabledProperty
     private final Method setEnabledMethod;  // Method object for setEnabledProperty
     private final String selectedProperty;  // names a bound appAM.getActionsClass() property
     private final Method isSelectedMethod;  // Method object for is/getSelectedProperty
-    private final Method setSelectedMethod;   // Method object for setSelectedProperty
+    private final Method setSelectedMethod; // Method object for setSelectedProperty
     private final Task.BlockingScope block;
     private javax.swing.Action proxy = null;
     private Object proxySource = null;
     private PropertyChangeListener proxyPCL = null;
 
     /**
-     * Construct an <tt>ApplicationAxtion</tt> that implements an `@Action`.
+     * Construct an <code>ApplicationAction</code> that implements an
+     * <code>&#064;Action</code>.
+     *
      * <p>
-     * If a <tt>ResourceMap</tt> is provided, then all fo the
+     * If a <code>ResourceMap</code> is provided, then all of the
      * {@link javax.swing.Action Action} properties are initialized with the
-     * values of resources whose key begins with `baseName`. `ResourceMap`
-     * keys are created by appending an <tt>@Action</tt> resource name, like
-     * "`Action.shortDescription`", to the `@Action`'s baseName. For example,
-     * given an <tt>@Action</tt> defined like this:</p>
+     * values of resources whose key begins with <code>baseName</code>. ResourceMap
+     * keys are created by appending an &#064;Action resource name, like
+     * "Action.shortDescription" to the &#064;Action's baseName For example,
+     * Given an &#064;Action defined like this:
      * ```java
-     * @Action void actionBaseName() { }
+     * &#064;Action void actionBaseName() { }
      * ```
      * <p>
      * Then the shortDescription resource key would be
-     * `actionBaseName.Action.shortDescription`, as in:</p>
+     * <code>actionBaseName.Action.shortDescription</code>, as in:
      * <pre>
      * actionBaseName.Action.shortDescription = Do perform some action
      * </pre>
+     *
      * <p>
-     * The complete set of @Action resources is:</p>
+     * The complete set of &#064;Action resources is:
      * <pre>
      * Action.icon
      * Action.text
@@ -182,50 +180,55 @@ public class ApplicationAction extends AbstractAction {
      * Action.mnemonic
      * Action.displayedMnemonicIndex
      * </pre>
-     * <p>
-     * A few of the resources are handled specially:</p>
-     * <ul><li>`Action.text`<br>Used to initialize the Action properties
-     * with keys `Action.NAME`, `Action.MNEMONIC_KEY`, and
-     * `Action.DISPLAYED_MNEMONIC_INDEX`.<br><hr><br>If the resource's
-     * value contains an "&" or an "_", it is assumed to mark the following
-     * character as the mnemonic. If `Action.mnemonic`/`Action.displayedMnemonic`
-     * resources are also defined (an odd case), they will override the mnemonic
-     * specified with the Action.text marker character.</li>
-     * <li>`Action.icon`<br>Used to initialize both <tt>Action.SMALL_ICON</tt> and 
-     * `Action.LARGE_ICON`.<br><hr><br>If Action.smallIcon or
-     * Action.largeIcon resources are also defined, they will override the value
-     * defined for Action.icon.</li>
-     * <li>`Action.displayedMnemonicIndexKey`<br>The corresponding
-     * <tt>javax.swing.Action</tt> constant is only defined in Java SE 6. We will set the
-     * Action property in earlier versions of Java, as well.<br><hr><br>
-     * This has been deprecated as of Swing Application Framework 1.05 due to
-     * the framework being updated to Java 11.</li></ul>
      *
-     * @param appAM the <tt>ApplicationActionMap</tt> for which this action is being
-     * constructed
-     * @param resourceMap initial <tt>Action</tt> properties are loaded from this
-     * `ResourceMap`
-     * @param baseName the name of the `@Action`
-     * @param actionMethod unless a proxy is specified, <tt>actionPerformed</tt> calls
-     * this method
-     * @param enabledProperty name of the enabled property
-     * @param selectedProperty name of the selected property
-     * @param block how much of the GUI to block while this action executes
+     * <p>
+     * A few the resources are handled specially:
+     * <ul>
+     * <li><code>Action.text</code><br>
+     * Used to initialize the Action properties with keys
+     * <code>Action.NAME</code>, <code>Action.MNEMONIC_KEY</code> and
+     * <code>Action.DISPLAYED_MNEMONIC_INDEX</code>. If the resources's value
+     * contains an "&" or an "_" it's assumed to mark the following character as
+     * the mnemonic. If Action.mnemonic/Action.displayedMnemonic resources are
+     * also defined (an odd case), they'll override the mnemonic specfied with
+     * the Action.text marker character.</li>
+     * <li><code>Action.icon</code><br>
+     * Used to initialize both ACTION.SMALL_ICON,LARGE_ICON. If Action.smallIcon
+     * or Action.largeIcon resources are also defined they'll override the value
+     * defined for Action.icon.</li>
+     * <li><code>Action.displayedMnemonicIndexKey</code><br>
+     * The corresponding javax.swing.Action constant is only defined in Java SE
+     * 6. We'll set the Action property in Java SE 5 too.</li>
+     * </ul>
+     *
+     * @param appAM the ApplicationActionMap this action is being constructed
+     * for.
+     * @param resourceMap initial Action properties are loaded from this
+     * ResourceMap.
+     * @param baseName the name of the &#064;Action
+     * @param actionMethod unless a proxy is specified, actionPerformed calls
+     * this method.
+     * @param enabledProperty name of the enabled property.
+     * @param selectedProperty name of the selected property.
+     * @param block how much of the GUI to block while this action executes.
      *
      * @see #getName
-     * @see ApplicationActionMap#getActionsClass()
-     * @see ApplicationActionMap#getActionsObject()
+     * @see ApplicationActionMap#getActionsClass
+     * @see ApplicationActionMap#getActionsObject
      */
-    public ApplicationAction(ApplicationActionMap appAM, ResourceMap resourceMap,
-            String baseName, Method actionMethod, String enabledProperty,
-            String selectedProperty, Task.BlockingScope block) {
+    public ApplicationAction(ApplicationActionMap appAM,
+            ResourceMap resourceMap,
+            String baseName,
+            Method actionMethod,
+            String enabledProperty,
+            String selectedProperty,
+            Task.BlockingScope block) {
         if (appAM == null) {
             throw new IllegalArgumentException("null appAM");
         }
         if (baseName == null) {
             throw new IllegalArgumentException("null baseName");
         }
-
         this.appAM = appAM;
         this.resourceMap = resourceMap;
         this.actionName = baseName;
@@ -234,13 +237,12 @@ public class ApplicationAction extends AbstractAction {
         this.selectedProperty = selectedProperty;
         this.block = block;
 
-        /* If enabledProperty is specified, lookup the is/set methods and verify
-         * the former exists.
+        /* If enabledProperty is specified, lookup up the is/set methods and
+	 * verify that the former exists.
          */
         if (enabledProperty != null) {
             setEnabledMethod = propertySetMethod(enabledProperty, boolean.class);
             isEnabledMethod = propertyGetMethod(enabledProperty);
-
             if (isEnabledMethod == null) {
                 throw newNoSuchPropertyException(enabledProperty);
             }
@@ -249,17 +251,15 @@ public class ApplicationAction extends AbstractAction {
             this.setEnabledMethod = null;
         }
 
-        /* If selectedProperty is specified, lookup the is/set methods and verify
-         * the former exists.
+        /* If selectedProperty is specified, lookup up the is/set methods and
+	 * verify that the former exists.
          */
         if (selectedProperty != null) {
             setSelectedMethod = propertySetMethod(selectedProperty, boolean.class);
             isSelectedMethod = propertyGetMethod(selectedProperty);
-
             if (isSelectedMethod == null) {
                 throw newNoSuchPropertyException(selectedProperty);
             }
-
             super.putValue(SELECTED_KEY, Boolean.FALSE);
         } else {
             this.isSelectedMethod = null;
@@ -271,98 +271,86 @@ public class ApplicationAction extends AbstractAction {
         }
     }
 
-    /**
-     * Shorter convenience constructor used to create `ProxyActions`.
-     *
-     * @see ApplicationActionMap#getProxyActions() 
-     *
-     * @param appAM the ApplicationActionMap for which this action is being
-     * constructed
-     * @param resourceMap initial Action properties are loaded from this
-     * ResourceMap
-     * @param actionName the name of the @Action
+    /* Shorter convenience constructor used to create ProxyActions, 
+     * see ApplicationActionMap.addProxyAction().
      */
-    public ApplicationAction(ApplicationActionMap appAM, ResourceMap resourceMap,
+    ApplicationAction(ApplicationActionMap appAM, ResourceMap resourceMap, 
             String actionName) {
-        this(appAM, resourceMap, actionName, null, null, null,
+        this(appAM, resourceMap, actionName, null, null, null, 
                 Task.BlockingScope.NONE);
     }
 
-    private IllegalArgumentException newNoSuchPropertyException(
-            String propertyName) {
+    private IllegalArgumentException newNoSuchPropertyException(String propertyName) {
         String actionsClassName = appAM.getActionsClass().getName();
-        String msg = String.format("no property named %s in %s", propertyName,
+        String msg = String.format("no property named %s in %s", propertyName, 
                 actionsClassName);
         return new IllegalArgumentException(msg);
     }
 
     /**
-     * The name of the <tt>@Action` `enabledProperty</tt> whose value is returned
-     * by {@link #isEnabled() `isEnabled``, or `null`.
+     * The name of the <code>@Action</code> enabledProperty whose value is returned
+     * by {@link #isEnabled isEnabled}, or null.
      *
-     * @return the name of the <tt>enabledProperty</tt> or `null`
-     *
-     * @see #isEnabled()
+     * @return the name of the enabledProperty or null.
+     * @see #isEnabled
      */
-    public String getEnabledProperty() {
+    String getEnabledProperty() {
         return enabledProperty;
     }
 
     /**
-     * The name fo the <tt>@Action` `selectedProperty</tt> whose value is returned
-     * by {@link #isSelected `isSelected``, or `null`.
+     * The name of the <code>@Action</code> selectedProperty whose value is returned
+     * by {@link #isSelected isSelected}, or null.
      *
-     * @return the name of the <tt>selectedProperty</tt> or `null`
-     *
+     * @return the name of the selectedProperty or null.
      * @see #isSelected
      */
-    public String getSelectedProperty() {
+    String getSelectedProperty() {
         return selectedProperty;
     }
 
     /**
-     * Return the proxy for this action or `null`
+     * Return the proxy for this action or null.
      *
-     * @return the value of the proxy property
+     * @return the value of the proxy property.
      * @see #setProxy
      * @see #setProxySource
-     * @see #actionPerformed(java.awt.event.ActionEvent) 
+     * @see #actionPerformed
      */
     public javax.swing.Action getProxy() {
         return proxy;
     }
 
     /**
-     * Set the proxy for this action. If the proxy is non-`null` then we delegate
-     * and/or track the following:
+     * Set the proxy for this action.If the proxy is non-null then we
+     * delegate/track the following:
      * <ul>
-     * <li>`actionPerformed`<br>Our <tt>actionPerformed</tt> method calls
-     * the delegate's after the ActionEvent source to be the value of
-     * `getProxySource`</li>
-     * <li>`shortDescription`<br>If the proxy's `shortDescription`, i.e.,
-     * the value for key {@link javax.swing.Action#SHORT_DESCRIPTION
-     * <tt>SHORT_DESCRIPTION`</tt> is not `null`, then set this action's `shortDescription`.
-     * Most Swing components use the <tt>shortDescription</tt> to initialize their
-     * tooltip.</li>
-     * <li>`longDescription`<br>If the proxy's `longDescription`, i.e., the
-     * value for {@link javax.swing.Action#LONG_DESCRIPTION <tt>LONG_DESCRIPTION`</tt> is
-     * not `null`, then set this action's `longDescription`.</li></ul>
+     * <li><code>actionPerformed</code><br>
+     * Our <code>actionPerformed</code> method calls the delegate's after the
+     * ActionEvent source to be the value of <code>getProxySource</code></li>
+     * <li><code>shortDescription</code><br>
+     * If the proxy's shortDescription, i.e. the value for key
+     * {@link javax.swing.Action#SHORT_DESCRIPTION SHORT_DESCRIPTION} is not
+     * null, then set this action's shortDescription. Most Swing components use
+     * the shortDescription to initialize their tooltip.</li>
+     * <li><code>longDescription
+     * If the proxy's longDescription, i.e. the value for key
+     * {@link javax.swing.Action#LONG_DESCRIPTION LONG_DESCRIPTION} is not null,
+     * then set this action's longDescription.</li>
+     * </ul>
      *
-     * @see #setProxy(javax.swing.Action)
+     * @param proxy the proxy for the <code>Action</code>
+     * @see #setProxy
      * @see #setProxySource
-     * @see #actionPerformed(java.awt.event.ActionEvent)
-     *
-     * @param proxy the proxy action
+     * @see #actionPerformed
      */
     public void setProxy(javax.swing.Action proxy) {
         javax.swing.Action oldProxy = this.proxy;
         this.proxy = proxy;
-
         if (oldProxy != null) {
             oldProxy.removePropertyChangeListener(proxyPCL);
             proxyPCL = null;
         }
-
         if (this.proxy != null) {
             updateProxyProperties();
             proxyPCL = new ProxyPCL();
@@ -371,32 +359,30 @@ public class ApplicationAction extends AbstractAction {
             setEnabled(false);
             setSelected(false);
         }
-
         firePropertyChange("proxy", oldProxy, this.proxy);
     }
 
     /**
-     * Return the value that becomes the <tt>ActionEvent</tt> source before the
-     * <tt>ActionEvent</tt> is passed along to the proxy `Action`.
+     * Return the value that becomes the <code>ActionEvent</code> source before the
+     * ActionEvent is passed along to the proxy Action.
      *
-     * @see #getProxy()
+     * @return the value of the proxySource property.
+     * @see #getProxy
      * @see #setProxySource
-     * @see ActionEvent#getSource()
-     *
-     * @return source of the `ActionEvent`
+     * @see ActionEvent#getSource
      */
     public Object getProxySource() {
         return proxySource;
     }
 
     /**
-     * Set the value that becomes the <tt>ActionEvent</tt> source before the
-     * <tt>ActionEvent</tt> is passed along to the proxy `Action`.
+     * Set the value that becomes the <code>ActionEvent</code> source before the
+     * ActionEvent is passed along to the proxy Action.
      *
-     * @param source the <tt>ActionEvent</tt> source
-     * @see #getProxy()
-     * @see #getProxySource()
-     * @see ActionEvent#setSource(java.lang.Object)
+     * @param source the <code>ActionEvent</code> source/
+     * @see #getProxy
+     * @see #getProxySource
+     * @see ActionEvent#setSource
      */
     public void setProxySource(Object source) {
         Object oldValue = this.proxySource;
@@ -412,139 +398,118 @@ public class ApplicationAction extends AbstractAction {
     }
 
     private void updateProxyProperties() {
-        javax.swing.Action proxy = getProxy();
-
-        if (proxy != null) {
-            setEnabled(proxy.isEnabled());
-            Object s = proxy.getValue(SELECTED_KEY);
+        javax.swing.Action prxy = getProxy();
+        if (prxy != null) {
+            setEnabled(prxy.isEnabled());
+            Object s = prxy.getValue(SELECTED_KEY);
             setSelected((s instanceof Boolean) && ((Boolean) s).booleanValue());
-            maybePutDescriptionValue(javax.swing.Action.SHORT_DESCRIPTION, proxy);
-            maybePutDescriptionValue(javax.swing.Action.LONG_DESCRIPTION, proxy);
+            maybePutDescriptionValue(javax.swing.Action.SHORT_DESCRIPTION, prxy);
+            maybePutDescriptionValue(javax.swing.Action.LONG_DESCRIPTION, prxy);
         }
     }
 
-    /* This PCL is added to the proxy action, i.e., getProxy(). We track the
-     * folowing properties of the proxy action we are bound to: enabled, 
-     * selected, longDescription, and shortDescription. We only mirror the
-     * description properties if they are non-null.
+    /* This PCL is added to the proxy action, i.e. getProxy().  We
+     * track the following properties of the proxy action we're bound to:
+     * enabled, selected, longDescription, shortDescription.  We only
+     * mirror the description properties if they're non-null.
      */
     private class ProxyPCL implements PropertyChangeListener {
 
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            String propertyName = evt.getPropertyName();
-
-            if ((propertyName == null) || "enabled".equals(propertyName)
+        public void propertyChange(PropertyChangeEvent e) {
+            String propertyName = e.getPropertyName();
+            if ((propertyName == null)
+                    || "enabled".equals(propertyName)
                     || "selected".equals(propertyName)
                     || javax.swing.Action.SHORT_DESCRIPTION.equals(propertyName)
                     || javax.swing.Action.LONG_DESCRIPTION.equals(propertyName)) {
                 updateProxyProperties();
             }
         }
-
     }
 
-    /* Original source had definitions for SELECTED_KEY, DISPLAYED_MNEMONIC_INDEX_KEY,
-     * and LARGE_ICON_KEY placed here, with the explanAction that these constants
-     * were only defined in Mustang (1.6), and referenced the JDK6 API 
-     * documentation. As we are updating this framework library to a more modern
-     * Java version (JDK11), we no longer need to have those three constants 
-     * defined internally, therefore we have eliminated those definitions. We
-     * are placing this comment here for the sake of posterity, also why the
-     * definitions are made below.
-     *
-     * private static final String SELECTED_KEY = "SwingSelectedKey";
-     * private static final String DESPLAYED_MNEMONIC_INDEX_KEY = 
-     *         "SwingDisplayedMnemonicIndexKey";
-     * private static final String LARGE_ICON_KEY = "SwingLargeIconKey";
-     *
+    /* The corresponding javax.swing.Action constants are only 
+     * defined in Mustang (1.6), see 
+     * http://download.java.net/jdk6/docs/api/javax/swing/Action.html
      */
- /* Init all of the javax.swing.Action properties for the @Action named
-     * actionName.
+    // Removed the constants (fields) that are mentioned in the note above due
+    //+ to no longer needing to work around missing constants in a supported
+    //+ Java version. Since we are updating to Java 11, the three constants that
+    //+ were defined here are available directly from the javax.swing.Action
+    //+ class. The three constants were:
+    //+
+    //+     * DISPLAYED_MNEMONIC_INDEX_KEY
+    //+     * LARGE_ICON_KEY
+    //+     * SELECTED_KEY
+    //+
+    //+                                            -> Sean Carrick, Feb 10, 2021
+    
+    /* Init all of the javax.swing.Action properties for the @Action
+     * named actionName.  
      */
     private void initActionProperties(ResourceMap resourceMap, String baseName) {
-        boolean iconOrNameSpecified = false; // true if Action's icon/name
-        //+ properties set
+        boolean iconOrNameSpecified = false;  // true if Action's icon/name properties set
         String typedName = null;
 
-        // Action.text => Action.NAME, MNEMONIC_KEY, DISPLAYED_MNEMONIC_INDEX_KEY
+        // Action.text => Action.NAME,MNEMONIC_KEY,DISPLAYED_MNEMONIC_INDEX_KEY
         String text = resourceMap.getString(baseName + ".Action.text");
-
         if (text != null) {
             MnemonicText.configure(this, text);
             iconOrNameSpecified = true;
         }
-
         // Action.mnemonic => Action.MNEMONIC_KEY
         Integer mnemonic = resourceMap.getKeyCode(baseName + ".Action.mnemonic");
-
         if (mnemonic != null) {
             putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic);
         }
-
-        // Action.displayedMnemonicIndex => Action.DISPLAYED_MNEMONIC_INDEX_KEY
-        Integer index = resourceMap.getInteger(baseName
-                + ".Action.displayedMnemonicIndex");
-
+        // Action.mnemonic => Action.DISPLAYED_MNEMONIC_INDEX_KEY
+        Integer index = resourceMap.getInteger(baseName + ".Action.displayed"
+                + "MnemonicIndex");
         if (index != null) {
-            putValue(javax.swing.Action.DISPLAYED_MNEMONIC_INDEX_KEY, index);
+            putValue(DISPLAYED_MNEMONIC_INDEX_KEY, index);
         }
-
         // Action.accelerator => Action.ACCELERATOR_KEY
-        KeyStroke key = resourceMap.getKeyStroke(baseName
-                + ".Action.accelerator");
-
+        KeyStroke key = resourceMap.getKeyStroke(baseName + ".Action.accelerator");
         if (key != null) {
             putValue(javax.swing.Action.ACCELERATOR_KEY, key);
         }
-
-        // Action.icon => Action.SMALL_ICON, LARGE_ICON_KEY
+        // Action.icon => Action.SMALL_ICON,LARGE_ICON_KEY
         Icon icon = resourceMap.getIcon(baseName + ".Action.icon");
-
         if (icon != null) {
             putValue(javax.swing.Action.SMALL_ICON, icon);
-            putValue(javax.swing.Action.LARGE_ICON_KEY, icon);
+            putValue(LARGE_ICON_KEY, icon);
             iconOrNameSpecified = true;
         }
-
         // Action.smallIcon => Action.SMALL_ICON
         Icon smallIcon = resourceMap.getIcon(baseName + ".Action.smallIcon");
-
         if (smallIcon != null) {
             putValue(javax.swing.Action.SMALL_ICON, smallIcon);
             iconOrNameSpecified = true;
         }
-
         // Action.largeIcon => Action.LARGE_ICON
         Icon largeIcon = resourceMap.getIcon(baseName + ".Action.largeIcon");
-
         if (largeIcon != null) {
-            putValue(javax.swing.Action.LARGE_ICON_KEY, largeIcon);
+            putValue(LARGE_ICON_KEY, largeIcon);
             iconOrNameSpecified = true;
         }
-
         // Action.shortDescription => Action.SHORT_DESCRIPTION
         putValue(javax.swing.Action.SHORT_DESCRIPTION,
                 resourceMap.getString(baseName + ".Action.shortDescription"));
-
         // Action.longDescription => Action.LONG_DESCRIPTION
         putValue(javax.swing.Action.LONG_DESCRIPTION,
                 resourceMap.getString(baseName + ".Action.longDescription"));
-
         // Action.command => Action.ACTION_COMMAND_KEY
         putValue(javax.swing.Action.ACTION_COMMAND_KEY,
                 resourceMap.getString(baseName + ".Action.command"));
-
-        // If no visual was defined for this Action, i.e., no text and no icon,
-        //+ then we default Action.NAME.
+        // If no visual was defined for this Action, i.e. no text
+        // and no icon, then we default Action.NAME
         if (!iconOrNameSpecified) {
             putValue(javax.swing.Action.NAME, actionName);
         }
     }
 
     private String propertyMethodName(String prefix, String propertyName) {
-        return prefix + propertyName.substring(0, 1).toUpperCase()
-                + propertyName.substring(1);
+        return prefix + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
     }
 
     private Method propertyGetMethod(String propertyName) {
@@ -552,48 +517,46 @@ public class ApplicationAction extends AbstractAction {
             propertyMethodName("is", propertyName),
             propertyMethodName("get", propertyName)
         };
-
         Class actionsClass = appAM.getActionsClass();
-
         for (String name : getMethodNames) {
             try {
                 return actionsClass.getMethod(name);
             } catch (NoSuchMethodException ignore) {
-                // Do nothing. Return null below.
             }
         }
-
         return null;
     }
 
     private Method propertySetMethod(String propertyName, Class type) {
         Class actionsClass = appAM.getActionsClass();
-
         try {
-            return actionsClass.getMethod(propertyMethodName("set", propertyName),
-                    type);
-        } catch (NoSuchMethodException returnNull) {
+            return actionsClass.getMethod(propertyMethodName("set", propertyName), type);
+        } catch (NoSuchMethodException ignore) {
             return null;
         }
     }
 
     /**
-     * The name of this Action. This string begins with the name of the
-     * corresponding @Action method (unless the <tt>name`</tt> `@Action`
-     * parameter was specified.
+     *
+     * The name of this Action. This string begins with the name the
+     * corresponding &#064;Action method (unless the <code>name</code>
+     * &#064;Action parameter was specified).
+     *
      * <p>
      * This name is used as a prefix to look up action resources, and the
-     * <tt>ApplicationContext` Framework uses it as the key for this `Action</tt> in the
-     * `ApplicationActionMaps`.</p>
-     * 
-     * <dl><dt>Note:</dt><dd>This property should not be confused with the
-     * {@link javax.swing.Action#NAME <tt>Action.NAME`</tt> key. That key is actually
-     * used to initialize the <tt>text</tt> properties of Swing components,
-     * which is why we call the corresponding <tt>ApplicationAction</tt> resource
-     * "`Action.text`", as in:
+     * ApplicationContext Framework uses it as the key for this Action in
+     * ApplicationActionMaps.
+     *
+     * <p>
+     * Note: this property should not confused with the {@link
+     * javax.swing.Action#NAME Action.NAME} key. That key is actually used to
+     * initialize the <code>text</code> properties of Swing components, which is 
+     * why we call the corresponding ApplicationAction resource "Action.text", 
+     * as in:
      * <pre>
      * myCloseButton.Action.text = Close
-     * </pre></dd></dl>
+     * </pre>
+     *
      *
      * @return the (read-only) value of the name property
      */
@@ -611,60 +574,63 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * Provides parameter values to <tt>@Action</tt> methods. By default, parameter
+     *
+     * Provides parameter values to &#064;Action methods. By default, parameter
      * values are selected based exclusively on their type:
      * <table border=1>
-     * <caption>Action Methods</caption>
+     * <caption>&#064;Action Parameter Values</caption>
      * <tr>
      * <th>Parameter Type</th>
      * <th>Parameter Value</th>
      * </tr>
      * <tr>
-     * <td>`ActionEvent`</td>
-     * <td>`actionEvent`</td>
+     * <td><code>ActionEvent</code></td>
+     * <td><code>actionEvent</code></td>
      * </tr>
      * <tr>
-     * <td>`javax.swing.Action`</td>
-     * <td>This <tt>ApplicationAction</tt> object</td>
+     * <td><code>javax.swing.Action</code></td>
+     * <td>this <code>ApplicationAction</code> object</td>
      * </tr>
      * <tr>
-     * <td>`ActionMap`</td>
-     * <td>The <tt>ActionMap</tt> that contains this `Action`</td>
+     * <td><code>ActionMap</code></td>
+     * <td>the <code>ActionMap</code> that contains this <code>Action</code></td>
      * </tr>
      * <tr>
-     * <td>`ResourceMap`</td>
-     * <td>The <tt>ResourceMap` of the `ActionMap</tt> that contains this
-     * `Action`</td>
+     * <td><code>ResourceMap</code></td>
+     * <td>the <code>ResourceMap</code> of the the <code>ActionMap</code> that 
+     * contains this <code>Action</code></td>
      * </tr>
      * <tr>
-     * <td>`ApplicationContext`</td>
-     * <td> The value of `ApplicationContext.getInstance()`</td>
+     * <td><code>ApplicationContext</code></td>
+     * <td>the value of <code>ApplicationContext.getInstance()</code></td>
      * </tr>
      * </table>
+     *
      * <p>
-     * <tt>ApplicationAction</tt> subclasses may also select values based on the value of
-     * the <tt>Action.Parameter</tt> annotation, which is passed along as the
-     * <tt>pKey</tt> argument to this method:</p>
+     * ApplicationAction subclasses may also select values based on the value of
+     * the <code>Action.Parameter</code> annotation, which is passed along as the
+     * <code>pKey</code> argument to this method:
      * ```java
-     * @Action
-     * public void doAction(@Action.Parameter("myKey") String myParameter) {
-     *     // The value of myParameter is computed by:
-     *     //+ getActionArgument(String.class, "myKey", actionEvent)
+     * &#064;Action 
+     * public void doAction(&#064;Action.Parameter("myKey") String myParameter) {
+     *    // The value of myParameter is computed by:
+     *    // getActionArgument(String.class, "myKey", actionEvent)
      * }
      * ```
+     *
      * <p>
-     * If <tt>pType` and `pKey</tt> are not recognized, this method calls
-     * {@link #actionFailed} with an `IllegalArgumentException`.
+     * If <code>pType</code> and <code>pKey</code> aren't recognized, this method 
+     * calls {@link #actionFailed} with an IllegalArgumentException.
+     *
      *
      * @param pType parameter type
-     * @param pKey the value of the <tt>@Action.Parameter</tt> annotation
-     * @param actionEvent the <tt>ActionEvent</tt> that triggered this Action
-     * @return an <tt>Object</tt> representing this `ActionArgument`
+     * @param pKey the value of the &#064;Action.Parameter annotation
+     * @param actionEvent the ActionEvent that triggered this Action
+     * @return the argument to the specified <code>&#064;Action</code>
      */
-    protected Object getActionArgument(Class pType, String pKey,
+    protected Object getActionArgument(Class pType, String pKey, 
             ActionEvent actionEvent) {
         Object argument = null;
-
         if (pType == ActionEvent.class) {
             argument = actionEvent;
         } else if (pType == javax.swing.Action.class) {
@@ -678,48 +644,44 @@ public class ApplicationAction extends AbstractAction {
         } else if (pType == Application.class) {
             argument = appAM.getContext().getApplication();
         } else {
-            Exception e = new IllegalArgumentException("unrecognied @Action "
+            Exception e = new IllegalArgumentException("unrecognized @Action "
                     + "method parameter");
             actionFailed(actionEvent, e);
         }
-
         return argument;
     }
 
     private Task.InputBlocker createInputBlocker(Task task, ActionEvent event) {
         Object target = event.getSource();
-
         if (block == Task.BlockingScope.ACTION) {
             target = this;
         }
-
         return new DefaultInputBlocker(task, block, target, this);
     }
 
     private void noProxyActionPerformed(ActionEvent actionEvent) {
         Object taskObject = null;
 
-        // Create the arguments array for actionMethod by calling
-        //+ getActionArgument() for each parameter.
+        /* Create the arguments array for actionMethod by 
+	 * calling getActionArgument() for each parameter.
+         */
         Annotation[][] allPAnnotations = actionMethod.getParameterAnnotations();
         Class<?>[] pTypes = actionMethod.getParameterTypes();
         Object[] arguments = new Object[pTypes.length];
-
         for (int i = 0; i < pTypes.length; i++) {
             String pKey = null;
-
             for (Annotation pAnnotation : allPAnnotations[i]) {
                 if (pAnnotation instanceof Action.Parameter) {
                     pKey = ((Action.Parameter) pAnnotation).value();
                     break;
                 }
             }
-
             arguments[i] = getActionArgument(pTypes[i], pKey, actionEvent);
         }
 
-        // Call target.actionMethod(arguments). If the return value is a Task,
-        //+ then execute it.
+        /* Call target.actionMethod(arguments).  If the return value
+	 * is a Task, then execute it.
+         */
         try {
             Object target = appAM.getActionsObject();
             taskObject = actionMethod.invoke(target, arguments);
@@ -731,56 +693,48 @@ public class ApplicationAction extends AbstractAction {
 
         if (taskObject instanceof Task) {
             Task task = (Task) taskObject;
-
             if (task.getInputBlocker() == null) {
                 task.setInputBlocker(createInputBlocker(task, actionEvent));
             }
-
             ApplicationContext ctx = appAM.getContext();
             ctx.getTaskService().execute(task);
         }
     }
 
-    @Override
-    public boolean accept(Object sender) {
-        return super.accept(sender); //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
-     * This method implements this `Action`'s behavior.
+     * This method implements this <code>Action's</code> behavior.
      * <p>
-     * If there is a proxy <tt>Action` then call its `actionPerformed</tt> method.
-     * Otherwise, call the <tt>@Action</tt> method with parameter values provided by
-     * `getActionArgument()`. If anything goes wrong, call `actionFailed()`.
+     * If there's a proxy Action then call its actionPerformed method.
+     * Otherwise, call the &#064;Action method with parameter values provided by
+     * <code>getActionArgument()</code>. If anything goes wrong call
+     * <code>actionFailed()</code>.
      *
-     * @param e {@inheritDoc}
-     * @see #setProxy(javax.swing.Action)
-     * @see #getActionArgument(java.lang.Class, java.lang.String,
-     * java.awt.event.ActionEvent)
+     * @param actionEvent @{inheritDoc}
+     * @see #setProxy
+     * @see #getActionArgument
      * @see Task
      */
     @Override
-    public void actionPerformed(ActionEvent e) {
-        javax.swing.Action proxy = getProxy();
-
-        if (proxy != null) {
-            e.setSource(getProxySource());
-            proxy.actionPerformed(e);
+    public void actionPerformed(ActionEvent actionEvent) {
+        javax.swing.Action prxy = getProxy();
+        if (prxy != null) {
+            actionEvent.setSource(getProxySource());
+            prxy.actionPerformed(actionEvent);
         } else if (actionMethod != null) {
-            noProxyActionPerformed(e);
+            noProxyActionPerformed(actionEvent);
         }
     }
 
     /**
-     * If the proxy action is <tt>null` and `enabledProperty</tt> was specified,
-     * then return the value of the <tt>enabled</tt> property's is/get method applied to
-     * our `ApplicationActionMap`'s `actionsObject`. Otherwise, return the
-     * value of this <tt>Action`'s `enabled</tt> property.
+     * If the proxy action is null and <code>enabledProperty</code> was specified,
+     * then return the value of the enabled property's is/get method applied to
+     * our ApplicationActionMap's <code>actionsObject</code>. Otherwise return the
+     * value of this Action's enabled property.
      *
      * @return {@inheritDoc}
-     * @see #setProxy(javax.swing.Action)
-     * @see #setEnabled(boolean)
-     * @see ApplicationActionMap#getActionsObject()
+     * @see #setProxy
+     * @see #setEnabled
+     * @see ApplicationActionMap#getActionsObject
      */
     @Override
     public boolean isEnabled() {
@@ -790,22 +744,24 @@ public class ApplicationAction extends AbstractAction {
             try {
                 Object b = isEnabledMethod.invoke(appAM.getActionsObject());
                 return (Boolean) b;
-            } catch (Exception e) {
+            } catch (IllegalAccessException 
+                    | IllegalArgumentException 
+                    | InvocationTargetException e) {
                 throw newInvokeError(isEnabledMethod, e);
             }
         }
     }
 
     /**
-     * If the proxy action is <tt>null` and `enabledProperty</tt> was specified,
-     * the set the value of the <tt>enabled</tt> property by invoking the corresponding
-     * <tt>set</tt> method on our ApplicationActionMap`'s `actionsObject`.
-     * Otherwise, set the value of this <tt>Action`'s `enabled</tt> property.
+     * If the proxy action is null and <code>enabledProperty</code> was specified,
+     * then set the value of the enabled property by invoking the corresponding
+     * <code>set</code> method on our ApplicationActionMap's <code>actionsObject</code>.
+     * Otherwise set the value of this Action's enabled property.
      *
      * @param enabled {@inheritDoc}
-     * @see #setProxy(javax.swing.Action)
-     * @see #isEnabled()
-     * @see ApplicationActionMap#getActionsObject()
+     * @see #setProxy
+     * @see #isEnabled
+     * @see ApplicationActionMap#getActionsObject
      */
     @Override
     public void setEnabled(boolean enabled) {
@@ -814,22 +770,24 @@ public class ApplicationAction extends AbstractAction {
         } else {
             try {
                 setEnabledMethod.invoke(appAM.getActionsObject(), enabled);
-            } catch (Exception e) {
+            } catch (IllegalAccessException 
+                    | IllegalArgumentException 
+                    | InvocationTargetException e) {
                 throw newInvokeError(setEnabledMethod, e, enabled);
             }
         }
     }
 
     /**
-     * If the proxy action is <tt>null` and `selectedProperty</tt> was specified,
-     * then return the value of the <tt>selected</tt> property's is/get method applied to
-     * our `ApplicationActionMap`'s `actionsObject`. Otherwise, return the
-     * value of this <tt>Action`'s `enabled</tt> property.
+     * If the proxy action is null and <code>selectedProperty</code> was specified,
+     * then return the value of the selected property's is/get method applied to
+     * our ApplicationActionMap's <code>actionsObject</code>. Otherwise return the
+     * value of this Action's enabled property.
      *
-     * @return <tt>true` if this `Action`'s `JTobbleButton</tt> is selected
-     * @see #setProxy(javax.swing.Action)
-     * @see #setSelected(boolean)
-     * @see ApplicationActionMap#getActionsObject()
+     * @return true if this Action's JToggleButton is selected
+     * @see #setProxy
+     * @see #setSelected
+     * @see ApplicationActionMap#getActionsObject
      */
     public boolean isSelected() {
         if ((getProxy() != null) || (isSelectedMethod == null)) {
@@ -840,7 +798,7 @@ public class ApplicationAction extends AbstractAction {
                 Object b = isSelectedMethod.invoke(appAM.getActionsObject());
                 return (Boolean) b;
             } catch (IllegalAccessException 
-                    | IllegalArgumentException 
+                    | IllegalArgumentException
                     | InvocationTargetException e) {
                 throw newInvokeError(isSelectedMethod, e);
             }
@@ -848,34 +806,36 @@ public class ApplicationAction extends AbstractAction {
     }
 
     /**
-     * If the proxy action is <tt>null` and `selectedProperty</tt> was specified,
-     * then set the value of the <tt>selected</tt> property by invoking the corresponding
-     * <tt>set</tt> method on our `ApplicationActionMap`'s `actionsObject`.
-     * Otherwise, set the value of this <tt>Action`'s `selected</tt> property.
+     * If the proxy action is null and <code>selectedProperty</code> was specified,
+     * then set the value of the selected property by invoking the corresponding
+     * <code>set</code> method on our ApplicationActionMap's <code>actionsObject</code>.
+     * Otherwise set the value of this Action's selected property.
      *
-     * @param selected this `Action`'s `JToggleButton`'s value
-     * @see #setProxy(javax.swing.Action)
-     * @see #isSelected()
-     * @see ApplicationActionMap#getActionsObject()
+     * @param selected this Action's JToggleButton's value
+     * @see #setProxy
+     * @see #isSelected
+     * @see ApplicationActionMap#getActionsObject
      */
     public void setSelected(boolean selected) {
         if ((getProxy() != null) || (setSelectedMethod == null)) {
-            super.putValue(SELECTED_KEY, Boolean.valueOf(selected));
+            super.putValue(SELECTED_KEY, selected);
         } else {
             try {
-                super.putValue(SELECTED_KEY, Boolean.valueOf(selected));
+                super.putValue(SELECTED_KEY, selected);
                 if (selected != isSelected()) {
                     setSelectedMethod.invoke(appAM.getActionsObject(), selected);
                 }
-            } catch (Exception e) {
+            } catch (IllegalAccessException
+                    | IllegalArgumentException 
+                    | InvocationTargetException e) {
                 throw newInvokeError(setSelectedMethod, e, selected);
             }
         }
     }
 
     /**
-     * Keeps the <tt>@Action selectedProperty</tt> in sync when the value of
-     * <tt>key</tt> is `Action.SELECTED_KEY`.
+     * Keeps the <code>@Action selectedProperty</code> in sync when the value of
+     * <code>key</code> is <code>Action.SELECTED_KEY</code>.
      *
      * @param key {@inheritDoc}
      * @param value {@inheritDoc}
@@ -889,94 +849,84 @@ public class ApplicationAction extends AbstractAction {
         }
     }
 
-    /* Throw an Error because invoking Method m on the actionsObject, with the
-     * specified arguments, failed.
+    /* Throw an Error because invoking Method m on the actionsObject,
+     * with the specified arguments, failed.
      */
     private Error newInvokeError(Method m, Exception e, Object... args) {
         String argsString = (args.length == 0) ? "" : args[0].toString();
-
         for (int i = 1; i < args.length; i++) {
             argsString += ", " + args[i];
         }
-
         String actionsClassName = appAM.getActionsObject().getClass().getName();
-        String msg = String.format("%s.%s(%s) failed", actionsClassName, m,
+        String msg = String.format("%s.%s(%s) failed", actionsClassName, m, 
                 argsString);
-
         return new Error(msg, e);
     }
 
-    /* Forward the @Action class' ProperyChangeEvent e to this Action's 
-     * PropertyChangeListeners using actionPropertyName instead of the original
-     * @Action class' propery name. This method is used by 
-     * ApplicationActionMap#ActionsPCL to forward @Action enabledProperty and
-     * selectedProperty changes.
+    /* Forward the @Action class's PropertyChangeEvent e to this
+     * Action's PropertyChangeListeners using actionPropertyName instead
+     * the original @Action class's property name.  This method is used
+     * by ApplicationActionMap#ActionsPCL to forward @Action 
+     * enabledProperty and selectedProperty changes.
      */
-    public void forwardPropertyChangeEvent(PropertyChangeEvent e,
+    void forwardPropertyChangeEvent(PropertyChangeEvent e, 
             String actionPropertyName) {
-        if ("selected".equals(actionPropertyName)
+        if ("selected".equals(actionPropertyName) 
                 && (e.getNewValue() instanceof Boolean)) {
             putValue(SELECTED_KEY, (Boolean) e.getNewValue());
         }
-
         firePropertyChange(actionPropertyName, e.getOldValue(), e.getNewValue());
     }
 
-    /* Log enough output for a developer to figure out what went wrong. */
+    /* Log enough output for a developer to figure out 
+     * what went wrong.
+     */
     private void actionFailed(ActionEvent actionEvent, Exception e) {
-        // Handling the original libraries TBD functionality...
-        logger.error(e, toString());
-
+        // TBD Log an error
+        // e.printStackTrace();
         throw new Error(e);
     }
 
     /**
-     * Returns a string representation of this <tt>ApplicationAction</tt> that
-     * should be useful for debugging. If the action is enabled, its name is
-     * enclosed by parentheses; if it is selected, then a "+" appears after the
-     * name. If the action will appear with a text label, then that is included
-     * too. If the action has a proxy, then we append the string for the proxy
-     * action.
+     * Returns a string representation of this
+     * <code>ApplicationAction</code> that should be useful for debugging. If the
+     * action is enabled it's name is enclosed by parentheses; if it's selected
+     * then a "+" appears after the name. If the action will appear with a text
+     * label, then that's included too. If the action has a proxy, then we
+     * append the string for the proxy action.
      *
-     * @return a string representation of this `ApplicationAction`
+     * @return A string representation of this ApplicationAction
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         sb.append(getClass().getName());
         sb.append(" ");
-        if (isEnabled()) {
+        boolean n_abled = isEnabled();
+        if (!n_abled) {
             sb.append("(");
         }
-
         sb.append(getName());
         Object selectedValue = getValue(SELECTED_KEY);
-
         if (selectedValue instanceof Boolean) {
             if (((Boolean) selectedValue)) {
                 sb.append("+");
             }
         }
-
-        if (isEnabled()) {
+        if (!n_abled) {
             sb.append(")");
         }
-
         Object nameValue = getValue(javax.swing.Action.NAME); // [getName()].Action.text
-
         if (nameValue instanceof String) {
             sb.append(" \"");
             sb.append((String) nameValue);
             sb.append("\"");
         }
-
-        if (getProxy() != null) {
+        proxy = getProxy();
+        if (proxy != null) {
             sb.append(" Proxy for: ");
-            sb.append(getProxy().toString());
+            sb.append(proxy.toString());
         }
-
         return sb.toString();
     }
-
 }

@@ -120,9 +120,9 @@ import javax.swing.RootPaneContainer;
  * label.text = Hello World
  * </pre>
  */
-public abstract class SingleFrameApplication extends Application {
+public abstract class DockingFrameApplication extends Application {
 
-    private static final Logger logger = Logger.getLogger(SingleFrameApplication.class.getName());
+    private static final Logger logger = Logger.getLogger(DockingFrameApplication.class.getName());
     private ResourceMap appResources = null;
 
     /**

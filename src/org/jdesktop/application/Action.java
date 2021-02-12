@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2021 PekinSOFT Systems
+ * Copyright (C) 2021 PekinSOFT Systems
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,21 +13,25 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * *****************************************************************************
- * Class Name: Action.java
- *     Author: Sean Carrick <sean at pekinsoft dot com>
- *    Created: Jan 16 2021
- * 
- *    Purpose:
  * 
  * *****************************************************************************
- * CHANGE LOG:
- * 
- * Date        By                   Reason
- * ----------  -------------------  --------------------------------------------
- * 01/16/2021  Sean Carrick          Initial Adaptation.
+ *  Project    :   SwingApplicationFramework
+ *  Class      :   Action.java
+ *  Author     :   Sean Carrick
+ *  Created    :   Feb 10, 2021 @ 7:26:09 PM
+ *  Modified   :   Feb 10, 2021
+ *  
+ *  Purpose:     See class JavaDoc comment.
+ *  
+ *  Revision History:
+ *  
+ *  WHEN          BY                   REASON
+ *  ------------  -------------------  -----------------------------------------
+ *  ??? ??, 2006  Hans Muller          Initial creation.
+ *  Feb 10, 2021  Sean Carrick         Update to Java 11.
  * *****************************************************************************
  */
+
 package org.jdesktop.application;
 
 import java.lang.annotation.Documented;
@@ -36,54 +40,63 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 /**
- * Marks a method that will be used to define a Swing <tt>Action</tt> object's 
- * <tt>actionPerformed</tt> method. It also identifies the resources that will be
- * used to initialize the Action's properties. Additional `@Action`
- * parameters can be used to specify the name of the bound properties (from the
- * same class) that indicate if the Action is to be enabled/selected, and if the
- * GUI should be blocked while the Action's background {@link Task} is running.
+ * Marks a method that will be used to define a Swing <code>Action</code> 
+ * object's <code>actionPerformed</code> method.  It also identifies the 
+ * resources that will be used to initialize the Action's properties. Additional 
+ * <code>&#064;Action</code> parameters can be used to specify the name of the 
+ * bound properties (from the same class) that indicate if the Action is to be 
+ * enabled/selected, and if the GUI should be blocked while the Action's 
+ * background {@link Task} is running.
  * <p>
- * The {@link ApplicationActionMap} class creates an <tt>ActionMap</tt> that 
- * contains one {@link ApplicationAction} for each @Action found in a 
- * target or "actions" class. Typically applications will use {@link
- * ApplicationContext#getActionMap(Class, Object) getActionMap} to lazily
- * construct and cache ApplicationActionMaps, rather than constructing them
- * directly. By default the ApplicationActionMap's {@link ApplicationActionMap#get
- * key} for an @Action is the name of the method. The <tt>name</tt> parameter
- * can be used to specify a different key.</p>
+ * The {@link ApplicationActionMap} class creates an <code>ActionMap</code> that
+ * contains one {@link ApplicationAction} for each <code>&#064;Action</code>
+ * found in a target or "actions" class. Typically applications will use {@link
+ * ApplicationContext#getActionMap(Class, Object) getActionMap} to lazily 
+ * construct and cache ApplicationActionMaps, rather than constructing them 
+ * directly.  By default the ApplicationActionMap's {@link ApplicationActionMap#get
+ * key} for an <code>&#064;Action</code> is the name of the method. The <code>
+ * name</code> parameter can be used to specify a different key.</p>
  * <p>
- * The `ApplicationAction`'s properties are initialized with resources
- * loaded from a ResourceBundle with the same name as the actions class. The
+ * The <code>ApplicationAction</code>'s properties are initialized with resources
+ * loaded from a ResourceBundle with the same name as the actions class.  The 
  * list of properties initialized this way is documented by the {@link 
- * ApplicationAction ApplicationsAction}'s constructor.</p>
+ * ApplicationAction ApplicationAction}'s constructor.</p>
+ * 
  * <p>
- * The method marked with @Action, can have no parameters, or a single
- * ActionEvent parameter. The method's return type can be <tt>void</tt> or
- * {@link Task}. If the return type is Task, the Task will be executed by the
- * ApplicationAction's <tt>actionPerformed</tt> method.</p>
+ * The method marked with <code>&#064;Action</code>, can have no parameters, or 
+ * a single ActionEvent parameter.  The method's return type can be <code>void
+ * </code> or {@link Task}.  If the return type is Task, the Task will be 
+ * executed by the ApplicationAction's <code>actionPerformed</code> method.</p>
+ * 
  * <p>
  * [TBD the block parameter, and the Parameter annotation]</p>
+ * 
  * @see ApplicationAction
  * @see ApplicationActionMap
  * @see ApplicationContext
- * @author Hans Muller (Original Author)
- * @author Sean Carrick (Modifying Author) &lt;sean at pekinsoft dot com&gt;
- *
- * @author Sean Carrick
+ * 
+ * @author Hans Muller (Original Author) &lt;current email unknown&gt;
+ * @author Sean Carrick (Updater) &lt;sean at pekinsoft dot com&gt;
+ * 
+ * @version 1.05
+ * @since 1.03
  */
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Action {
     String name() default "";
     String enabledProperty() default "";
-    String selectedProperty() default "";
+    String selectedProperty() default  "";
     Task.BlockingScope block() default Task.BlockingScope.NONE;
-    
+
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.PARAMETER)
     @interface Parameter {
-        String value() default "";
+	String value() default "";
     }
 }
+

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2021 PekinSOFT Systems
+ * Copyright (C) 2021 PekinSOFT Systems
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,21 +13,25 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * *****************************************************************************
- * Class Name: ProxyActions.java
- *     Author: Sean Carrick <sean at pekinsoft dot com>
- *    Created: Jan 16 2021
- * 
- *    Purpose:
  * 
  * *****************************************************************************
- * CHANGE LOG:
- * 
- * Date        By                   Reason
- * ----------  -------------------  --------------------------------------------
- * 01/16/2021  Sean Carrick          Initial Creation.
+ *  Project    :   SwingApplicationFramework
+ *  Class      :   ProxyActions.java
+ *  Author     :   Sean Carrick
+ *  Created    :   Feb 11, 2021 @ 9:43:31 AM
+ *  Modified   :   Feb 11, 2021
+ *  
+ *  Purpose:     See class JavaDoc comment.
+ *  
+ *  Revision History:
+ *  
+ *  WHEN          BY                   REASON
+ *  ------------  -------------------  -----------------------------------------
+ *  ??? ??, 2006  Hans Muller          Initial creation.
+ *  Feb 11, 2021  Sean Carrick         Updated to Java 11: nothing really done.
  * *****************************************************************************
  */
+
 package org.jdesktop.application;
 
 import java.lang.annotation.Documented;
@@ -37,9 +41,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
- * @author Sean Carrick
+ * @author Hans Muller (Original Author) &lt;current email unknown&gt;
+ * @author Sean Carrick (Updater) &lt;sean at pekinsoft dot com&gt;
+ * 
+ * @version 1.03
+ * @since 1.03
  */
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

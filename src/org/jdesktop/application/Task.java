@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2006-2021 PekinSOFT Systems
+ * Copyright (C) 2006 Sun Microsystems
+ * Copyright (C) 2021 PekinSOFT Systems
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,24 +14,26 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * *****************************************************************************
- * Class Name: Task.java
- *     Author: Sean Carrick <sean at pekinsoft dot com>
- *    Created: Jan 16 2021
- * 
- *    Purpose:  See Class JavaDoc
  * 
  * *****************************************************************************
- * CHANGE LOG:
- * 
- * Date        By                   Reason
- * ----------  -------------------  --------------------------------------------
- * 01/16/2021  Sean Carrick          Initial Adaptation.
+ *  Project    :   SwingApplicationFramework
+ *  Class      :   Task.java
+ *  Author     :   Sean Carrick
+ *  Created    :   Feb 11, 2021 @ 5:16:41 PM
+ *  Modified   :   Feb 11, 2021
+ *  
+ *  Purpose:     See class JavaDoc comment.
+ *  
+ *  Revision History:
+ *  
+ *  WHEN          BY                   REASON
+ *  ------------  -------------------  -----------------------------------------
+ *  ??? ??, 2006  Hans Muller          Initial creation.
+ *  Feb 11, 2021  Sean Carrick         Updated to Java 11.
  * *****************************************************************************
  */
 package org.jdesktop.application;
 
-import org.jdesktop.application.utils.Logger;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,86 +41,113 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import javax.swing.SwingWorker;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jdesktop.swingworker.SwingWorker;
+import org.jdesktop.swingworker.SwingWorker.StateValue;
 
 /**
  * A type of {@link SwingWorker} that represents an application background task.
  * Tasks add descriptive properties that can be shown to the user, a new set of
  * methods for customizing task completion, support for blocking input to the
- * GUI while the Task is executing, and a <tt>TaskListener</tt> that enables one
- * to monitor the three key SwingWorker methods: `doInBackground`, `process`, 
- * and `done`.
+ * GUI while the Task is executing, and a <code>TaskListener</code> that enables
+ * one to monitor the three key SwingWorker methods:
+ * <code>doInBackground</code>, <code>process</code> and <code>done</code>.
  * <p>
- * When a Task completes, the <tt>final done</tt> method invokes one of `succeeded`, 
- * <tt>cancelled`, `interrupted`, or `failed`. The `final done</tt> method invokes 
- * <tt>finished</tt> when the completion method returns or throws an exception.</p>
+ * When a Task completes, the <code>final done</code> method invokes one of
+ * <code>succeeded</code>, <code>cancelled</code>, <code>interrupted</code>, or
+ * <code>failed</code>. The <code>final done</code> method invokes <code>finished
+ * </code> when the completion method returns or throws an exception.</p>
  * <p>
- * Tasks should provide localized values for the `title`, `description`, and 
- * <tt>message` properties in a `ResourceBundle</tt> for the Task subclass. A 
- * {@link ResourceMap} is loaded automatically using the
- * Task subclass as the <tt>startClass</tt> and Task.class the `stopClass`.
- * This ResourceMap is also used to look up format strings used in calls to
- * {@link #message message}, which is used to set the `message`
- * property.</p>
+ * Tasks should provide localized values for the <code>title</code>,
+ * <code>description</code>, and <code>message</code> properties in a
+ * ResourceBundle for the Task subclass. A {@link ResourceMap} is loaded
+ * automatically using the Task subclass as the <code>startClass</code> and
+ * <code>Task.class</code> the <code>stopClass</code>. This ResourceMap is also
+ * used to look up format strings used in calls to {@link #message message},
+ * which is used to set the <code>message</code> property.</p>
  * <p>
- * For example: give a Task called <tt>MyTask</tt> defined like this:
- * 
+ * For example: given a Task called <code>MyTask</code> defined like this:</p>
  * ```java
- * class MyTask extends Task&lt;MyResultType, Void&gt; {
+ * class MyTask extends Task<MyResultType, Void> {
  *     protected MyResultType doInBackground() {
  *         message("startMessage", getPlannedSubtaskCount());
- *         // do the work...if an error is encountered:
- *         message("errorMessage");
+ *         // do the work ... if an error is encountered:
+ *             message("errorMessage");
  *         message("finishedMessage", getActualSubtaskCount(), getFailureCount());
- *         // ...return the resultset
+ *         // .. return the result
  *     }
  * }
  * ```
  * <p>
  * Typically the resources for this class would be defined in the MyTask
- * ResourceBundle, `resources/MyTask.properties`:</p>
+ * ResourceBundle, @{code resources/MyTask.properties}:</p>
  * <pre>
  * title = My Task
- * description = A task of mine for my own purposes
+ * description = A task of mine for my own purposes.
  * startMessage = Starting: working on %s subtasks...
  * errorMessage = An unexpected error occurred, skipping subtask
- * finishMessage = Finished: completed %1$s subtasks, %2$s failures
+ * finishedMessage = Finished: completed %1$s subtasks, %2$s failures
  * </pre>
  * <p>
- * Tasks can specify that input to the GUI is to be blocked while they're
- * being executed. The <tt>inputBlocker</tt> property specifies what part of the
- * GUI is to be blocked and how that's accomplished. The <tt>inputBlocker</tt> is
- * set automatically when an <tt>@Action</tt> method that returns a Task
- * specifies a {@link BlockingScope} value for the <tt>block</tt> annotation
- * parameter. To customize the way blocking is implemented you can define your
- * own <tt>Task.InputBlocker`. For example, assume that `busyGlassPane</tt> is a
- * component that consumes (and ignores) keyboard and mouse input:
- * 
+ * Task subclasses can override resource values in their own ResourceBundles:</p>
+ * ```java
+ * class MyTaskSubclass extends MyTask {
+ * }
+ * ```
+ * <pre>
+ * # resources/MyTaskSubclass.properties
+ * title = My Task Subclass
+ * description = An appropriate description
+ * # ... all other resources are inherited
+ * </pre>
+ * <p>
+ * Tasks can specify that input to the GUI is to be blocked while they're being
+ * executed. The <code>inputBlocker</code> property specifies what part of the
+ * GUI is to be blocked and how that's accomplished. The <code>inputBlocker
+ * </code> is set automatically when an <code>@Action</code> method that returns
+ * a Task specifies a {@link BlockingScope} value for the <code>block</code> 
+ * annotation parameter. To customize the way blocking is implemented you can 
+ * define your own <code>Task.InputBlocker</code>. For example, assume that 
+ * <code>busyGlassPane</code> is a component that consumes (and ignores) 
+ * keyboard and mouse input:</p>
  * ```java
  * class MyInputBlocker extends InputBlocker {
  *     BusyIndicatorInputBlocker(Task task) {
  *         super(task, Task.BlockingScope.WINDOW, myGlassPane);
  *     }
- *
  *     protected void block() {
- *         myFrame.setGlasspane(myGlassPane);
+ *         myFrame.setGlassPane(myGlassPane);
  *         busyGlassPane.setVisible(true);
  *     }
- *
  *     protected void unblock() {
- *         busyGlassPane.setVisible(false);
+ *       busyGlassPane.setVisible(false);
  *     }
  * }
- * //...
+ * // ...
+ * myTask.setInputBlocker(new MyInputBlocker(myTask));
  * ```
  * <p>
- * All of the settable properties in this class are bound, i.e., a
+ * All of the settable properties in this class are bound, i.e. a
  * PropertyChangeEvent is fired when the value of the property changes. As with
- * the <tt>SwingWorker</tt> superclass, all `PropertyChangeListener`s run
- * on the event dispatching thread. This is also true of `TaskListener`s.
+ * the <code>SwingWorker</code> superclass, all
+ * <code>PropertyChangeListeners</code> run on the event dispatching thread.
+ * This is also true of <code>TaskListeners</code>.</pre>
+ * <p>
+ * Unless specified otherwise specified, this class is thread-safe. All of the
+ * Task properties can be get/set on any thread.</pre>
  *
- * @author Hans Muller (Original Author)
- * @author Sean Carrick (Adapting Author) &lt;sean at pekinsoft dot com&gt;
+ *
+ * @author Hans Muller (Original Author) &lt;current email unkown&gt;
+ * @author Sean Carrick (Updater) &lt;sean at pekinsoft dot com&gt;
+ * 
+ * @version 1.05
+ * @since 1.03
+ * 
+ * @see ApplicationContext
+ * @see ResourceMap
+ * @see TaskListener
+ * @see TaskEvent
  */
 public abstract class Task<T, V> extends SwingWorker<T, V> {
 
@@ -139,16 +169,16 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     private TaskService taskService = null;
 
     /**
-     * Specifies to what extent the GUI should be blocked when a Task is
-     * executed by a TaskService. Input blocking is carried out by the Task's {@link
-     * #getInputBlocker inputBlocker}.
+     * Specifies to what extent the GUI should be blocked when a Task is 
+     * executed by a TaskService. Input blocking is carried out by the Task's
+     * {@link #getInputBlocker inputBlocker}.
      *
-     * @see InputBlocker
-     * @see Action#block
+     * @see Task.InputBlocker
+     * @see Action#block() 
      */
     public enum BlockingScope {
         /**
-         * Don't block the GUI while this task is executing.
+         * Don't block the GUI while this Task is executing.
          */
         NONE,
         /**
@@ -157,8 +187,8 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
          */
         ACTION,
         /**
-         * Block a component while the task is executing, typically by disabling
-         * it.
+         * Block a component while the task is executing, typically by
+         * temporarily disabling it.
          */
         COMPONENT,
         /**
@@ -168,18 +198,113 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         WINDOW,
         /**
          * Block all of the application's top level windows, typically by
-         * showing an application-modal dialog
+         * showing a application-modal dialog.
          */
         APPLICATION
     };
 
+    private void initTask(ResourceMap resourceMap, String prefix) {
+        this.resourceMap = resourceMap;
+        if ((prefix == null) || (prefix.length() == 0)) {
+            resourcePrefix = "";
+        } else if (prefix.endsWith(".")) {
+            resourcePrefix = prefix;
+        } else {
+            resourcePrefix = prefix + ".";
+        }
+        if (resourceMap != null) {
+            title = resourceMap.getString(resourceName("title"));
+            description = resourceMap.getString(resourceName("description"));
+            message = resourceMap.getString(resourceName("message"));
+            if (message != null) {
+                messageTime = System.currentTimeMillis();
+            }
+        }
+        addPropertyChangeListener(new StatePCL());
+        taskListeners = new CopyOnWriteArrayList<>();
+    }
+
+    private ResourceMap defaultResourceMap(Application application) {
+        return application.getContext().getResourceMap(getClass(), Task.class);
+    }
+
     /**
-     * Construct a <tt>Task</tt> with an empty (`""`) resource name
-     * prefix, whose ResourceMap is the value of 
-     * `ApplicationContext.getInstance().getResourceMap(this.getClass(), 
-     * Task.class)`.
+     * @deprecated
+     * <b>Warning:</b> This constructor is deprecated. It will be removed in a
+     * future release. This constructor was a way for developers to initialize a
+     * Task's title/description/message properties, and it's InputBlocker's
+     * visual properties, from an alternative ResourceMap. This feature is now
+     * supported with the InputBlocker's resourceMap property.
+     * <p>
+     * Construct a <code>Task</code>. If the <code>resourceMap</code> parameter
+     * is not null, then the <code>title</code>, <code>description</code>, and
+     * <code>message</code> properties are initialized from resources. The
+     * <code>resourceMap</code> is also used to lookup localized messages
+     * defined with the {@link #message message} method. In both cases, if the
+     * value of <code>resourcePrefix</code> is not null or an empty string
+     * <code>""</code>, resource names must have the name of the
+     * <code>resourcePrefix</code> parameter, followed by a ".", as a prefix</p>
      *
-     * @param application the Application to which this Task belongs
+     * @param application the application to which this <code>Task</code> belongs
+     * @param resourceMap the ResourceMap for the Task's user properties, can be
+     * null
+     * @param resourcePrefix prefix for resource names, can be null
+     * @see #getResourceMap() 
+     * @see #setTitle(java.lang.String) 
+     * @see #setDescription(java.lang.String) 
+     * @see #setMessage(java.lang.String) 
+     * @see #resourceName(java.lang.String) 
+     * @see ApplicationContext#getResourceMap() 
+     */
+    @Deprecated
+    public Task(Application application, ResourceMap resourceMap, 
+            String resourcePrefix) {
+        this.application = application;
+        initTask(resourceMap, resourcePrefix);
+    }
+
+    /**
+     * @deprecated
+     * <b>Warning:</b> This constructor is deprecated. It will be removed in a
+     * future release. This constructor was a way for developers to initialize a
+     * Task's title/description/message properties, and it's InputBlocker's
+     * visual properties, from an alternative ResourceMap. This feature is now
+     * supported with the InputBlocker's resourceMap property.
+     * <p>
+     * Construct a <code>Task</code> with the specified resource name prefix,
+     * whose ResourceMap is the value of <code>
+     * ApplicationContext.getInstance().getResourceMap(this.getClass(), Task.class)
+     * </code>. The <code>resourcePrefix</code> is used to construct the
+     * resource names for the intial values of the <code>title</code>,
+     * <code>description</code>, and <code>message</code> Task properties and
+     * for message {@link java.util.Formatter format} strings.
+     *
+     * @param application the application to which this <code>Task</code> belongs
+     * @param resourcePrefix prefix for resource names, can be null
+     * @see #getResourceMap
+     * @see #setTitle
+     * @see #setDescription
+     * @see #setMessage
+     * @see #resourceName
+     * @see ApplicationContext#getResourceMap
+     */
+    @Deprecated
+    public Task(Application application, String resourcePrefix) {
+        this.application = application;
+        initTask(defaultResourceMap(application), resourcePrefix);
+    }
+
+    /**
+     * Construct a <code>Task</code> with an empty (<code>""</code>) resource
+     * name prefix, whose ResourceMap is the value of
+     * <code>ApplicationContext.getInstance().getResourceMap(this.getClass(),
+     * Task.class)</code>. For example:
+     * ```java
+     * Task task = new Task(getApplication().getContext().getInstance().getResourceMap(this.getClass(), Task.class);
+     * // ...
+     * ```
+     * 
+     * @param application the application to which this <code>Task</code> belongs
      */
     public Task(Application application) {
         this.application = application;
@@ -190,7 +315,7 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         return application;
     }
 
-    public final ApplicationContext getApplicationContext() {
+    public final ApplicationContext getContext() {
         return getApplication().getContext();
     }
 
@@ -199,12 +324,11 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * This property is set when a task is executed by a TaskService, cleared
      * when the task is done and all of its completion methods have run.
      * <p>
-     * This is a read-only bound property</p>
+     * This is a read-only bound property.</p>
      *
-     * @return the value of the taskService property
-     *
-     * @see TaskService#execute(com.pekinsoft.desktop.task.Task)
-     * @see #done()
+     * @return the value of the taskService property.
+     * @see TaskService#execute(org.jdesktop.application.Task) 
+     * @see #done() 
      */
     public synchronized TaskService getTaskService() {
         return taskService;
@@ -213,36 +337,33 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     /**
      * Set when a task is executed by a TaskService, cleared when the task is
      * done and all of its completion methods have run.
-     *
-     * @param taskService
      */
     synchronized void setTaskService(TaskService taskService) {
         TaskService oldTaskService, newTaskService;
-
         synchronized (this) {
             oldTaskService = this.taskService;
             this.taskService = taskService;
             newTaskService = this.taskService;
         }
-
         firePropertyChange("taskService", oldTaskService, newTaskService);
     }
 
     /**
      * Returns a Task resource name with the specified suffix. Task resource
-     * names are the simple name of the contructor's `resourceClass`
-     * parameter, followed by ".", followed by `suffix`. If the
+     * names are the simple name of the constructor's <code>resourceClass</code>
+     * parameter, followed by ".", followed by <code>suffix</code>. If the
      * resourceClass parameter was null, then this method returns an empty
      * string.
      * <p>
      * This method would only be of interest to subclasses that wanted to look
-     * up additional Task resources (beyond `title`, `message`,
-     * etc.) using the same naming convention.</p>
+     * up additional Task resources (beyond <code>title</code>,
+     * <code>message</code>, etc..) using the same naming convention.
      *
      * @param suffix the resource name's suffix
-     * @return the fully qualified resource name
-     *
-     * @see #getResourceMap
+     * @return the resource name of the <code>Task</code> with the specified
+     *          suffix
+     * 
+     * @see #getResourceMap() 
      * @see #message
      */
     protected final String resourceName(String suffix) {
@@ -250,138 +371,150 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Returns the <tt>ResourceMap</tt> used by the constructor to initialize the
-     * `title`, `message`, etc., properties, and by the
-     * {@link #message message} method to look up format strings.
+     * Returns the <code>ResourceMap</code> used by the constructor to
+     * initialize the <code>title</code>, <code>message</code>, etc properties,
+     * and by the {@link #message message} method to look up format strings.
      *
-     * @return this Task's `ResourceMap`
-     *
-     * @see #resourceName(java.lang.String)
+     * @return this Task's <code>ResourceMap</code>
+     * 
+     * @see #resourceName(java.lang.String) 
      */
     public final ResourceMap getResourceMap() {
         return resourceMap;
     }
 
     /**
-     * Return the value of the <tt>title</tt> property. The default value of this
-     * property is the value of the {@link #getResourceMap() resourceMap}'s
-     * <tt>title</tt> resource.
+     * Return the value of the <code>title</code> property. The default value of
+     * this property is the value of the {@link #getResourceMap resourceMap's}
+     * <code>title</code> resource.
      * <p>
-     * Returns a brief one-line description of this Task that would be useful
-     * for describing this task to the user. The default value of this property
-     * is null.</p>
+     * Returns a brief one-line description of the this Task that would be
+     * useful for describing this task to the user. The default value of this
+     * property is null.</p>
      *
-     * @return the value of the <tt>title</tt> property
-     *
-     * @see #setTitle
-     * @see #setDescription
-     * @see #setMessage
+     * @return the value of the <code>title</code> property.
+     * 
+     * @see #setTitle(java.lang.String) 
+     * @see #setDescription(java.lang.String) 
+     * @see #setMessage(java.lang.String) 
      */
     public synchronized String getTitle() {
         return title;
     }
 
+    /**
+     * Set the <code>title</code> property. The default value of this property
+     * is the value of the {@link #getResourceMap resourceMap's}
+     * <code>title</code> resource.
+     * <p>
+     * The title is a brief one-line description of the this Task that would be
+     * useful for describing it to the user. The {@code
+     * title} should be specific to this Task, for example "Loading image
+     * sunset.png" is better than "Image Loader". Similarly the title isn't
+     * intended for ephemeral messages, like "Loaded 27.3% of sunset.png". The
+     * {@link #setMessage message} property is for reporting the Task's current
+     * status.</p>
+     *
+     * @param title a brief one-line description of the this Task.
+     * 
+     * @see #getTitle() 
+     * @see #setDescription(java.lang.String) 
+     * @see #setMessage(java.lang.String) 
+     */
     protected void setTitle(String title) {
         String oldTitle, newTitle;
-
         synchronized (this) {
             oldTitle = this.title;
             this.title = title;
             newTitle = this.title;
         }
-
         firePropertyChange("title", oldTitle, newTitle);
     }
 
     /**
-     * Return the value of the <tt>description</tt> property. The default value
-     * of this property is the value of the
-     * {@link #getResourceMap() resourceMap's} <tt>description</tt> resource.
+     * Return the value of the <code>description</code> property. The default
+     * value of this property is the value of the
+     * {@link #getResourceMap resourceMap's} <code>description</code> resource.
      * <p>
      * A longer version of the Task's title; a few sentences that describe what
      * the Task is for in terms that an application user would understand.</p>
      *
-     * @return the value of the <tt>description</tt> property
-     *
-     * @see #setDescription(java.lang.String)
-     * @see #setTitle(java.lang.String)
-     * @see #setMessage(java.lang.String)
+     * @return the value of the <code>description</code> property.
+     * 
+     * @see #setDescription(java.lang.String) 
+     * @see #setTitle(java.lang.String) 
+     * @see #setMessage(java.lang.String) 
      */
     public synchronized String getDescription() {
         return description;
     }
 
     /**
-     * Set the <tt>description</tt> property. The default value of this property
-     * is the value of the {@link #getResourceMap() resourceMap's}
-     * <tt>description</tt> resource.
+     * Set the <code>description</code> property. The default value of this
+     * property is the value of the {@link #getResourceMap resourceMap's}
+     * <code>description</code> resource.
      * <p>
      * The description is a longer version of the Task's title. It should be a
      * few sentences that describe what the Task is for, in terms that an
      * application user would understand.</p>
      *
      * @param description a few sentences that describe what this Task is for
-     *
-     * @see #getDescription()
-     * @see #setTitle(java.lang.String)
-     * @see #setMessage(java.lang.String)
+     * 
+     * @see #getDescription() 
+     * @see #setTitle(java.lang.String) 
+     * @see #setMessage(java.lang.String) 
      */
     protected void setDescription(String description) {
         String oldDescription, newDescription;
-
         synchronized (this) {
             oldDescription = this.description;
             this.description = description;
             newDescription = this.description;
         }
-
         firePropertyChange("description", oldDescription, newDescription);
     }
 
     /**
-     * Returns the length of time this Task has run. If the task has not started
-     * yet (i.e., if its state is still `StateValue.PENDING`), then this
-     * method returns 0. Otherwise it returns the duration in the specified time
-     * units. For example, to learn how many seconds a Task has run so far:
-     * <pre>
+     * Returns the length of time this Task has run. If the task hasn't started
+     * yet (i.e. if its state is still <code>StateValue.PENDING</code>), then
+     * this method returns 0. Otherwise it returns the duration in the specified
+     * time units. For example, to learn how many seconds a Task has run so far:
+     * ```java
      * long nSeconds = myTask.getExecutionDuration(TimeUnit.SECONDS);
-     * </pre>
+     * ```
      *
      * @param unit the time unit of the return value
-     * @return the length of time this Task has run
-     *
-     * @see #execute()
+     * @return the length of time this Task has run.
+     * 
+     * @see #execute() 
      */
     public long getExecutionDuration(TimeUnit unit) {
-        long startTime, doneTime, dt;
-
+        long sTime, dTime, dt;
         synchronized (this) {
-            startTime = this.startTime;
-            doneTime = this.doneTime;
+            sTime = this.startTime;
+            dTime = this.doneTime;
         }
-
-        if (startTime == -1L) {
+        if (sTime == -1L) {
             dt = 0L;
-        } else if (doneTime == -1L) {
-            dt = System.currentTimeMillis() - startTime;
+        } else if (dTime == -1L) {
+            dt = System.currentTimeMillis() - sTime;
         } else {
-            dt = doneTime - startTime;
+            dt = dTime - sTime;
         }
-
         return unit.convert(Math.max(0L, dt), TimeUnit.MILLISECONDS);
     }
 
     /**
-     * Return the value of the <tt>message</tt> property. The default value of
-     * this property is the value of the {@link #getResourceMap() resourceMap's}
-     * <tt>message</tt> resource.
+     * Return the value of the <code>message</code> property. The default value
+     * of this property is the value of the {@link #getResourceMap resourceMap's} 
+     * <code>message</code> resource.
      * <p>
      * Returns a short, one-line, message that explains what the task is up to
      * in terms appropriate for an application user.</p>
      *
-     * @return a short, one-line status message
-     *
-     * @see #setMessage(java.lang.String)
+     * @return a short one-line status message.
+     * 
+     * @see #setMessage(java.lang.String) 
      * @see #getMessageDuration(java.util.concurrent.TimeUnit) 
      */
     public String getMessage() {
@@ -389,30 +522,30 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Set the <tt>message</tt> property. The default value of this property is
-     * the value of the {@link #getResourceMap() resourceMap's} `message`
-     * resource.
+     * Set the <code>message</code> property. The default value of this property
+     * is the value of the {@link #getResourceMap resourceMap's}
+     * <code>message</code> resource.
      * <p>
-     * Sets a short, one-line message that explains what the task is up to in
-     * terms appropriate for an application user. This message should reflect
-     * that Task's dynamic state and can be reset as frequently as one could
+     * Returns a short, one-line, message that explains what the task is up to
+     * in terms appropriate for an application user. This message should reflect
+     * that Task's dynamic state and can be reset as frequently one could
      * reasonably expect a user to understand. It should not repeat the
      * information in the Task's title and should not convey any information
-     * that the user should not ignore.</p>
+     * that the user shouldn't ignore.</p>
      * <p>
-     * For example, a Task whose <tt>doInBackground</tt> method loaded a photo
-     * from a web service might set this property to a new value each time a new
-     * internal milestone was reached, e.g.:</p>
-     * 
+     * For example, a Task whose <code>doInBackground</code> method loaded a
+     * photo from a web service might set this property to a new value each time
+     * a new internal milestone was reached, e.g.:</p>
      * ```java
      * loadTask.setTitle("Loading photo from http://photos.com/sunset");
-     * //...
+     * // ...
+     * loadTask.setMessage("opening connection to photos.com");
+     * // ...
      * loadTask.setMessage("reading thumbnail image file sunset.png");
-     * //... etc ...
+     * // ... etc
      * ```
      * <p>
-     * Each time this property is set, the {@link 
-     * #getMessageDuration(java.util.concurrent.TimeUnit) 
+     * Each time this property is set, the {@link #getMessageDuration
      * messageDuration} property is reset. Since status messages are intended to
      * be ephemeral, application GUI elements like status bars may want to clear
      * messages after 20 or 30 seconds have elapsed.</p>
@@ -420,97 +553,92 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * Localized messages that require parameters can be constructed with the
      * {@link #message message} method.</p>
      *
-     * @param message a short, one-line status message
-     *
-     * @see #getMessage()
+     * @param message a short one-line status message.
+     * 
+     * @see #getMessage() 
      * @see #getMessageDuration(java.util.concurrent.TimeUnit) 
      * @see #message
      */
     protected void setMessage(String message) {
         String oldMessage, newMessage;
-
         synchronized (this) {
             oldMessage = this.message;
             this.message = message;
             newMessage = this.message;
             messageTime = System.currentTimeMillis();
         }
-
         firePropertyChange("message", oldMessage, newMessage);
     }
 
     /**
-     * Set the message property to a string generated with `String.format`
-     * and the specified arguments. The <tt>formatResourceKey</tt> names a
-     * resource whose value is a format string. See the Task Class javadoc for
-     * an example.
+     * Set the message property to a string generated with <code>String.format}
+     * </code>and the specified arguments. The <code>formatResourceKey</code>
+     * names a resource whose value is a format string. See the Task class 
+     * JavaDoc for an example.
      * <p>
-     * Note that if no arguments are specified, this method is comparable
+     * Note that if the no arguments are specified, this method is comparable
      * to:</p>
-     * <pre>
+     * ```java
      * setMessage(getResourceMap().getString(resourceName(formatResourceKey)));
-     * </pre>
+     * ```
      * <p>
-     * If a <tt>ResourceMap</tt> was not specified for this Task, then set the
-     * <tt>message</tt> property to `formatResourceKey`.</p>
+     * If a <code>ResourceMap</code> was not specified for this Task, then set
+     * the <code>message</code> property to <code>formatResourceKey</code>.</p>
      *
-     * @param formatResourceKey the suffix of the format string's resource name
+     * @param formatResourceKey the suffix of the format string's resource name.
      * @param args the arguments referred to by the placeholders in the format
-     * string
-     *
-     * @see #setMessage(java.lang.String)
-     * @see ResourceMap#getString(java.lang.String, java.lang.Object...)
+     *          string
+     * 
+     * @see #setMessage(java.lang.String) 
+     * @see ResourceMap#getString(java.lang.String, java.lang.Object...) 
      * @see java.text.MessageFormat
      */
     protected final void message(String formatResourceKey, Object... args) {
-        ResourceMap resourceMap = getResourceMap();
-
-        if (resourceMap != null) {
-            setMessage(resourceMap.getString(resourceName(formatResourceKey), args));
+        ResourceMap resMap = getResourceMap();
+        if (resMap != null) {
+            setMessage(resMap.getString(resourceName(formatResourceKey), args));
         } else {
             setMessage(formatResourceKey);
         }
     }
 
     /**
-     * Returns the length of time that has elapsed since the `message`
+     * Returns the length of time that has elapsed since the <code>message</code>
      * property was last set.
      *
      * @param unit units for the return value
-     * @return elapsed time since the <tt>message</tt> property was last set
-     *
-     * @see #setMessage(java.lang.String)
+     * @return elapsed time since the <code>message</code> property was last
+     *          set.
+     * 
+     * @see #setMessage(java.lang.String) 
      */
     public long getMessageDuration(TimeUnit unit) {
         long messageTime;
-
         synchronized (this) {
             messageTime = this.messageTime;
         }
-
-        long dt = (messageTime == -1L) ? 0L
-                : Math.max(0L, System.currentTimeMillis() - messageTime);
+        long dt = (messageTime == -1L) ? 0L : Math.max(0L, System.currentTimeMillis() - messageTime);
         return unit.convert(dt, TimeUnit.MILLISECONDS);
     }
 
     /**
-     * Returns the value of the <tt>userCanCancel</tt> property. The default
+     * Returns the value of the <code>userCanCancel</code> property. The default
      * value of this property is true.
      * <p>
      * Generic GUI components, like a Task progress dialog, can use this
      * property to decide if they should provide a way for the user to cancel
-     * this task.
-     * </p>
+     * this task.</p>
      *
-     * @return true if the user can cancel this Task; false otherwise
-     * @see #setUserCanCancel(boolean)
+     * @return true if the user can cancel this Task
+     * 
+     * @see #setUserCanCancel(boolean) 
      */
     public synchronized boolean getUserCanCancel() {
         return userCanCancel;
     }
 
     /**
-     * Sets the <tt>userCanCancel</tt> property. The default value of this
+     * Sets the <code>userCanCancel</code> property. The default value of this
      * property is true.
      * <p>
      * Generic GUI components, like a Task progress dialog, can use this
@@ -518,60 +646,55 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * this task. For example, the value of this property might be bound to the
      * enabled property of a cancel button.</p>
      * <p>
-     * This property has no effect on the {@link #cancel(boolean)  cancel} method. 
-     * It is just advice for GUI components that display this task.</p>
+     * This property has no effect on the {@link #cancel} cancel method. It's
+     * just advice for GUI components that display this Task.</p>
      *
      * @param userCanCancel true if the user should be allowed to cancel this
-     * task; false if not
-     *
-     * @see #getUserCanCancel()
+     *          Task
+     * @see #getUserCanCancel() 
      */
     protected void setUserCanCancel(boolean userCanCancel) {
         boolean oldValue, newValue;
-
         synchronized (this) {
             oldValue = this.userCanCancel;
             this.userCanCancel = userCanCancel;
             newValue = this.userCanCancel;
         }
-
         firePropertyChange("userCanCancel", oldValue, newValue);
     }
 
     /**
-     * Returns true if the {@link #setProgress(int)  progress} property has been
-     * set. Some Tasks do not update the progress property because it is
-     * difficult or impossibly to determine what percentage of the task has been
+     * Returns true if the {@link #setProgress progress} property has been set.
+     * Some Tasks don't update the progress property because it's difficult or
+     * impossible to determine how what percentage of the task has been
      * completed. GUI elements that display Task progress, like an application
-     * status bar, can use this property to set the {@link 
-     * javax.swing.JProgressBar#indeterminate
-     * indeterminate} <tt>JProgressBar</tt> property.
+     * status bar, can use this property to set the @{link
+     * JProgressBar#indeterminate indeterminate} @{code JProgressBar} property.
      * <p>
      * A task that does keep the progress property up to date should initialize
-     * it to 0, to ensure that <tt>isProgressPropertyValid</tt> is always
-     * true.</p>
+     * it to 0, to ensure that <code>isProgressPropertyValid</code> is always 
+     * true.
      *
-     * @return true if the {@link #setProgress(int) progress} property has been
-     * set
-     *
-     * @see #setProgress(int)
+     * @return true if the {@link #setProgress progress} property has been set.
+     * 
+     * @see #setProgress(float) 
      */
     public synchronized boolean isProgressPropertyValid() {
         return progressPropertyIsValid;
     }
 
     /**
-     * A convenience method that sets the <tt>progress</tt> property to the
-     * following ratio normalized to 0 &hellip; 100.
+     * A convenience method that sets the <code>progress</code> property to the
+     * following ratio normalized to 0 .. 100.
      * <pre>
      * value - min / max - min
      * </pre>
      *
-     * @param value a value in the range min&hellip;max, inclusive
+     * @param value a value in the range min ... max, inclusive
      * @param min the minimum value of the range
      * @param max the maximum value of the range
-     *
-     * @see #setProgress(int)
+     * 
+     * @see #setProgress(int) 
      */
     protected final void setProgress(int value, int min, int max) {
         if (min >= max) {
@@ -580,18 +703,17 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         if ((value < min) || (value > max)) {
             throw new IllegalArgumentException("invalid value");
         }
-
         float percentage = (float) (value - min) / (float) (max - min);
         setProgress(Math.round(percentage * 100.0f));
     }
 
     /**
-     * Convenience method tat sets the <tt>progress</tt> property to
-     * `percentage * 100`.
+     * A convenience method that sets the <code>progress</code> property to
+     * <code>percentage * 100</code>.
      *
-     * @param percentage a value in the range 0.0&hellip;1.0, inclusive
-     *
-     * @see #setProgress(int)
+     * @param percentage a value in the range 0.0 ... 1.0 inclusive
+     * 
+     * @see #setProgress(int) 
      */
     protected final void setProgress(float percentage) {
         if ((percentage < 0.0) || (percentage > 1.0)) {
@@ -601,16 +723,16 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * A convenience method that sets the <tt>progress</tt> property to the
-     * following ratio normalized to 0&hellip;100.
+     * A convenience method that sets the <code>progress</code> property to the
+     * following ratio normalized to 0 .. 100.
      * <pre>
      * value - min / max - min
      * </pre>
      *
-     * @param value a value in the range min&hellip;max, inclusive
+     * @param value a value in the range min ... max, inclusive
      * @param min the minimum value of the range
      * @param max the maximum value of the range
-     *
+     * 
      * @see #setProgress(int)
      */
     protected final void setProgress(float value, float min, float max) {
@@ -620,55 +742,59 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         if ((value < min) || (value > max)) {
             throw new IllegalArgumentException("invalid value");
         }
-
         float percentage = (value - min) / (max - min);
         setProgress(Math.round(percentage * 100.0f));
     }
 
     /**
-     * Equivalent to `getState() == StateValue.PENDING`.
+     * Equivalent to <code>getState() == StateValue.PENDING</code>.
      * <p>
-     * When a pending Task's state changes to <tt>StateValue.STARTED</tt> a
-     * PropertyChangeEvent for the "started" property is fired. Similarly, when
-     * a started Task's state changes to `StateValue.DONE`, a "done"
+     * When a pending Task's state changes to <code>StateValue.STARTED</code> a
+     * PropertyChangeEvent for the "started" property is fired. Similarly when a
+     * started Task's state changes to <code>StateValue.DONE</code>, a "done"
      * PropertyChangeEvent is fired.</p>
-     *
-     * @return <tt>true` if the Task is still pending; `false</tt> if it has been started
+     * 
+     * @return <code>true</code> if the task is pending; <code>false</code> if
+     *          the task has already started or has completed
      */
     public final boolean isPending() {
         return getState() == StateValue.PENDING;
     }
 
     /**
-     * Equivalent to `getState() == StateValue.STARTED`.
+     * Equivalent to <code>getState() == StateValue.STARTED</code>.
      * <p>
-     * When a pending Task's state changes to <tt>StateValue.STARTED</tt> a
-     * PropertyChangeEvent for the "started" property is fired. Similarly, when
-     * a started Task's state changes to `StateValue.DONE`, a "done"
+     * When a pending Task's state changes to <code>StateValue.STARTED</code> a
+     * PropertyChangeEvent for the "started" property is fired. Similarly when a
+     * started Task's state changes to <code>StateValue.DONE</code>, a "done"
      * PropertyChangeEvent is fired.</p>
-     *
-     * @return <tt>true` if the Task has started; `false</tt> if has not
+     * 
+     * @return <code>true</code> if the task has been started; <code>false</code>
+     *          if the task is still pending or has completed
      */
     public final boolean isStarted() {
         return getState() == StateValue.STARTED;
     }
 
     /**
-     * {@inheritDoc }
+     * {@inheritDoc}
      * <p>
      * This method fires the TaskListeners' {@link TaskListener#process process}
-     * method. If you override <tt>process</tt> and do not call
-     * `super.process(values)`, then the `TaskListener`s will
-     * <strong>not</strong>
-     * run.</p>
+     * method. If you override <code>process</code> and do not call
+     * <code>super.process(values)</code>, then the TaskListeners will not run.
+     * </p>
      *
-     * @param values {@inheritDoc }
+     * @param values @{inheritDoc}
      */
     @Override
     protected void process(List<V> values) {
         fireProcessListeners(values);
     }
 
+    /**
+     * {@inheritDoc }
+     */
+    @Override
     protected final void done() {
         try {
             if (isCancelled()) {
@@ -692,31 +818,29 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
     }
 
     /**
-     * Called when this Task has been cancelled by {@link #cancel(boolean) }.
+     * Called when this Task has been cancelled by {@link #cancel(boolean)}.
      * <p>
      * This method runs on the EDT. It does nothing by default.</p>
      *
-     * @see done
+     * @see #done() 
      */
     protected void cancelled() {
-
     }
 
     /**
-     * Called when this Task has successfully completed, i.e., when its
-     * <tt>get</tt> method returns a value. Tasks that compute a value should
-     * override this method.
+     * Called when this Task has successfully completed, i.e. when its
+     * <code>get</code> method returns a value. Tasks that compute a value
+     * should override this method.
      * <p>
      * This method runs on the EDT. It does nothing by default.</p>
      *
-     * @param result the value returned by the {`get` method
-     *
-     * @see #done
-     * @see #get()
-     * @see #failed
+     * @param result the value returned by the <code>get</code> method
+     * 
+     * @see #done() 
+     * @see #get() 
+     * @see #failed(java.lang.Throwable) 
      */
     protected void succeeded(T result) {
-
     }
 
     /**
@@ -724,94 +848,87 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
      * <p>
      * This method runs on the EDT. It does nothing by default.</p>
      *
-     * @param e the <tt>InterruptedException</tt> thrown by `get`
-     *
-     * @see #cancel(boolean)
-     * @see #done()
-     * @see #get()
+     * @param e the <code>InterruptedException</code> thrown by <code>get</code>
+     * 
+     * @see #cancel(boolean) 
+     * @see #done() 
+     * @see #get() 
      */
     protected void interrupted(InterruptedException e) {
-
     }
 
     /**
-     * Called when an execution of this Task fails and an <tt>ExecutionException</tt> 
-     * is thrown by `get`.
+     * Called when an execution of this Task fails and an
+     * <code>ExecutionExecption</code> is thrown by <code>get</code>.
      * <p>
-     * This method runs on the EDT. It logs an error message by default.</p>
+     * This method runs on the EDT. It Logs an error message by default.</p>
      *
-     * @param cause the {@link Throwable#getCause() cause} of the
-     * `ExecutionException`
-     *
-     * @see #done()
-     * @see #get()
-     * @see #failed(java.lang.Throwable)
+     * @param cause the {@link Throwable#getCause cause} of the
+     * <code>ExecutionException</code>
+     * 
+     * @see #done() 
+     * @see #get() 
+     * @see #failed
      */
     protected void failed(Throwable cause) {
         String msg = String.format("%s failed: %s", this, cause);
-        Exception ex = new Exception(cause.getMessage(), cause);
-        ex.setStackTrace(cause.getStackTrace());
-
-        logger.error(ex, this.getClass().getName() + "." + "failed(Throwable "
-                + "cause [" + cause.toString() + "])");
+        logger.log(Level.SEVERE, msg, cause);
     }
 
     /**
-     * Called unconditionally (in a <tt>finally</tt> clause) after one of the
-     * completion methods, `succeeded`, `failed`, `cancelled`,
-     * or `interrupted`, runs. Subclasses can override this method to
-     * cleanup before the <tt>done</tt> method returns.
+     * Called unconditionally (in a <code>finally</code> clause) after one of
+     * the completion methods, <code>succeeded</code>, <code>failed</code>,
+     * <code>cancelled</code>, or <code>interrupted</code>, runs. Subclasses can
+     * override this method to cleanup before the <code>done</code> method
+     * returns.
      * <p>
      * This method runs on the EDT. It does nothing by default.</p>
      *
-     * @see #done()
-     * @see #get()
-     * @see #failed(java.lang.Throwable)
+     * @see #done() 
+     * @see #get() 
+     * @see #failed(java.lang.Throwable) 
      */
     protected void finished() {
-
     }
 
     /**
-     * Adds a <tt>TaskListener</tt> to this Task. The listener will be notified
-     * when the Task's state changes to `STARTED`, each time the `process`
-     * method is called, and when the Task's state changes to `DONE`. All of the
-     * listener methods will run on the event dispatching
-     * thread.
+     * Adds a <code>TaskListener</code> to this Task. The listener will be
+     * notified when the Task's state changes to <code>STARTED</code>, each time
+     * the <code>process</code> method is called, and when the Task's state
+     * changes to <code>DONE</code>. All of the listener methods will run on the
+     * event dispatching thread.
      *
-     * @param listener the <tt>TaskListener</tt> to be added
-     *
+     * @param listener the <code>TaskListener</code> to be added
+     * 
      * @see #removeTaskListener(org.jdesktop.application.TaskListener) 
      */
     public void addTaskListener(TaskListener<T, V> listener) {
         if (listener == null) {
             throw new IllegalArgumentException("null listener");
         }
-
         taskListeners.add(listener);
     }
 
     /**
-     * Removes a <tt>TaskListener</tt> from this Task. If the specified listener
-     * does not exist, this method does nothing.
+     * Removes a <code>TaskListener</code> from this Task. If the specified
+     * listener doesn't exist, this method does nothing.
      *
-     * @param listener the <tt>TaskListener</tt> to be removed
-     *
+     * @param listener the <code>TaskListener</code> to be added
+     * 
      * @see #addTaskListener(org.jdesktop.application.TaskListener) 
      */
     public void removeTaskListener(TaskListener<T, V> listener) {
         if (listener == null) {
             throw new IllegalArgumentException("null listener");
         }
-
         taskListeners.remove(listener);
     }
 
     /**
-     * Returns a copy of this Task's `TaskListener`s.
+     * Returns a copy of this Task's <code>TaskListeners</code>.
      *
-     * @return a copy of this Task's `TaskListener`s.
-     *
+     * @return a copy of this Task's <code>TaskListeners</code>.
+     * 
      * @see #addTaskListener(org.jdesktop.application.TaskListener) 
      * @see #removeTaskListener(org.jdesktop.application.TaskListener) 
      */
@@ -819,85 +936,78 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
         return taskListeners.toArray(new TaskListener[taskListeners.size()]);
     }
 
-    /* This method is guaranteed to run on the EDT, it is called from 
-     * `SwingWorker.process()`.
+    /* This method is guaranteed to run on the EDT, it's called
+     * from SwingWorker.process().
      */
     private void fireProcessListeners(List<V> values) {
         TaskEvent<List<V>> event = new TaskEvent(this, values);
-
         taskListeners.forEach(listener -> {
             listener.process(event);
         });
     }
 
-    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see
-     * below).
+    /* This method runs on the EDT because it's called from
+     * StatePCL (see below).
      */
     private void fireDoInBackgroundListeners() {
         TaskEvent<Void> event = new TaskEvent(this, null);
-
-        for (TaskListener<T, V> listener : taskListeners) {
+        taskListeners.forEach(listener -> {
             listener.doInBackground(event);
-        }
+        });
     }
 
-    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
-     * below).
+    /* This method runs on the EDT because it's called from
+     * StatePCL (see below).
      */
     private void fireSucceededListeners(T result) {
         TaskEvent<T> event = new TaskEvent(this, result);
-
-        for (TaskListener<T, V> listener : taskListeners) {
+        taskListeners.forEach(listener -> {
             listener.succeeded(event);
-        }
+        });
     }
 
-    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
-     * below).
+    /* This method runs on the EDT because it's called from
+     * StatePCL (see below).
      */
     private void fireCancelledListeners() {
         TaskEvent<Void> event = new TaskEvent(this, null);
-
-        for (TaskListener<T, V> listener : taskListeners) {
+        taskListeners.forEach(listener -> {
             listener.cancelled(event);
-        }
+        });
     }
 
-    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
-     * below).
+    /* This method runs on the EDT because it's called from
+     * StatePCL (see below).
      */
     private void fireInterruptedListeners(InterruptedException e) {
         TaskEvent<InterruptedException> event = new TaskEvent(this, e);
-
-        for (TaskListener<T, V> listener : taskListeners) {
+        taskListeners.forEach(listener -> {
             listener.interrupted(event);
-        }
+        });
     }
 
-    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
-     * below).
+    /* This method runs on the EDT because it's called from
+     * StatePCL (see below).
      */
     private void fireFailedListeners(Throwable e) {
         TaskEvent<Throwable> event = new TaskEvent(this, e);
-
-        for (TaskListener<T, V> listener : taskListeners) {
+        taskListeners.forEach(listener -> {
             listener.failed(event);
-        }
+        });
     }
 
-    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
-     * below).
+    /* This method runs on the EDT because it's called from
+     * StatePCL (see below).
      */
     private void fireFinishedListeners() {
         TaskEvent<Void> event = new TaskEvent(this, null);
-
-        for (TaskListener<T, V> listener : taskListeners) {
+        taskListeners.forEach(listener -> {
             listener.finished(event);
-        }
+        });
     }
 
-    /* This method runs on the EDT because it is called from <tt>StatePCL</tt> (see 
-     * below).
+    /* This method runs on the EDT because it's called from
+     * StatePCL (see below).
      */
     private void fireCompletionListeners() {
         try {
@@ -919,14 +1029,17 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
 
     private class StatePCL implements PropertyChangeListener {
 
+        /**
+         * {@inheritDoc }
+         * 
+         * @param e {@inheritDoc }
+         */
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            String propertyName = evt.getPropertyName();
-
+        public void propertyChange(PropertyChangeEvent e) {
+            String propertyName = e.getPropertyName();
             if ("state".equals(propertyName)) {
-                StateValue state = (StateValue) (evt.getNewValue());
-                Task task = (Task) (evt.getSource());
-
+                StateValue state = (StateValue) (e.getNewValue());
+                Task task = (Task) (e.getSource());
                 switch (state) {
                     case STARTED:
                         taskStarted(task);
@@ -946,7 +1059,6 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
             synchronized (Task.this) {
                 startTime = System.currentTimeMillis();
             }
-
             firePropertyChange("started", false, true);
             fireDoInBackgroundListeners();
         }
@@ -955,7 +1067,6 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
             synchronized (Task.this) {
                 doneTime = System.currentTimeMillis();
             }
-
             try {
                 task.removePropertyChangeListener(this);
                 firePropertyChange("done", false, true);
@@ -965,94 +1076,108 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
             }
         }
     }
-    
+
     /**
-     * Return this Task's `InputBlocker`.
+     * Return this task's InputBlocker.
      * <p>
      * This is a bound property.</p>
+     *
+     * @return the <code>InputBlocker</code> for this <code>Task</code>
      * 
-     * @return this Task's `InputBlocker`
-     * 
-     * @see #setInputBlocker
+     * @see #setInputBlocker(org.jdesktop.application.Task.InputBlocker) 
      */
     public final InputBlocker getInputBlocker() {
         return inputBlocker;
     }
-    
+
+    /**
+     * Set this task's InputBlocker. The InputBlocker defines to what extent the
+     * GUI should be blocked while the Task is executed by a TaskService. It is
+     * not used by the Task directly, it's used by the TaskService that executes
+     * the Task.
+     * <p>
+     * This property may only be set before the Task is
+     * {@link TaskService#execute submitted} to a TaskService for execution. If
+     * it's called afterwards, an IllegalStateException is thrown.</p>
+     * <p>
+     * This is a bound property.</p>
+     * 
+     * @param the <code>InputBlocker</code> to assign for this <code>Task</code>
+     * 
+     * @see #getInputBlocker() 
+     */
     public final void setInputBlocker(InputBlocker inputBlocker) {
         if (getTaskService() != null) {
             throw new IllegalStateException("task already being executed");
         }
-        
         InputBlocker oldInputBlocker, newInputBlocker;
-        
-        synchronized(this) {
+        synchronized (this) {
             oldInputBlocker = this.inputBlocker;
             this.inputBlocker = inputBlocker;
             newInputBlocker = this.inputBlocker;
         }
-        
         firePropertyChange("inputBlocker", oldInputBlocker, newInputBlocker);
     }
-    
+
     /**
-     * Specifies to what extend input to the Application's GUI should be blocked
-     * while this Task is being executed and provides a pair of methods, <tt>block</tt> 
-     * and <tt>unblock()</tt> that do the work of blocking the GUI. For 
-     * the sake of input blocking, a Task begins executing when it is {@link 
-     * TaskService#execute(com.pekinsoft.desktop.application.Task)  submitted} 
-     * to a `TaskService`, and it finishes executing after the Task's 
-     * completion methods have been called.
+     * Specifies to what extent input to the Application's GUI should be blocked
+     * while this Task is being executed and provides a pair of methods,
+     * <code>block</code> and <code>unblock</code> that do the work of blocking
+     * the GUI. For the sake of input blocking, a Task begins executing when
+     * it's {@link TaskService#execute submitted} to a <code>TaskService</code>,
+     * and it finishes executing after the Task's completion methods have been
+     * called.
      * <p>
-     * The InputBlocker's {@link BlockingScope BlockingScope} and the 
-     * blocking <tt>target</tt> object define what part of the GUI's input will 
-     * be blocked:</p>
+     * The InputBlocker's {@link Task.BlockingScope
+     * BlockingScope} and the blocking <code>target</code> object define what
+     * part of the GUI's input will be blocked:</p>
      * <dl>
-     * <dt><strong>`Task.BlockingScope.NONE`</strong></dt>
-     *  <dd>Do not block input. The blocking target is ignored in this case.</dd>
-     * <dt><strong>`Task.BlockingScope.ACTION`</strong></dt>
-     *  <dd>Disable the target {@link javax.swing.Action Action} while the Task
-     *      is executing.</dd>
-     * <dt><strong><code>Task.BlockingScope.COMPONENT</code></strong></dt>
-     *  <dd>Disable the target {@link java.awt.Component Component} while the 
-     *      Task is executing.</dd>
-     * <dt><strong>`Task.BlockingScope.WINDOW`</strong></dt>
-     *  <dd>Block the Window ancestor of the target Component while the Task is
-     *      executing.</dd>
-     * <dt><strong>`Task.BlockingScope.APPLICATION`</strong></dt>
-     *  <dd>Block the entire Application while the Task is executing. The 
-     *      blocking target is ignored in this case.</dd></dl>
+     * <dt><b><code>Task.BlockingScope.NONE</code></b></dt><dd>Don't block input.
+     * The blocking target is ignored in this case.</dd>
+     * <dt><b><code>Task.BlockingScope.ACTION</code></b></dt><dd>Disable the 
+     * target {@link javax.swing.Action Action} while the Task is executing.</dd>
+     * <dt><b><code>Task.BlockingScope.COMPONENT</code></b></dt><dd>Disable the
+     * target {@link java.awt.Component} Component while the Task is executing.
+     * </dd>
+     * <dt><b><code>Task.BlockingScope.WINDOW</code></b></dt><dd>Block the Window
+     * ancestor of the target Component while the Task is executing.</dd>
+     * <dt><b><code>Task.BlockingScope.Application</code></b></dt><dd>Block the
+     * entire Application while the Task is executing. The blocking target is
+     * ignored in this case.</dd>
+     * </dl>
      * <p>
-     * Input blocking begins when the <tt>block</tt> method is called and ends
-     * when <tt>unblock</tt> is called. Each method is only called once, 
-     * typically by the `TaskService`.
-     * 
+     * Input blocking begins when the <code>block</code> method is called and
+     * ends when <code>unblock</code> is called. Each method is only called
+     * once, typically by the <code>TaskService</code>.</p>
+     *
      * @see Task#getInputBlocker() 
-     * @see Task#setInputBlocker(com.pekinsoft.desktop.application.Task.InputBlocker) 
+     * @see Task#setInputBlocker(org.jdesktop.application.Task.InputBlocker) 
      * @see TaskService
      * @see Action
      */
     public static abstract class InputBlocker extends AbstractBean {
+
         private final Task task;
         private final BlockingScope scope;
         private final Object target;
         private final ApplicationAction action;
-        
+
         /**
-         * Construc an InputBlocker with four immutable properties. If the Task
-         * is null or if the Task has already been executed by a TaskService, 
-         * then an execption is thrown. If scope is `BlockingScope.ACTION`
-         * then target must be an {@link javax.swing.Action Action}. If scope is
-         * <tt>BlockingScope.WINDOW` or `BlockingScope.COMPONENT</tt> then
-         * target must be a Component.
-         * 
+         * Construct an InputBlocker with four immutable properties. If the Task
+         * is null or if the Task has already been executed by a TaskService,
+         * then an exception is thrown. If scope is
+         * <code>BlockingScope.ACTION</code> then target must be a
+         * {@link javax.swing.Action Action}. If scope is
+         * <code>BlockingScope.WINDOW</code> or
+         * <code>BlockingScope.COMPONENT</code> then target must be a Component.
+         *
          * @param task block input while this Task is executing
          * @param scope how much of the GUI will be blocked
          * @param target the GUI element that will be blocked
-         * @param action the <tt>@Action</tt> that triggered running the task, or
-         *          null
+         * @param action the <code>@Action</code> that triggered running the
+         *          task, or null
          * 
-         * @see TaskService#execute(com.pekinsoft.desktop.application.Task) 
+         * @see TaskService#execute(org.jdesktop.application.Task) 
          */
         public InputBlocker(Task task, BlockingScope scope, Object target, 
                 ApplicationAction action) {
@@ -1062,151 +1187,122 @@ public abstract class Task<T, V> extends SwingWorker<T, V> {
             if (task.getTaskService() != null) {
                 throw new IllegalStateException("task already being executed");
             }
-            
             switch (scope) {
                 case ACTION:
                     if (!(target instanceof javax.swing.Action)) {
-                        throw new IllegalArgumentException("target is not an "
-                                + "Action");
+                        throw new IllegalArgumentException("target not an Action");
                     }
                     break;
                 case COMPONENT:
                 case WINDOW:
                     if (!(target instanceof Component)) {
-                        throw new IllegalArgumentException("target is not a "
-                                + "Component");
+                        throw new IllegalArgumentException("target not a Component");
                     }
                     break;
             }
-            
             this.task = task;
             this.scope = scope;
             this.target = target;
             this.action = action;
         }
-        
+
         /**
-         * Construct an InputBlocker. If <tt>target</tt> is an `ApplicationAction`, it 
-         * becomes the InputBlocker's `Action`. If
-         * the Task is null or if the Task has already been executed by a 
-         * TaskService, then an exception is thrown.
-         * 
-         * @param task block input while this Task is running
+         * Construct an InputBlocker. If <code>target</code> is an
+         * <code>ApplicationAction</code>, it becomes the InputBlocker's
+         * <code>action</code>. If the Task is null or if the Task has already
+         * been executed by a TaskService, then an exception is thrown.
+         *
+         * @param task block input while this Task is executing
          * @param scope how much of the GUI will be blocked
          * @param target the GUI element that will be blocked
          * 
-         * @see TaskService#execute(com.pekinsoft.desktop.application.Task) 
+         * @see TaskService#execute(org.jdesktop.application.Task) 
          */
         public InputBlocker(Task task, BlockingScope scope, Object target) {
             this(task, scope, target, (target instanceof ApplicationAction) 
                     ? (ApplicationAction) target : null);
+
         }
-        
+
         /**
-         * The <tt>block</tt> method will block input while this Task is being 
-         * executed by a TaskService.
+         * The <code>block</code> method will block input while this Task is
+         * being executed by a TaskService.
+         *
+         * @return the value of the read-only Task property
          * 
-         * @return the value of this read-only Task property
-         * 
-         * @see #block()
-         * @see #unblock()
+         * @see #block() 
+         * @see #unblock() 
          */
         public final Task getTask() {
             return task;
         }
-        
+
         /**
          * Defines the extent to which the GUI is blocked while the task is
          * being executed.
+         *
+         * @return the value of the read-only blockingScope property
          * 
-         * @return the value of the read-only BlockingScope property
-         * 
-         * @see #block()
-         * @see #unblock()
+         * @see #block() 
+         * @see #unblock() 
          */
         public final BlockingScope getScope() {
             return scope;
         }
-        
+
         /**
          * Specifies the GUI element that will be blocked while the task is
          * being executed.
          * <p>
          * This property may be null.</p>
-         * 
+         *
          * @return the value of the read-only target property
          * 
-         * @see #block()
-         * @see #unblock()
+         * @see #getScope() 
+         * @see #block() 
+         * @see #unblock() 
          */
         public final Object getTarget() {
             return target;
         }
-        
+
         /**
-         * The ApplicationAction (`@Action`) that caused the task to be
-         * executed. The DefaultInputBlocker uses the action's <tt>name</tt> and
-         * <tt>resourceMap</tt> to configure its blocking dialog if `scope`
-         * is `BlockingScope.WINDOW`.
+         * The ApplicationAction (<code>@Action</code>) that caused the task to
+         * be executed. The DefaultInputBlocker uses the action's
+         * <code>name</code> and <code>resourceMap</code> to configure its
+         * blocking dialog if <code>scope</code> is
+         * <code>BlockingScope.WINDOW</code>.
          * <p>
-         * This property may well be null.</p>
-         * 
+         * This property may be null.</p>
+         *
          * @return the value of the read-only action property
          * 
-         * @see #block()
-         * @see #unblock()
+         * @see #getScope() 
+         * @see #block() 
+         * @see #unblock() 
          * @see ApplicationAction#getName() 
          * @see ApplicationAction#getResourceMap() 
          */
         public final ApplicationAction getAction() {
             return action;
         }
-        
+
         /**
-         * Block input to the GUI per the <tt>scope</tt> and `target`
-         * properties. This method will only be called once.
-         * 
+         * Block input to the GUI per the <code>scope</code> and
+         * <code>target</code> properties. This method will only be called once.
+         *
          * @see #unblock() 
-         * @see TaskService#execute(com.pekinsoft.desktop.application.Task) 
+         * @see TaskService#execute(org.jdesktop.application.Task) 
          */
         protected abstract void block();
-        
+
         /**
-         * Unblock input to the GUI by undoing whateve the <tt>block</tt> method
-         * did. This method will only be called once.
-         * 
+         * Unblock input to the GUI by undoing whatever the <code>block</code>
+         * method did. This method will only be called once.
+         *
          * @see #block() 
-         * @see TaskService#execute(com.pekinsoft.desktop.application.Task) 
+         * @see TaskService#execute(org.jdesktop.application.Task) 
          */
         protected abstract void unblock();
-        
-    }
-
-    private void initTask(ResourceMap resourcemap, String prefix) {
-        this.resourceMap = resourceMap;
-
-        if ((prefix == null) || (prefix.length() == 0)) {
-            resourcePrefix = "";
-        } else if (prefix.endsWith(".")) {
-            resourcePrefix = prefix;
-        } else {
-            resourcePrefix = prefix + ".";
-        }
-
-        if (resourceMap != null) {
-            title = resourceMap.getString(resourceName("title"));
-            description = resourceMap.getString(resourceName("description"));
-            message = resourceMap.getString(resourceName("message"));
-
-            if (message != null) {
-                messageTime = System.currentTimeMillis();
-            }
-        }
-        addPropertyChangeListener(new StatePCL());
-        taskListeners = new CopyOnWriteArrayList<>();
-    }
-    
-    private ResourceMap defaultResourceMap(Application application) {
-        return application.getContext().getResourceMap(getClass(), Task.class);
     }
 }
